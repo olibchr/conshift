@@ -1,6 +1,7 @@
 import json
 #from pyLD import jsonld
 import numpy as np
+import csv
 
 
 NO_ANT_CNT = 0
@@ -9,7 +10,7 @@ ERR_CNT = 0
 
 def load_data():
     ctg_set = set()
-
+    """
     DMa, this_set = get_data('DM_CleanData/DM_Partial_0.jsonld')
     ctg_set = ctg_set.union(this_set)
     DMb, this_set = get_data('DM_CleanData/DM_Partial_1.jsonld')
@@ -102,15 +103,16 @@ def load_data():
     ctg_set = ctg_set.union(this_set)
     WPk, this_set = get_data('WP_CleanData/WP_Partial_10.jsonld')
     ctg_set = ctg_set.union(this_set)
-    WPk, this_set = get_data('WP_CleanData/WP_Partial_11.jsonld')
+    WPl, this_set = get_data('WP_CleanData/WP_Partial_11.jsonld')
+    ctg_set = ctg_set.union(this_set)"""
+    WPm, this_set = get_data('WP_CleanData/WP_Partial_12.jsonld')
     ctg_set = ctg_set.union(this_set)
-    WPk, this_set = get_data('WP_CleanData/WP_Partial_12.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPk, this_set = get_data('WP_CleanData/WP_Partial_13.jsonld')
+    WPn, this_set = get_data('WP_CleanData/WP_Partial_13.jsonld')
     ctg_set = ctg_set.union(this_set)
 
     #articles = np.concatenate((a,b,c,d,e,f,g,h,i,j,k), axis = 0)
-    articles = np.concatenate((WPa, WPb, WPc, WPd, WPe, WPf, WPg, WPh, WPi, WPj, WPk, NYTa, NYTb, NYTc, NYTd, NYTe, NYTf, NYTg, NYTh, NYTi, NYTj, NYTk, INDa, INDb, INDc, INDd, INDe, INDf, INDg, INDh, INDi, INDj, INDk, HPa, HPb, HPc, HPd, HPe, HPf, HPg, HPh, HPi, HPj, HPk, DMa, DMb, DMc, DMd, DMe, DMf, DMg, DMh, DMi, DMj, DMk), axis=0)
+    #articles = np.concatenate((WPa, WPb, WPc, WPd, WPe, WPf, WPg, WPh, WPi, WPj, WPk, WPl, WPm, WPn, NYTa, NYTb, NYTc, NYTd, NYTe, NYTf, NYTg, NYTh, INDa, INDb, INDc, INDd, HPa, HPb, HPc, HPd, HPe, HPf, HPg, HPh, HPi, HPj, DMa, DMb, DMc, DMd, DMe, DMf, DMg, DMh, DMi, DMj, DMk), axis=0)
+    articles = np.concatenate((WPm, WPn), axis=0)
     # articles = np.array(a)
     return articles, ctg_set
 
@@ -130,10 +132,9 @@ def get_data(dir):
     global NO_CTG_CNT
     global ERR_CNT
 
-
     for i in range(0,len(content['publisher'])):
         this_id = content['publisher'][i]['@id']
-
+        this_date = content['publisher'][i]['datePublished']
         try:
             id_categories = content['publisher'][i]['category']
         except Exception as e:
@@ -157,12 +158,10 @@ def get_data(dir):
         else:
             id_annotations = np.array(id_annotations)
             id_annotations_t = tuple(id_annotations)
-        articles.append([this_id, id_annotations])
-
+        articles.append([this_id, this_date, id_annotations])
         for annot in id_annotations_t:
             ctg_set.add(annot)
     articles = np.array(articles, dtype=object)
-    #ctg_set = sorted(ctg_set)
     return articles, ctg_set
 
 
@@ -181,12 +180,20 @@ print "Creating vectors.."
 
 article_vecs = []
 for article in articles:
-    article_vec = len(ctg_set)*[0]
-    for ctg in article[1]:
-        try:
-            if ctg_to_id[ctg] is not None:
-                article_vec[ctg_to_id[ctg]] = 1
-        except Exception:
-            print article[0], ctg
-    article_vecs.append([article[0],article_vec])
+    article_vec = []
+    #print len(article[2])
+    for ctg in article[2]:
+        if ctg_to_id[ctg] is not None:
+            article_vec.append(ctg_to_id[ctg])
 
+    article_vecs.append([article[0],article[1], article_vec])
+
+with open('annotation_vectors.csv', 'wb') as article_vec_out:
+    writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    for a_vec in article_vecs:
+        writer.writerow(a_vec)
+
+with open('annotation_to_indext.csv', 'wb') as article_dict_out:
+    writer = csv.writer(article_dict_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    for key, value in ctg_to_id.items():
+        writer.writerow([key.encode('utf-8'), value])
