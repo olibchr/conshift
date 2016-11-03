@@ -1,0 +1,5 @@
+IONData2016/*
+IONData/dataset*
+*.jsonld
+*.tgz
+*.csv
