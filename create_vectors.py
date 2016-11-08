@@ -7,10 +7,11 @@ import csv
 NO_ANT_CNT = 0
 NO_CTG_CNT = 0
 ERR_CNT = 0
+all_abouts = []
 
 def load_data():
     ctg_set = set()
-    """
+
     DMa, this_set = get_data('DM_CleanData/DM_Partial_0.jsonld')
     ctg_set = ctg_set.union(this_set)
     DMb, this_set = get_data('DM_CleanData/DM_Partial_1.jsonld')
@@ -104,15 +105,14 @@ def load_data():
     WPk, this_set = get_data('WP_CleanData/WP_Partial_10.jsonld')
     ctg_set = ctg_set.union(this_set)
     WPl, this_set = get_data('WP_CleanData/WP_Partial_11.jsonld')
-    ctg_set = ctg_set.union(this_set)"""
+    ctg_set = ctg_set.union(this_set)
     WPm, this_set = get_data('WP_CleanData/WP_Partial_12.jsonld')
     ctg_set = ctg_set.union(this_set)
     WPn, this_set = get_data('WP_CleanData/WP_Partial_13.jsonld')
     ctg_set = ctg_set.union(this_set)
 
-    #articles = np.concatenate((a,b,c,d,e,f,g,h,i,j,k), axis = 0)
-    #articles = np.concatenate((WPa, WPb, WPc, WPd, WPe, WPf, WPg, WPh, WPi, WPj, WPk, WPl, WPm, WPn, NYTa, NYTb, NYTc, NYTd, NYTe, NYTf, NYTg, NYTh, INDa, INDb, INDc, INDd, HPa, HPb, HPc, HPd, HPe, HPf, HPg, HPh, HPi, HPj, DMa, DMb, DMc, DMd, DMe, DMf, DMg, DMh, DMi, DMj, DMk), axis=0)
-    articles = np.concatenate((WPm, WPn), axis=0)
+    articles = np.concatenate((WPa, WPb, WPc, WPd, WPe, WPf, WPg, WPh, WPi, WPj, WPk, WPl, WPm, WPn, NYTa, NYTb, NYTc, NYTd, NYTe, NYTf, NYTg, NYTh, INDa, INDb, INDc, INDd, HPa, HPb, HPc, HPd, HPe, HPf, HPg, HPh, HPi, HPj, DMa, DMb, DMc, DMd, DMe, DMf, DMg, DMh, DMi, DMj, DMk), axis=0)
+    #articles = np.concatenate((WPm, WPn), axis=0)
     # articles = np.array(a)
     return articles, ctg_set
 
@@ -126,11 +126,12 @@ def get_data(dir):
     articles = []
     ctg_set = set()
     id_categories = None
-    id_annotations = None
+    id_abouts = None
 
     global NO_ANT_CNT
     global NO_CTG_CNT
     global ERR_CNT
+    global all_abouts
 
     for i in range(0,len(content['publisher'])):
         this_id = content['publisher'][i]['@id']
@@ -138,26 +139,26 @@ def get_data(dir):
         try:
             id_categories = content['publisher'][i]['category']
         except Exception as e:
-            #print "No categories or annotations for articles " + this_id
             NO_CTG_CNT += 1
         try:
-            id_annotations = content['publisher'][i]['about']
+            id_abouts = content['publisher'][i]['about']
+            all_abouts.append(id_abouts)
         except Exception as e:
             #print "No annotations for article " + this_id
             NO_ANT_CNT += 1
 
-        if id_annotations is None and id_categories is None:
+        if id_abouts is None and id_categories is None:
             ERR_CNT += 1
             continue
-        elif id_annotations is None:
+        elif id_abouts is None:
             id_annotations = id_categories
-            id_annotations_t = tuple(id_categories)
         elif id_categories is None:
-            id_annotations = id_annotations
-            id_annotations_t = tuple(id_annotations)
+            id_annotations = id_abouts
         else:
-            id_annotations = np.array(id_annotations)
-            id_annotations_t = tuple(id_annotations)
+            id_annotations = np.array(id_abouts)
+            id_annotations = np.append(id_annotations, id_categories)
+
+        id_annotations_t = tuple(id_annotations)
         articles.append([this_id, this_date, id_annotations])
         for annot in id_annotations_t:
             ctg_set.add(annot)
@@ -175,13 +176,11 @@ id_to_ctg = {i:ctg_set[i] for i in range(0,len(ctg_set))}
 
 print "Found " + str(len(articles)) + " articles with " + str(len(ctg_to_id)) + " categories"
 print "No annotations for " + str(NO_ANT_CNT) + "articles"
-#print "Sample: " + str(articles[0])
 print "Creating vectors.."
 
 article_vecs = []
 for article in articles:
     article_vec = []
-    #print len(article[2])
     for ctg in article[2]:
         if ctg_to_id[ctg] is not None:
             article_vec.append(ctg_to_id[ctg])
@@ -193,7 +192,19 @@ with open('annotation_vectors.csv', 'wb') as article_vec_out:
     for a_vec in article_vecs:
         writer.writerow(a_vec)
 
-with open('annotation_to_indext.csv', 'wb') as article_dict_out:
+with open('annotation_to_index.csv', 'wb') as article_dict_out:
     writer = csv.writer(article_dict_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     for key, value in ctg_to_id.items():
         writer.writerow([key.encode('utf-8'), value])
+
+with open('about_to_index.csv', 'wb') as abouts_dict:
+    writer = csv.writer(abouts_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    all_abouts_t = tuple(all_abouts)
+    abouts_set = set()
+    for about in all_abouts_t:
+        abouts_set.add(about)
+    abouts_set = sorted(abouts_set)
+    annot_to_id = {abouts_set[i] : ctg_to_id[abouts_set[i]] for i in range(0,len(abouts_set))}
+    for k,v in annot_to_id.items():
+        writer.writerow([key.encode('utf-8'), v])
+
