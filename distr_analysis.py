@@ -4,6 +4,8 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from scipy.stats import entropy
+from sklearn.preprocessing import normalize
 
 
 def get_ctg(filters):
@@ -51,9 +53,9 @@ def build_vectors(filtered_items, filter_id_to_ctg, length):
                     this_vector[int(annot)] = 1
                 vector.append(this_vector)
         vector = np.average(vector, axis=0)
-
         all_d_vector.append(vector)
     print len(all_d_vector)
+    all_d_vector = normalize(all_d_vector)
     #all_d_vector = np.reshape(all_d_vector, (1, length))
     #print all_d_vector.shape
     return all_d_vector
@@ -61,16 +63,31 @@ def build_vectors(filtered_items, filter_id_to_ctg, length):
 
 def plot_d(distributions):
     for distr in distributions:
-        density, bins = np.histogram(distr, normed=True, density=True)
-        unity_density = density / density.sum()
-        fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
-        widths = bins[:-1] - bins[1:]
-        ax.bar(bins[1:], unity_density, width=widths)
+        distr = distr / np.sum(distr)
+        print np.sum(distr)
+        #density, bins = np.histogram(distr, normed=True, density=True)
+        #unity_density = density / density.sum()
+        plt.plot(distr)
+        #fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
+        #widths = bins[:-1] - bins[1:]
+        #ax.bar(bins[1:], unity_density, width=widths)
         plt.show()
         #plt.plot(unity_density)
         #plt.axis([0,150000,0,1])
         #plt.show()
 
+
+def kl_div(distributions):
+    if len(distributions) <2:
+        print "Nothing to compare.. exiting"
+    else:
+        all_div = []
+        for i in range(1, len(distributions)):
+            #print np.sum(distributions[0])
+            #print np.sum(distributions[i])
+            this_entropy = entropy(distributions[0], distributions[i])
+            all_div.append(this_entropy)
+    return all_div
 
 def main(argv):
     all_items = []
@@ -92,14 +109,21 @@ def main(argv):
 
     filtered_items = filter_items(all_items, filter_id_to_ctg)
 
-    print "Articles with specified annotation: " + str(len(filtered_items))
+    for filter in filter_id_to_ctg.values():
+        print "Articles with specified annotation: " + filter + " gave " + str(sum(1 for x in (lambda x: x==filter for x in filtered_items))) + " results."
 
     distributions = build_vectors(filtered_items, filter_id_to_ctg, len(all_id_to_ctg))
 
     print "Built " + str(len(distributions)) + " distribution vectors"
 
     plot_d(distributions)
+    all_divergences = kl_div(distributions)
+    print "KL Divergences towards " + str(argv[1]) + " are: "
+    print all_divergences
+
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 0:
+        print "Usage: enter one or several indices from the dictionary hinting at wikipedia annotations which are preferably related. This program calculates the cosine similarity between the first entered index and all other entered indeces."
     main(sys.argv)
