@@ -136,12 +136,18 @@ def get_data(dir):
     for i in range(0,len(content['publisher'])):
         this_id = content['publisher'][i]['@id']
         this_date = content['publisher'][i]['datePublished']
+        """
         try:
             id_categories = content['publisher'][i]['category']
         except Exception as e:
             NO_CTG_CNT += 1
+        """
         try:
             id_abouts = content['publisher'][i]['about']
+            for i in range(0,len(id_abouts)):
+                about = id_abouts[i]
+                if 'wiki/wiki' in about:
+                    id_abouts[i] = about.replace('wiki/wiki', 'wiki')
             all_abouts.append(id_abouts)
         except Exception as e:
             #print "No annotations for article " + this_id
@@ -170,6 +176,10 @@ print "Loading data.."
 articles, ctg_set = load_data()
 ctg_set = sorted(ctg_set)
 
+#for item in ctg_set:
+#    if 'wiki/wiki' in item:
+#        item.replace('wiki/wiki','wiki')
+
 print "Creating dictionary.."
 ctg_to_id = {ctg_set[i]: i for i in range(0,len(ctg_set))}
 id_to_ctg = {i:ctg_set[i] for i in range(0,len(ctg_set))}
@@ -179,13 +189,16 @@ print "No annotations for " + str(NO_ANT_CNT) + "articles"
 print "Creating vectors.."
 
 article_vecs = []
+cnt = 0
 for article in articles:
     article_vec = []
     for ctg in article[2]:
         if ctg_to_id[ctg] is not None:
             article_vec.append(ctg_to_id[ctg])
+            cnt += 1
 
     article_vecs.append([article[0],article[1], article_vec])
+print "avg: " + str(cnt) + str(len(articles))
 
 with open('annotation_vectors.csv', 'wb') as article_vec_out:
     writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -197,6 +210,7 @@ with open('annotation_to_index.csv', 'wb') as article_dict_out:
     for key, value in ctg_to_id.items():
         writer.writerow([key.encode('utf-8'), value])
 
+"""
 with open('about_to_index.csv', 'wb') as abouts_dict:
     writer = csv.writer(abouts_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     all_abouts_t = tuple(all_abouts)
@@ -207,4 +221,4 @@ with open('about_to_index.csv', 'wb') as abouts_dict:
     annot_to_id = {abouts_set[i] : ctg_to_id[abouts_set[i]] for i in range(0,len(abouts_set))}
     for k,v in annot_to_id.items():
         writer.writerow([key.encode('utf-8'), v])
-
+"""
