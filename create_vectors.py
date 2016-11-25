@@ -10,6 +10,7 @@ ERR_CNT = 0
 all_abouts = []
 
 def load_data():
+    #load the data from the directories
     ctg_set = set()
 
     DMa, this_set = get_data('DM_CleanData/DM_Partial_0.jsonld')
@@ -118,7 +119,7 @@ def load_data():
 
 
 def get_data(dir):
-
+    # get the data
     with open('IONData2016/' + dir) as json_data:
         data = json.load(json_data)
 
@@ -133,15 +134,16 @@ def get_data(dir):
     global ERR_CNT
     global all_abouts
 
+    # filter the data for category and about annotations
     for i in range(0,len(content['publisher'])):
         this_id = content['publisher'][i]['@id']
         this_date = content['publisher'][i]['datePublished']
-        """
+
         try:
             id_categories = content['publisher'][i]['category']
         except Exception as e:
             NO_CTG_CNT += 1
-        """
+
         try:
             id_abouts = content['publisher'][i]['about']
             for i in range(0,len(id_abouts)):
@@ -172,7 +174,7 @@ def get_data(dir):
     return articles, ctg_set
 
 
-print "Loading data.."
+print "Loading data.." # we load the data
 articles, ctg_set = load_data()
 ctg_set = sorted(ctg_set)
 
@@ -180,25 +182,26 @@ ctg_set = sorted(ctg_set)
 #    if 'wiki/wiki' in item:
 #        item.replace('wiki/wiki','wiki')
 
-print "Creating dictionary.."
+print "Creating dictionary.." # put all annotations into dictionaries
 ctg_to_id = {ctg_set[i]: i for i in range(0,len(ctg_set))}
 id_to_ctg = {i:ctg_set[i] for i in range(0,len(ctg_set))}
 
 print "Found " + str(len(articles)) + " articles with " + str(len(ctg_to_id)) + " categories"
-print "No annotations for " + str(NO_ANT_CNT) + "articles"
+print "No about annotations for " + str(NO_ANT_CNT) + "articles." + " No ctg annotations for " + str(NO_CTG_CNT) + "articles."
 print "Creating vectors.."
 
+# we build annotation vectors which contain the index of a positive entry (=1), rest is 0
 article_vecs = []
-cnt = 0
+annot_cnt = 0
 for article in articles:
     article_vec = []
     for ctg in article[2]:
         if ctg_to_id[ctg] is not None:
             article_vec.append(ctg_to_id[ctg])
-            cnt += 1
+            annot_cnt += 1
 
     article_vecs.append([article[0],article[1], article_vec])
-print "avg: " + str(cnt) + str(len(articles))
+print "avg:" + str(annot_cnt / len(articles)) + " cnts: " + str(annot_cnt) + " len " + str(len(articles))
 
 with open('annotation_vectors.csv', 'wb') as article_vec_out:
     writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
