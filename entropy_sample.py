@@ -60,7 +60,7 @@ def rel_links(link, id_ctg):
     if assc_links == None:
         return []
     assc_links = assc_links.split('\n')
-    print "Got " + str(len(assc_links))  + " links."
+    # print "Got " + str(len(assc_links))  + " links."
     result_ids = []
     for assc in assc_links:
         try:
@@ -70,7 +70,7 @@ def rel_links(link, id_ctg):
         scrapurl = "http://en.wikipedia.org/wiki/" + str((this_assc.url).split('/')[-1])
         if scrapurl in id_ctg:
             result_ids.append(id_ctg[scrapurl])
-    print "returning " + str(len(result_ids)) + " links."
+    # print "returning " + str(len(result_ids)) + " links."
     return result_ids
 
 
@@ -79,22 +79,23 @@ def get_link_annotations(filtered_items, all_id_to_ctg):
     id_ctg = [[k, v] for k, v in all_id_to_ctg.iteritems()]
     improvement_cnt = 0
     for item in filtered_items:
-        related_links = rel_links(all_id_to_ctg[int(item[0])], inv_map)
-        if len(related_links) == 0:
-            print "empty return"
-            continue
+        #print item
         # get wikipedia related section and parse links into list
+        related_ids = rel_links(all_id_to_ctg[int(item[0])], inv_map)
+        if len(related_ids) == 0:
+            # print "empty return"
+            continue
 
-        for rel_link in related_links:
-            if rel_link in filtered_items:
+        for rel_link in related_ids:
+            if rel_link in item[1][2]:
                 continue
             if rel_link in all_id_to_ctg:
-                for id, ctg in id_ctg:
-                    if ctg == rel_link:
-                        item[1][2].append(all_id_to_ctg[rel_link])
-                        improvement_cnt += 1
-                        continue
-
+                item[1][2].append(rel_link)
+                # print 'done!'
+                improvement_cnt += 1
+                continue
+        #print item
+    print "Added " + str(improvement_cnt) + " annotations from wikipedia 'see also' section."
     return filtered_items
 
 
@@ -123,7 +124,7 @@ def build_vectors(filtered_items, filters, length):
         i += 1
     return all_d_vector
 
-git
+
 def plot_d(distributions, argv):
     print "Summed densities are: "
     i = 2
@@ -223,8 +224,8 @@ def main(argv):
 
     filtered_items, article_cnt = filter_items(all_items, filters)
 
-    filtered_items = get_link_annotations(filtered_items, all_id_to_ctg)
-    return 0
+    # filtered_items = get_link_annotations(filtered_items, all_id_to_ctg)
+
     distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
 
     print "Built " + str(len(distributions)) + " probability density vectors"

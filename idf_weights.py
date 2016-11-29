@@ -43,7 +43,10 @@ def filter_items(all_items, filter):
 def build_vectors(filtered_items, filters, length):
     all_d_vector = []
     index_cnt = {key: 0 for key in filters}
+    i = 0
     for filter in filters:
+        if i % 500 == 0:
+            print "Progress: " + str(i/len(filters))
         vector = []
         for item in filtered_items:
             if item[0] == filter:
@@ -86,6 +89,8 @@ def main():
     print "Articles: " + str(len(all_items))
 
     filtered_items, article_cnt = filter_items(all_items, filters)
+
+    print "Building vectors.."
 
     distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
 

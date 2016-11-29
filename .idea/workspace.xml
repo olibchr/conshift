@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/idf_weights.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entropy_sample.py" afterPath="$PROJECT_DIR$/entropy_sample.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/idf_weights.py" afterPath="$PROJECT_DIR$/idf_weights.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,18 +58,18 @@
       <file leaf-file-name="entropy_sample.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/entropy_sample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8743376">
-              <caret line="125" column="3" selection-start-line="125" selection-start-column="3" selection-end-line="125" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.38540334">
+              <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
               <folding>
                 <element signature="e#1#11#0" expanded="true" />
                 <element signature="e#312#788#0" expanded="false" />
                 <element signature="e#812#1271#0" expanded="false" />
-                <element signature="e#3557#4331#0" expanded="false" />
-                <element signature="e#4374#5041#0" expanded="false" />
-                <element signature="e#5075#5594#0" expanded="false" />
-                <element signature="e#5627#5982#0" expanded="false" />
-                <element signature="e#6041#6401#0" expanded="false" />
-                <element signature="e#6447#6733#0" expanded="false" />
+                <element signature="e#3600#4374#0" expanded="false" />
+                <element signature="e#4414#5081#0" expanded="false" />
+                <element signature="e#5115#5634#0" expanded="false" />
+                <element signature="e#5667#6022#0" expanded="false" />
+                <element signature="e#6081#6441#0" expanded="false" />
+                <element signature="e#6487#6773#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -79,12 +79,11 @@
         <entry file="file://$PROJECT_DIR$/idf_weights.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+              <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#167#463#0" expanded="false" />
                 <element signature="e#487#946#0" expanded="false" />
-                <element signature="e#990#1508#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -132,10 +131,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1440" />
+    <option name="x" value="35" />
     <option name="y" value="22" />
     <option name="width" value="1391" />
-    <option name="height" value="1418" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -162,6 +161,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -182,8 +183,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -421,7 +420,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="22" width="1391" height="1418" extended-state="0" />
+    <frame x="35" y="22" width="1391" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14234364" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -465,6 +464,28 @@
     <entry file="file://$PROJECT_DIR$/create_vectors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#149#5488#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/distr_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
+          <folding>
+            <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2586#3253#0" expanded="false" />
+            <element signature="e#3865#4225#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create_vectors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="189" column="125" selection-start-line="189" selection-start-column="125" selection-end-line="189" selection-end-column="125" />
           <folding>
             <element signature="e#149#5488#0" expanded="false" />
@@ -492,12 +513,12 @@
             <element signature="e#1#11#0" expanded="true" />
             <element signature="e#312#788#0" expanded="false" />
             <element signature="e#812#1271#0" expanded="false" />
-            <element signature="e#3557#4331#0" expanded="false" />
-            <element signature="e#4374#5041#0" expanded="false" />
-            <element signature="e#5075#5594#0" expanded="false" />
-            <element signature="e#5627#5982#0" expanded="false" />
-            <element signature="e#6041#6401#0" expanded="false" />
-            <element signature="e#6447#6733#0" expanded="false" />
+            <element signature="e#3600#4374#0" expanded="false" />
+            <element signature="e#4414#5081#0" expanded="false" />
+            <element signature="e#5115#5634#0" expanded="false" />
+            <element signature="e#5667#6022#0" expanded="false" />
+            <element signature="e#6081#6441#0" expanded="false" />
+            <element signature="e#6487#6773#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -542,12 +563,12 @@
             <element signature="e#1#11#0" expanded="true" />
             <element signature="e#312#788#0" expanded="false" />
             <element signature="e#812#1271#0" expanded="false" />
-            <element signature="e#3557#4331#0" expanded="false" />
-            <element signature="e#4374#5041#0" expanded="false" />
-            <element signature="e#5075#5594#0" expanded="false" />
-            <element signature="e#5627#5982#0" expanded="false" />
-            <element signature="e#6041#6401#0" expanded="false" />
-            <element signature="e#6447#6733#0" expanded="false" />
+            <element signature="e#3600#4374#0" expanded="false" />
+            <element signature="e#4414#5081#0" expanded="false" />
+            <element signature="e#5115#5634#0" expanded="false" />
+            <element signature="e#5667#6022#0" expanded="false" />
+            <element signature="e#6081#6441#0" expanded="false" />
+            <element signature="e#6487#6773#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -636,12 +657,12 @@
             <element signature="e#1#11#0" expanded="true" />
             <element signature="e#312#788#0" expanded="false" />
             <element signature="e#812#1271#0" expanded="false" />
-            <element signature="e#3557#4331#0" expanded="false" />
-            <element signature="e#4374#5041#0" expanded="false" />
-            <element signature="e#5075#5594#0" expanded="false" />
-            <element signature="e#5627#5982#0" expanded="false" />
-            <element signature="e#6041#6401#0" expanded="false" />
-            <element signature="e#6447#6733#0" expanded="false" />
+            <element signature="e#3600#4374#0" expanded="false" />
+            <element signature="e#4414#5081#0" expanded="false" />
+            <element signature="e#5115#5634#0" expanded="false" />
+            <element signature="e#5667#6022#0" expanded="false" />
+            <element signature="e#6081#6441#0" expanded="false" />
+            <element signature="e#6487#6773#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -791,16 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/create_word2vectors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="162" column="14" selection-start-line="162" selection-start-column="14" selection-end-line="162" selection-end-column="14" />
-          <folding>
-            <element signature="e#1#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/distr_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -823,33 +834,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/create_word2vectors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="162" column="14" selection-start-line="162" selection-start-column="14" selection-end-line="162" selection-end-column="14" />
+          <folding>
+            <element signature="e#1#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/idf_weights.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#167#463#0" expanded="false" />
             <element signature="e#487#946#0" expanded="false" />
-            <element signature="e#990#1508#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/entropy_sample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8743376">
-          <caret line="125" column="3" selection-start-line="125" selection-start-column="3" selection-end-line="125" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.38540334">
+          <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
             <element signature="e#312#788#0" expanded="false" />
             <element signature="e#812#1271#0" expanded="false" />
-            <element signature="e#3557#4331#0" expanded="false" />
-            <element signature="e#4374#5041#0" expanded="false" />
-            <element signature="e#5075#5594#0" expanded="false" />
-            <element signature="e#5627#5982#0" expanded="false" />
-            <element signature="e#6041#6401#0" expanded="false" />
-            <element signature="e#6447#6733#0" expanded="false" />
+            <element signature="e#3600#4374#0" expanded="false" />
+            <element signature="e#4414#5081#0" expanded="false" />
+            <element signature="e#5115#5634#0" expanded="false" />
+            <element signature="e#5667#6022#0" expanded="false" />
+            <element signature="e#6081#6441#0" expanded="false" />
+            <element signature="e#6487#6773#0" expanded="false" />
           </folding>
         </state>
       </provider>
