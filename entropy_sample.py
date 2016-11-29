@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 from scipy.stats import entropy
 from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise as pw
-
+import wikipedia
+import warnings
+warnings.filterwarnings("ignore")
 
 def get_ctg(filters):
     filter_id_to_ctg = {}
@@ -48,19 +50,51 @@ def filter_items(all_items, filter):
     return filtered_items, index_cnt
 
 
-def get_link_annotations(filtered_items, all_id_to_ctg):
-    id_ctg = [[k, v] for k, v in all_id_to_ctg]
-    for item in filtered_items:
-        related_links = []
+def rel_links(link, id_ctg):
+    link = str(link.split('/')[-1]).replace("_", " ").replace("Category:", "")
+    try:
+        this_page = wikipedia.page(title=link)
+        assc_links = this_page.section('See also')
+    except Exception:
+        return []
+    if assc_links == None:
+        return []
+    assc_links = assc_links.split('\n')
+    print "Got " + str(len(assc_links))  + " links."
+    result_ids = []
+    for assc in assc_links:
+        try:
+            this_assc = wikipedia.page(title=assc)
+        except Exception:
+            continue
+        scrapurl = "http://en.wikipedia.org/wiki/" + str((this_assc.url).split('/')[-1])
+        if scrapurl in id_ctg:
+            result_ids.append(id_ctg[scrapurl])
+    print "returning " + str(len(result_ids)) + " links."
+    return result_ids
 
+
+def get_link_annotations(filtered_items, all_id_to_ctg):
+    inv_map = {v: k for k, v in all_id_to_ctg.iteritems()}
+    id_ctg = [[k, v] for k, v in all_id_to_ctg.iteritems()]
+    improvement_cnt = 0
+    for item in filtered_items:
+        related_links = rel_links(all_id_to_ctg[int(item[0])], inv_map)
+        if len(related_links) == 0:
+            print "empty return"
+            continue
         # get wikipedia related section and parse links into list
 
         for rel_link in related_links:
-            if rel_link in id_ctg[:][1]:
+            if rel_link in filtered_items:
+                continue
+            if rel_link in all_id_to_ctg:
                 for id, ctg in id_ctg:
                     if ctg == rel_link:
-                        item.append(ctg)
-                        break
+                        item[1][2].append(all_id_to_ctg[rel_link])
+                        improvement_cnt += 1
+                        continue
+
     return filtered_items
 
 
@@ -89,7 +123,7 @@ def build_vectors(filtered_items, filters, length):
         i += 1
     return all_d_vector
 
-
+git
 def plot_d(distributions, argv):
     print "Summed densities are: "
     i = 2
@@ -190,7 +224,7 @@ def main(argv):
     filtered_items, article_cnt = filter_items(all_items, filters)
 
     filtered_items = get_link_annotations(filtered_items, all_id_to_ctg)
-
+    return 0
     distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
 
     print "Built " + str(len(distributions)) + " probability density vectors"
