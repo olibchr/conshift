@@ -6,7 +6,10 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy.stats import entropy
 from sklearn.preprocessing import normalize
-
+from sklearn.metrics import pairwise as pw
+import wikipedia
+import warnings
+warnings.filterwarnings("ignore")
 
 def get_ctg(filters):
     filter_id_to_ctg = {}
@@ -44,6 +47,55 @@ def filter_items(all_items, filter):
     for key in filter:
         print "     " + str(key) + ": " + str(index_cnt[key]) + " articles."
     print "Loaded in total " + str(sum(val for val in index_cnt.values())) + " articles."
+    return filtered_items, index_cnt
+
+
+def rel_links(link, id_ctg):
+    link = str(link.split('/')[-1]).replace("_", " ").replace("Category:", "")
+    try:
+        this_page = wikipedia.page(title=link)
+        assc_links = this_page.section('See also')
+    except Exception:
+        return []
+    if assc_links == None:
+        return []
+    assc_links = assc_links.split('\n')
+    # print "Got " + str(len(assc_links))  + " links."
+    result_ids = []
+    for assc in assc_links:
+        try:
+            this_assc = wikipedia.page(title=assc)
+        except Exception:
+            continue
+        scrapurl = "http://en.wikipedia.org/wiki/" + str((this_assc.url).split('/')[-1])
+        if scrapurl in id_ctg:
+            result_ids.append(id_ctg[scrapurl])
+    # print "returning " + str(len(result_ids)) + " links."
+    return result_ids
+
+
+def get_link_annotations(filtered_items, all_id_to_ctg):
+    inv_map = {v: k for k, v in all_id_to_ctg.iteritems()}
+    id_ctg = [[k, v] for k, v in all_id_to_ctg.iteritems()]
+    improvement_cnt = 0
+    for item in filtered_items:
+        #print item
+        # get wikipedia related section and parse links into list
+        related_ids = rel_links(all_id_to_ctg[int(item[0])], inv_map)
+        if len(related_ids) == 0:
+            # print "empty return"
+            continue
+
+        for rel_link in related_ids:
+            if rel_link in item[1][2]:
+                continue
+            if rel_link in all_id_to_ctg:
+                item[1][2].append(rel_link)
+                # print 'done!'
+                improvement_cnt += 1
+                continue
+        #print item
+    print "Added " + str(improvement_cnt) + " annotations from wikipedia 'see also' section."
     return filtered_items
 
 
@@ -111,6 +163,19 @@ def kl_div(distributions):
     return all_div
 
 
+def c_sim(distributions):
+    if len(distributions) <2:
+        print "Nothing to compare.. exiting"
+    else:
+        all_sim = []
+
+        for i in range(1, len(distributions)):
+            gold_standard = distributions[0][1]
+            this_sim = pw.cosine_similarity(gold_standard, distributions[i][1])
+            all_sim.append([distributions[i][0],this_sim])
+    return all_sim
+
+
 def validation(distributions, all_id_to_ctg, argv):
     for i in range(1, len(distributions)):
         diff = np.subtract(np.array(distributions[0]), np.array(distributions[i]))
@@ -120,6 +185,18 @@ def validation(distributions, all_id_to_ctg, argv):
         print "In index " + str(argv[i+1]) + " --> summed " + str(abs(np.sum(diff))) + " distance"
 
 
+def validation_scoring(distributions):
+    scoring = [0] * len(distributions)
+    gold_standard = distributions[0]
+    k = 0
+    for d in distributions:
+        for i in range(0,len(d[1])):
+            if (d[1][i] >= 0.00001) and (gold_standard[1][i] >= 0.00001):
+                scoring[k] += 1
+        k += 1
+    return scoring
+
+
 def main(argv):
     all_items = []
     filtered_items = []
@@ -127,7 +204,7 @@ def main(argv):
     filter_id_to_ctg = {}
     all_ctg_to_id = {}
     all_id_to_ctg = {}
-    filters = [x for x in range(1,1000)]
+    filters = map(int,argv[1:])
     print "Setting filters.. "
 
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
@@ -145,7 +222,9 @@ def main(argv):
 
     print "Articles: " + str(len(all_items))
 
-    filtered_items = filter_items(all_items, filters)
+    filtered_items, article_cnt = filter_items(all_items, filters)
+
+    # filtered_items = get_link_annotations(filtered_items, all_id_to_ctg)
 
     distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
 
@@ -156,12 +235,27 @@ def main(argv):
     all_divergences = kl_div(distributions)
     print "KL Divergences are: "
 
+    plot_x = []
     for d in (all_divergences):
         print "     " + str(filters[0]) + " --> " + str(d[0]) + " : " + str(d[1])
-    #for d in range(0,len(all_divergences)):
-    #    print "     " + str(argv[1]) + " --> "+ str(argv[d+2]) + " : " + str(all_divergences[d])
+        plot_x.append(d[1])
 
-    # validation(distributions, all_id_to_ctg,argv)
+    all_similarities = c_sim(distributions)
+    print "Cosine Similarities are: "
+    for d in (all_similarities):
+        print "     " + str(filters[0]) + " --> " + str(d[0]) + " : " + str(d[1])
+
+
+    scoring = validation_scoring(distributions)
+
+    print "Overlapping indices: "
+    k = 0
+    for score in scoring:
+        print "     " + str(filters[0]) + " --> " + str(filters[k]) + " : " + str(score) + " hits."
+        k += 1
+
+    plt.plot(article_cnt.values()[1:], plot_x, 'rx')
+    #plt.show()
 
 
 if __name__ == "__main__":
