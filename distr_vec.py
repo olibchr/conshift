@@ -26,55 +26,32 @@ def get_items():
 
 
 def filter_items(all_items, filter):
-    # index_cnt = {key: 0 for key in filter}
     filtered_items = []
     for item in all_items:
         for annot in item[2]:
             annot = int(annot)
             filtered_items.append([annot, item])
-            # index_cnt[annot] = index_cnt[annot] + 1
-    # with open('index_cnt.csv', 'wb') as cnt_out:
-	# writer = csv.writer(cnt_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)       
-	# for key in filter:
-	    # writer.writerow([key, index_cnt[key]])
-            # print "     " + str(key) + ": " + str(index_cnt[key]) + " articles."
-    # print "Loaded in total " + str(sum(val for val in index_cnt.values())) + " articles."
-    return filtered_items #, index_cnt
+
+    return filtered_items
 
 
 def build_vectors(filtered_items, filters, length):
     all_d_vector = []
-    #index_cnt = {key: 0 for key in filters}
     i = 0
     for filter in filters:
         if i % 200 == 0:
-	    print "progress: " + str(i) + ", " + str(len(filters)) + ", " + str(i / len(filters)) + "%"
-        i =+ 1
+            print "progress: " + str(i) + ", " + str(len(filters)) + ", " + str(i / len(filters)) + "%"
+        i = + 1
         vector = []
         for item in filtered_items:
             if item[0] == filter:
                 this_vector = [0.000001] * length
                 for annot in item[1][2]:
-                    #print annot
                     this_vector[int(annot)] = 1
-      #              index_cnt[filter] = index_cnt[filter] +1
 
                 vector.append(this_vector)
-        # vector = normalize(vector)
         vector = np.average(vector, axis=0)
         all_d_vector.append([filter, vector])
-    # just for printing
-    i = 0
-    with open('all_distributions.csv') as all_d:
-        writer = csv.writer(all_d, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for d in all_d_vector:
-            indexes = []
-            ind_cnt = 0
-            for ind in d[1]:
-                if ind == 1:
-                    indexes.append(ind_cnt)
-                ind_cnt += 1
-            writer.writerow([d[0], indexes])
     return all_d_vector
 
 
@@ -99,16 +76,18 @@ def main():
 
     filtered_items = filter_items(all_items, filters)
 
-    distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
-    """
-    print "Building TF-IDF"
-    tfidf = build_all_idf(distributions)
+    all_distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
 
-    with open('tf-idf_weights.csv', 'wb') as article_vec_out:
-        writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for t in tfidf:
-            writer.writerow(t)
-    """
+    with open('all_distributions.csv') as all_d:
+        writer = csv.writer(all_d, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for d in all_distributions:
+            indexes = []
+            ind_cnt = 0
+            for ind in d[1]:
+                if ind > 0.0001:
+                    indexes.append([ind_cnt, ind])
+                ind_cnt += 1
+            writer.writerow([d[0], indexes])
 
 
 if __name__ == "__main__":
