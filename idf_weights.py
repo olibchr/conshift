@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfTransformer
 
-
+"""
 def get_ctg():
     all_id_to_ctg = {}
     with open('annotation_to_index.csv') as annotation_dict:
@@ -42,11 +42,12 @@ def filter_items(all_items, filter):
 
 def build_vectors(filtered_items, filters, length):
     all_d_vector = []
-    index_cnt = {key: 0 for key in filters}
+    #index_cnt = {key: 0 for key in filters}
     i = 0
     for filter in filters:
-        if i % 500 == 0:
+        if i % 200 == 0:
             print "Progress: " + str(i/len(filters))
+        i =+ 1
         vector = []
         for item in filtered_items:
             if item[0] == filter:
@@ -54,7 +55,7 @@ def build_vectors(filtered_items, filters, length):
                 for annot in item[1][2]:
                     #print annot
                     this_vector[int(annot)] = 1
-                    index_cnt[filter] = index_cnt[filter] +1
+      #              index_cnt[filter] = index_cnt[filter] +1
 
                 vector.append(this_vector)
         # vector = normalize(vector)
@@ -66,6 +67,16 @@ def build_vectors(filtered_items, filters, length):
     for vec in all_d_vector:
         print "     " + str(filters[i]) + ": " + str(int(sum(vec[1]))) + " annotations."
         i += 1
+    with open('all_distributions.csv') as all_d:
+        writer = csv.writer(all_d, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for d in all_d_vector:
+            indexes = []
+            ind_cnt = 0
+            for ind in d[1]:
+                if ind == 1:
+                    indexes.append(ind_cnt)
+                ind_cnt += 1
+            writer.writerow([d[0], indexes])
     return all_d_vector
 
 
@@ -76,6 +87,7 @@ def build_all_idf(distributions):
 
 
 def main():
+
     filter_id_to_ctg, all_id_to_ctg = get_ctg()
 
     filters = [x for x in all_id_to_ctg.keys()]
@@ -100,6 +112,24 @@ def main():
         writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for t in tfidf:
             writer.writerow(t)
+"""
+
+
+
+def load_distr():
+    all_d_vec = []
+    with open('distr_vec.csv') as distr_vec:
+        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for row in reader:
+            all_d_vec.append(row)
+    return all_d_vec
+ 
+
+def main():
+
+    all_d_vec = load_distr()
+
+
 
 
 if __name__ == "__main__":
