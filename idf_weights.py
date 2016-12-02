@@ -132,7 +132,6 @@ def rebuild_distr(all_d_content):
         for keyval in d_vec[1]:
             d_vector[keyval[0]] = keyval[1]
         all_d_vec = np.append(all_d_vec, [d_id, d_vector], axis=0)
-
     return all_d_vec
 
 

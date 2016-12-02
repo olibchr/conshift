@@ -55,12 +55,6 @@ def build_vectors(filtered_items, filters, length):
     return all_d_vector
 
 
-def build_all_idf(distributions):
-    transformer = TfidfTransformer(smooth_idf=False)
-    tfidf = transformer.fit_transform(distributions[:][1]).toarray()
-    return transformer.idf_
-
-
 def main():
     filter_id_to_ctg, all_id_to_ctg = get_ctg()
 
