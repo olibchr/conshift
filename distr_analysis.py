@@ -11,6 +11,15 @@ import wikipedia
 import warnings
 warnings.filterwarnings("ignore")
 
+"""
+The purpose of this program is to do an investigation of the data which was produced with the create vectors tool.
+You have to specify one or several IDs of annotations to investigate about (ID mapping can be found in separate csv file,
+produce by create vector tool as well)
+In detail, this tool creates density distribution vectors for the specified annotations and compares them to each other
+ with a KL divergence / cosine metric to measure similarity.
+ All output will be printed on screen.
+"""
+
 def get_ctg(filters):
     filter_id_to_ctg = {}
     all_id_to_ctg = {}

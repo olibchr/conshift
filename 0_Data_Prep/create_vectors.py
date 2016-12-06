@@ -3,6 +3,13 @@ import json
 import numpy as np
 import csv
 
+"""
+The purpose of this program is to load the json data from the 2014/2015 newspaper article data set and
+to filter the annotations and abouts per article.
+The output is a csv file of all articles and their annotations as ID's. A second file will be produced which maps the
+IDs to annotations.
+
+"""
 
 NO_ANT_CNT = 0
 NO_CTG_CNT = 0
