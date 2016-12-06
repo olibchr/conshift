@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DBSCAN.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index_analysis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" afterPath="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distr_analysis.py" afterPath="$PROJECT_DIR$/distr_analysis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distr_vec.py" afterPath="$PROJECT_DIR$/distr_vec.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/idf_weights.py" afterPath="$PROJECT_DIR$/idf_weights.py" />
     </list>
@@ -36,9 +34,16 @@
         <entry file="file://$PROJECT_DIR$/distr_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+              <caret line="252" column="30" selection-start-line="252" selection-start-column="30" selection-end-line="252" selection-end-column="30" />
               <folding>
                 <element signature="e#1#11#0" expanded="true" />
+                <element signature="e#2374#3144#0" expanded="false" />
+                <element signature="e#3208#4046#0" expanded="false" />
+                <element signature="e#4919#5586#0" expanded="false" />
+                <element signature="e#5620#6139#0" expanded="false" />
+                <element signature="e#6172#6527#0" expanded="false" />
+                <element signature="e#6586#6946#0" expanded="false" />
+                <element signature="e#6992#7278#0" expanded="false" />
                 <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
               </folding>
             </state>
@@ -49,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/0_Data_Prep/create_vectors.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
               <folding>
                 <element signature="e#449#5788#0" expanded="false" />
               </folding>
@@ -61,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/idf_weights.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="160" column="26" selection-start-line="160" selection-start-column="26" selection-end-line="160" selection-end-column="26" />
+              <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -69,13 +74,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="distr_vec.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="distr_vec.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/distr_vec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5953905">
-              <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index_analysis.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index_analysis.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4622279">
+              <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+              <folding>
+                <element signature="e#2#12#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/DBSCAN.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+              <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -113,10 +130,11 @@
         <option value="$PROJECT_DIR$/create_vectors.py" />
         <option value="$PROJECT_DIR$/entropy_sample.py" />
         <option value="$PROJECT_DIR$/DBSCAN.py" />
-        <option value="$PROJECT_DIR$/idf_weights.py" />
         <option value="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" />
         <option value="$PROJECT_DIR$/distr_analysis.py" />
+        <option value="$PROJECT_DIR$/idf_weights.py" />
         <option value="$PROJECT_DIR$/distr_vec.py" />
+        <option value="$PROJECT_DIR$/index_analysis.py" />
       </list>
     </option>
   </component>
@@ -430,9 +448,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="38" y="22" width="1402" height="878" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14051355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14051355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -476,6 +494,13 @@
           <caret line="216" column="27" selection-start-line="216" selection-start-column="27" selection-end-line="216" selection-end-column="27" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -507,6 +532,13 @@
           <caret line="216" column="27" selection-start-line="216" selection-start-column="27" selection-end-line="216" selection-end-column="27" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -538,6 +570,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -559,6 +598,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -580,6 +626,13 @@
           <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -591,6 +644,13 @@
           <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -619,6 +679,13 @@
           <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -630,6 +697,13 @@
           <caret line="110" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -648,6 +722,13 @@
           <caret line="110" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -666,6 +747,13 @@
           <caret line="110" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -677,6 +765,13 @@
           <caret line="110" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -688,6 +783,13 @@
           <caret line="110" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -706,6 +808,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -717,6 +826,13 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -728,6 +844,13 @@
           <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
@@ -739,15 +862,15 @@
           <caret line="0" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm50/python_stubs/-2125986627/__builtin__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33290654">
-          <caret line="2123" column="8" selection-start-line="2123" selection-start-column="8" selection-end-line="2123" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -758,10 +881,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm50/python_stubs/-2125986627/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33290654">
+          <caret line="3367" column="33" selection-start-line="3367" selection-start-column="33" selection-end-line="3367" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/0_Data_Prep/create_vectors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+          <folding>
+            <element signature="e#449#5788#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/distr_vec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/idf_weights.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DBSCAN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="38" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+          <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -771,40 +932,27 @@
     <entry file="file://$PROJECT_DIR$/distr_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+          <caret line="252" column="30" selection-start-line="252" selection-start-column="30" selection-end-line="252" selection-end-column="30" />
           <folding>
             <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#2374#3144#0" expanded="false" />
+            <element signature="e#3208#4046#0" expanded="false" />
+            <element signature="e#4919#5586#0" expanded="false" />
+            <element signature="e#5620#6139#0" expanded="false" />
+            <element signature="e#6172#6527#0" expanded="false" />
+            <element signature="e#6586#6946#0" expanded="false" />
+            <element signature="e#6992#7278#0" expanded="false" />
             <marker date="1480978770000" expanded="true" signature="9014:9015" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0_Data_Prep/create_vectors.py">
+    <entry file="file://$PROJECT_DIR$/index_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4622279">
+          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
           <folding>
-            <element signature="e#449#5788#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/idf_weights.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="26" selection-start-line="160" selection-start-column="26" selection-end-line="160" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/distr_vec.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5953905">
-          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#2#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
