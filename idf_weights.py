@@ -3,6 +3,7 @@ import sys
 import numpy as np
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfTransformer
+from scipy.sparse import lil_matrix
 
 """
 This program computes tf-idf scores based on density vectors, created by distr_vec for all density distributions of annotations.
@@ -26,6 +27,22 @@ def rebuild_distr(all_d_content):
             d_vector[keyval[0]] = keyval[1]
         all_d_vec = np.append(all_d_vec, [d_id, d_vector], axis=0)
     return all_d_vec
+
+
+def build_sparse(all_d_content):
+    positions = []
+    data = []
+    for distr in all_d_content:
+        this_position = distr[0]
+        this_data = distr[1]
+        positions.append(this_position)
+        data.append(this_data)
+
+    sparse_entities = lil_matrix((len(all_d_content), len(all_d_content)))
+    sparse_entities.rows = positions
+    sparse_entities.data = data
+    sparse_entities.tocsr()
+    return sparse_entities
 
 
 def build_all_idf(all_d_vec):

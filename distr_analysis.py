@@ -59,6 +59,7 @@ def filter_items(all_items, filter):
     return filtered_items, index_cnt
 
 
+"""
 def rel_links(link, id_ctg):
     link = str(link.split('/')[-1]).replace("_", " ").replace("Category:", "")
     try:
@@ -106,6 +107,7 @@ def get_link_annotations(filtered_items, all_id_to_ctg):
         #print item
     print "Added " + str(improvement_cnt) + " annotations from wikipedia 'see also' section."
     return filtered_items
+"""
 
 
 def build_vectors(filtered_items, filters, length):
@@ -140,16 +142,7 @@ def plot_d(distributions, argv):
     for distr in distributions:
         distr = distr / np.sum(distr)
         print np.sum(distr)
-        #density, bins = np.histogram(distr, normed=True, density=True)
-        #unity_density = density / density.sum()
         plt.plot(distr)
-        #fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True)
-        #widths = bins[:-1] - bins[1:]
-        #ax.bar(bins[1:], unity_density, width=widths)
-        #plt.show()
-        #plt.plot(unity_density)
-        #plt.axis([0,150000,0,1])
-        #plt.show()
         savename = "plots/" + str(argv[1]) + "_to_" + str(argv[i]) + ".png"
         i =+1
         plt.savefig(savename)
@@ -161,12 +154,8 @@ def kl_div(distributions):
     else:
         all_div = []
 
-        #gold_standard = distributions[]
         for i in range(1, len(distributions)):
-            #print np.sum(distributions[0])
-            #print np.sum(distributions[i])
             gold_standard = distributions[0][1]
-            # print distributions[i][0]
             this_entropy = entropy(gold_standard, distributions[i][1])
             all_div.append([distributions[i][0],this_entropy])
     return all_div
@@ -232,8 +221,6 @@ def main(argv):
     print "Articles: " + str(len(all_items))
 
     filtered_items, article_cnt = filter_items(all_items, filters)
-
-    # filtered_items = get_link_annotations(filtered_items, all_id_to_ctg)
 
     distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
 

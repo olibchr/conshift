@@ -37,6 +37,7 @@ def get_ind_cnt():
 
 
 all_id_to_ctg = get_ctg()
+all_ctg_to_id = {v: int(k) for k, v in all_id_to_ctg.iteritems()}
 all_ind = get_ind_cnt()
 all_ind = sorted(all_ind, key=lambda entree: entree[1], reverse=True)
 std = np.array(map(int, [int(row[1]) for row in all_ind]))
@@ -48,6 +49,6 @@ for i in range(0,400):
     if 'Category' in all_id_to_ctg[int(all_ind[i][0])].split('/')[-1]:
         continue
     else:
-        print all_id_to_ctg[int(all_ind[i][0])].split('/')[-1] + ": " + str(all_ind[i][1]) + " hits."
+        print all_id_to_ctg[int(all_ind[i][0])].split('/')[-1] + ": " + str(all_ind[i][1]) + " hits. " + str(all_ind[i][0])
 
 

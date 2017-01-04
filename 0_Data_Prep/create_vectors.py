@@ -2,6 +2,7 @@ import json
 #from pyLD import jsonld
 import numpy as np
 import csv
+import sys, os
 
 """
 The purpose of this program is to load the json data from the 2014/2015 newspaper article data set and
@@ -16,118 +17,27 @@ NO_CTG_CNT = 0
 ERR_CNT = 0
 all_abouts = []
 
+path = sys.argv[1]
 def load_data():
     #load the data from the directories
     ctg_set = set()
 
-    DMa, this_set = get_data('DM_CleanData/DM_Partial_0.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMb, this_set = get_data('DM_CleanData/DM_Partial_1.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMc, this_set = get_data('DM_CleanData/DM_Partial_2.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMd, this_set = get_data('DM_CleanData/DM_Partial_3.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMe, this_set = get_data('DM_CleanData/DM_Partial_4.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMf, this_set = get_data('DM_CleanData/DM_Partial_5.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMg, this_set = get_data('DM_CleanData/DM_Partial_6.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMh, this_set = get_data('DM_CleanData/DM_Partial_7.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMi, this_set = get_data('DM_CleanData/DM_Partial_8.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMj, this_set = get_data('DM_CleanData/DM_Partial_9.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    DMk, this_set = get_data('DM_CleanData/DM_Partial_10.jsonld')
-    ctg_set = ctg_set.union(this_set)
-
-    HPa, this_set = get_data('HP_CleanData/HP_Partial_0.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPb, this_set = get_data('HP_CleanData/HP_Partial_1.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPc, this_set = get_data('HP_CleanData/HP_Partial_2.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPd, this_set = get_data('HP_CleanData/HP_Partial_3.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPe, this_set = get_data('HP_CleanData/HP_Partial_4.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPf, this_set = get_data('HP_CleanData/HP_Partial_5.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPg, this_set = get_data('HP_CleanData/HP_Partial_6.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPh, this_set = get_data('HP_CleanData/HP_Partial_7.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPi, this_set = get_data('HP_CleanData/HP_Partial_8.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    HPj, this_set = get_data('HP_CleanData/HP_Partial_9.jsonld')
-    ctg_set = ctg_set.union(this_set)
-
-    INDa, this_set = get_data('IND_CleanData/IND_Partial_0.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    INDb, this_set = get_data('IND_CleanData/IND_Partial_1.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    INDc, this_set = get_data('IND_CleanData/IND_Partial_2.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    INDd, this_set = get_data('IND_CleanData/IND_Partial_3.jsonld')
-    ctg_set = ctg_set.union(this_set)
-
-    NYTa, this_set = get_data('NYT_CleanData/NYT_Partial_0.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTb, this_set = get_data('NYT_CleanData/NYT_Partial_1.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTc, this_set = get_data('NYT_CleanData/NYT_Partial_2.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTd, this_set = get_data('NYT_CleanData/NYT_Partial_3.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTe, this_set = get_data('NYT_CleanData/NYT_Partial_4.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTf, this_set = get_data('NYT_CleanData/NYT_Partial_5.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTg, this_set = get_data('NYT_CleanData/NYT_Partial_6.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    NYTh, this_set = get_data('NYT_CleanData/NYT_Partial_7.jsonld')
-    ctg_set = ctg_set.union(this_set)
-
-    WPa, this_set = get_data('WP_CleanData/WP_Partial_0.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPb, this_set = get_data('WP_CleanData/WP_Partial_1.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPc, this_set = get_data('WP_CleanData/WP_Partial_2.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPd, this_set = get_data('WP_CleanData/WP_Partial_3.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPe, this_set = get_data('WP_CleanData/WP_Partial_4.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPf, this_set = get_data('WP_CleanData/WP_Partial_5.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPg, this_set = get_data('WP_CleanData/WP_Partial_6.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPh, this_set = get_data('WP_CleanData/WP_Partial_7.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPi, this_set = get_data('WP_CleanData/WP_Partial_8.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPj, this_set = get_data('WP_CleanData/WP_Partial_9.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPk, this_set = get_data('WP_CleanData/WP_Partial_10.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPl, this_set = get_data('WP_CleanData/WP_Partial_11.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPm, this_set = get_data('WP_CleanData/WP_Partial_12.jsonld')
-    ctg_set = ctg_set.union(this_set)
-    WPn, this_set = get_data('WP_CleanData/WP_Partial_13.jsonld')
-    ctg_set = ctg_set.union(this_set)
-
-    articles = np.concatenate((WPa, WPb, WPc, WPd, WPe, WPf, WPg, WPh, WPi, WPj, WPk, WPl, WPm, WPn, NYTa, NYTb, NYTc, NYTd, NYTe, NYTf, NYTg, NYTh, INDa, INDb, INDc, INDd, HPa, HPb, HPc, HPd, HPe, HPf, HPg, HPh, HPi, HPj, DMa, DMb, DMc, DMd, DMe, DMf, DMg, DMh, DMi, DMj, DMk), axis=0)
-    #articles = np.concatenate((WPm, WPn), axis=0)
-    # articles = np.array(a)
+    for filename in os.listdir(path):
+        if ".jsonld" not in filename:
+            continue
+        print filename
+        this_article, this_set = get_data(path + filename)
+        if 'articles' in locals():
+            articles = np.concatenate((articles, this_article), axis=0)
+        else:
+            articles = this_article
+        ctg_set = ctg_set.union(this_set)
     return articles, ctg_set
 
 
 def get_data(dir):
     # get the data
-    with open('IONData2016/' + dir) as json_data:
+    with open(dir) as json_data:
         data = json.load(json_data)
 
     content = data['@reverse']
@@ -220,15 +130,3 @@ with open('annotation_to_index.csv', 'wb') as article_dict_out:
     for key, value in ctg_to_id.items():
         writer.writerow([key.encode('utf-8'), value])
 
-"""
-with open('about_to_index.csv', 'wb') as abouts_dict:
-    writer = csv.writer(abouts_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    all_abouts_t = tuple(all_abouts)
-    abouts_set = set()
-    for about in all_abouts_t:
-        abouts_set.add(about)
-    abouts_set = sorted(abouts_set)
-    annot_to_id = {abouts_set[i] : ctg_to_id[abouts_set[i]] for i in range(0,len(abouts_set))}
-    for k,v in annot_to_id.items():
-        writer.writerow([key.encode('utf-8'), v])
-"""

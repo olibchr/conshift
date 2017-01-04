@@ -10,11 +10,14 @@ from sklearn.preprocessing import StandardScaler
 """
 This program calculates density distributions for all annotations and saves those as sparse vectors
 """
-
+if len(sys.argv) < 2:
+    print "Give dir path to annotion files!"
+    exit()
+path = sys.argv[1]
 
 def get_ctg():
     all_id_to_ctg = {}
-    with open('annotation_to_index.csv') as annotation_dict:
+    with open(path + 'annotation_to_index.csv') as annotation_dict:
         reader = csv.reader(annotation_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             all_id_to_ctg[int(row[1])] = row[0]
@@ -23,7 +26,7 @@ def get_ctg():
 
 def get_items():
     all_annotations = []
-    with open('annotation_vectors.csv') as annotation_vectors:
+    with open(path + 'annotation_vectors.csv') as annotation_vectors:
         reader = csv.reader(annotation_vectors, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for item in reader:
             annots = item[2][1:-1].split(',')
@@ -32,19 +35,20 @@ def get_items():
     return sorted(all_annotations, key=lambda all_annotation: all_annotations[0])
 
 
-def filter_items(all_items, filter):
-    filtered_items = []
+def invert_items(all_items, filter):
+    inverted_items = []
     for item in all_items:
         for annot in item[2]:
             annot = int(annot)
-            filtered_items.append([annot, item])
+            inverted_items.append([annot, item])
+    sorted(inverted_items, key=lambda key:inverted_items[0])
+    return inverted_items
 
-    return filtered_items
 
-
-def build_vectors(filtered_items, filters, length):
+def build_vectors(inverted_items, filters, length):
     all_d_vector = []
     i = 0
+    offset = 0
 
     for filter in filters:
         if i % 200 == 0:
@@ -52,13 +56,16 @@ def build_vectors(filtered_items, filters, length):
         i += 1
         vector = {}
         indeces = []
-        for item in filtered_items:
+        for item in inverted_items[offset:]:
+            offset += 1
             if item[0] == filter:
                 for annot in item[1][2]:
                     if annot in vector.keys():
                         vector[annot] = vector[annot] + 1
                     else:
                         vector[annot] = 1
+            else:
+                break
         for k,v in vector.iteritems():
             indeces.append([k,v])
         all_d_vector.append([filter, indeces])
@@ -78,11 +85,11 @@ def main():
 
     print "Articles: " + str(len(all_items))
 
-    filtered_items = filter_items(all_items, filters)
+    inverted_items = invert_items(all_items, filters)
 
-    print len(filtered_items)
+    print len(inverted_items)
 
-    all_distributions = build_vectors(filtered_items, filters, len(all_id_to_ctg))
+    all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
 
     with open('all_distributions.csv', 'wb') as out_file:
         writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
