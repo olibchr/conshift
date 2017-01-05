@@ -3,3 +3,4 @@ IONData/dataset*
 *.jsonld
 *.tgz
 *.csv
+tests/*

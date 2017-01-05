@@ -87,7 +87,7 @@ def main():
     all_distributions = revert(sparse_entities)
     del sparse_entities
 
-    with open(path + 'all_distr_weighted', 'wb') as outfile:
+    with open(path + 'all_distr_weighted.csv', 'wb') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
         for line in all_distributions:
             writer.writerow(line)
