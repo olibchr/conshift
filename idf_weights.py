@@ -1,7 +1,7 @@
 import csv
 import sys
 import numpy as np
-import pickle
+import pickle, string
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import lil_matrix
@@ -14,10 +14,13 @@ csv.field_size_limit(sys.maxsize)
 path = sys.argv[1]
 def load_distr():
     all_d_content = []
+    allchars = ''.join(chr(i) for i in xrange(256))
+    identity = string.maketrans('', '')
+    nondigits = allchars.translate(identity, string.digits)
     with open(path + 'all_distributions.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
-            features = [int(k.replace('[','').replace(']','').replace(" ","").replace("'","")) for k in row[1].split(",")]
+            features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
             l_features = [features[x] for x in range(0,len(features),2)]
             xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
             all_d_content.append([int(row[0]),xy_features])
@@ -32,7 +35,7 @@ def get_ctg():
         for row in reader:
             all_id_to_ctg[int(row[1])] = row[0]
             all_ctg_to_id[row[0]] = int(row[1])
-    return all_ctg_to_id, all_id_to_ctg
+    return all_id_to_ctg
 
 
 def build_sparse(all_d_content, lilx, lily):
@@ -46,7 +49,6 @@ def build_sparse(all_d_content, lilx, lily):
             this_data.append(tuple[1])
         positions.append(this_position)
         data.append(this_data)
-
     sparse_entities = lil_matrix((lilx, lily))
     sparse_entities.rows = positions
     sparse_entities.data = data
@@ -60,20 +62,35 @@ def build_all_idf(all_d_vec):
     return sparse_entities
 
 
+def revert(sparse_entities):
+    all_distributions = []
+    sparse_entities = sparse_entities.tolil()
+    for i in range(0,sparse_entities.shape[0]):
+        this_row = sparse_entities.getrow(i)
+        this_features = []
+        for offset in range(0,len(this_row.data[0])):
+            this_features.append((this_row.rows[0][offset], this_row.data[0][offset]))
+        all_distributions.append((i,this_features))
+    return all_distributions
+
+
 def main():
     all_d_content = load_distr()
-    all_ctg_to_id, all_id_to_ctg = get_ctg()
+    all_id_to_ctg = get_ctg()
     print "Create sparse vectors"
-    all_d_vec = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
-
+    sparse_entities = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
+    del all_id_to_ctg, all_d_content
     print "Inverse Document Frequency"
-    #all_d_vec = rebuild_distr(all_d_content)
-    sparse_entities = build_all_idf(all_d_vec)
+    sparse_entities = build_all_idf(sparse_entities)
 
-    print "Results: " + str(len(sparse_entities))
+    # print "Results: " + str(len(sparse_entities))
+    all_distributions = revert(sparse_entities)
+    del sparse_entities
 
-    with open('all_distr_weighted', 'wb') as outfile:
-        pickle.dump(sparse_entities, outfile, pickle.HIGHEST_PROTOCOL)
+    with open(path + 'all_distr_weighted', 'wb') as outfile:
+        writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
+        for line in all_distributions:
+            writer.writerow(line)
 
 
 if __name__ == "__main__":

@@ -73,7 +73,7 @@ def build_vectors(inverted_items, filters, length):
                         vector[annot] = vector[annot] + 1
                     else:
                         vector[annot] = 1
-            
+
         for k, v in vector.iteritems():
             indeces.append([k, v])
         all_d_vector.append([int(filter), indeces])
@@ -99,7 +99,7 @@ def main():
     all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
 
     with open('all_distributions.csv', 'wb') as out_file:
-        writer = csv.writer(out_file, delimiter=',', quoting=csv.QUOTE_NONE)
+        writer = csv.writer(out_file, delimiter=',', quoting=csv.QUOTE_MINIMAL)
         for line in all_distributions:
             writer.writerow(line)
 
