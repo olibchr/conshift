@@ -1,6 +1,7 @@
 import csv
 import sys
 import numpy as np
+import pickle
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import lil_matrix
@@ -16,8 +17,10 @@ def load_distr():
     with open(path + 'all_distributions.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
-            features = [k.replace('"', '').replace('[','').replace(']','') for k in row[1].split(',')]
-            all_d_content.append([int(row[0]), features])
+            features = [int(k.replace('[','').replace(']','').replace(" ","").replace("'","")) for k in row[1].split(",")]
+            l_features = [features[x] for x in range(0,len(features),2)]
+            xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
+            all_d_content.append([int(row[0]),xy_features])
     return all_d_content
 
 
@@ -32,23 +35,10 @@ def get_ctg():
     return all_ctg_to_id, all_id_to_ctg
 
 
-def rebuild_distr(all_d_content):
-    all_d_vec = np.array()
-    for d_vec in all_d_content:
-        d_vector = [0] * len(all_d_content)
-        d_id = d_vec[0]
-        for keyval in d_vec[1]:
-            d_vector[keyval[0]] = keyval[1]
-        all_d_vec = np.append(all_d_vec, [d_id, d_vector], axis=0)
-    return all_d_vec
-
-
 def build_sparse(all_d_content, lilx, lily):
     positions = []
     data = []
     for distr in all_d_content:
-        print distr
-        exit()
         this_position = []
         this_data = []
         for tuple in distr[1]:
@@ -67,7 +57,7 @@ def build_sparse(all_d_content, lilx, lily):
 def build_all_idf(all_d_vec):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
-    return transformer.idf_
+    return sparse_entities
 
 
 def main():
@@ -78,20 +68,12 @@ def main():
 
     print "Inverse Document Frequency"
     #all_d_vec = rebuild_distr(all_d_content)
-    tfidf = build_all_idf(all_d_vec)
+    sparse_entities = build_all_idf(all_d_vec)
 
-    print "results: " + str(len(tfidf))
+    print "Results: " + str(len(sparse_entities))
 
-    with open('tfidf_vec.csv','wb') as tfidf_out:
-        writer = csv.writer(tfidf_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for idf in tfidf:
-            indexes = []
-            ind_cnt = 0
-            for ind,d in idf,all_d_content:
-                if ind > 0.0001:
-                    indexes.append([ind_cnt, ind])
-                ind_cnt += 1
-            writer.writerow([d[0], indexes])
+    with open('all_distr_weighted', 'wb') as outfile:
+        pickle.dump(sparse_entities, outfile, pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == "__main__":

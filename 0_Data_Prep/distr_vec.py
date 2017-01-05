@@ -58,7 +58,6 @@ def invert_items(all_items, filter, all_id_to_ctg):
 def build_vectors(inverted_items, filters, length):
     all_d_vector = []
     i = 0
-    offset = 0
 
     for filter in filters:
         if i % 200 == 0:
@@ -67,16 +66,14 @@ def build_vectors(inverted_items, filters, length):
         i += 1
         vector = {}
         indeces = []
-        for item in inverted_items[offset:]:
-            offset += 1
+        for item in inverted_items:
             if item[0] == filter:
                 for annot in item[1][2]:
                     if annot in vector.keys():
                         vector[annot] = vector[annot] + 1
                     else:
                         vector[annot] = 1
-            else:
-                break
+            
         for k, v in vector.iteritems():
             indeces.append([k, v])
         all_d_vector.append([int(filter), indeces])
