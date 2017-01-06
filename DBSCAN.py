@@ -2,7 +2,7 @@ import csv
 import sys, string
 import numpy as np
 import sklearn
-from sklearn.cluster import DBSCAN
+from sklearn.cluster import DBSCAN, Birch
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 from scipy.sparse import lil_matrix
@@ -64,10 +64,19 @@ def main():
     sparse_entities = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
     del all_id_to_ctg, all_d_content
 
-    print "Precomputing Distances"
     sparse_entities = StandardScaler(with_mean=False).fit_transform(sparse_entities)
-    XX = sklearn.metrics.pairwise.cosine_similarity(sparse_entities)
+    #-------------------------------------------------------------------------------------
 
+    print "BIRCH"
+    brc = Birch(branching_factor=50, n_clusters=None, threshold=0.5, compute_labels=True).fit(sparse_entities)
+    labels = brc.labels_
+    centroids = brc.subcluster_centers_
+    n_clusters = np.unique(labels).size
+    print("n_clusters : %d" % n_clusters)
+    
+    #-------------------------------------------------------------------------------------
+    print "Precomputing Distances"
+    XX = sklearn.metrics.pairwise.cosine_similarity(sparse_entities)
     print "Clustering.."
     db = DBSCAN(eps=0.3, min_samples=10, metric='precomputed').fit(XX)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
