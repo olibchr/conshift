@@ -55,13 +55,14 @@ def build_sparse(all_d_content, lilx, lily):
 
 
 def main():
+    print "Loading data"
     all_d_content = load_distr()
     all_id_to_ctg = get_ctg()
     print "Create sparse vectors"
     sparse_entities = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
     del all_id_to_ctg, all_d_content
 
-
+    print "Clustering.."
     sparse_entities = StandardScaler(with_mean=False).fit_transform(sparse_entities)
 
     db = DBSCAN(eps=0.3, min_samples=10, algorithm='brute', metric='cosine').fit(all_d_content)
@@ -94,7 +95,7 @@ def main():
                 break
         target_entities.append(this_class)
 
-
+    print target_entities
     #with open(path + 'all_distr_weighted.csv', 'wb') as outfile:
     #    writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
     #    for line in target_entities:
