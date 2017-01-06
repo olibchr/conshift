@@ -67,6 +67,7 @@ def build_vectors(inverted_items, filters, length):
                         vector[annot] = vector[annot] + 1
                     else:
                         vector[annot] = 1
+                item[0] = None
 
         for k, v in vector.iteritems():
             indeces.append([k, v])

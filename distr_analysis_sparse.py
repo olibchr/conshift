@@ -35,11 +35,16 @@ def get_ctg(filters):
     return filter_id_to_ctg, all_id_to_ctg
 
 
-def load_distr():
+def load_distr(filters):
     all_d_content = []
     with open(path + 'all_distributions.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        i = 0
         for row in reader:
+            if i not in filters:
+                i += 1
+                continue
+            i += 1
             features = [int(k.replace('[','').replace(']','').replace(" ","").replace("'","")) for k in row[1].split(",")]
             l_features = [features[x] for x in range(0,len(features),2)]
             xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
@@ -47,30 +52,49 @@ def load_distr():
     return all_d_content
 
 
-def build_sparse(all_d_content, lilx, lily):
-    positions = []
-    data = []
-    for distr in all_d_content:
-        this_position = []
-        this_data = []
-        for tuple in distr[1]:
-            this_position.append(tuple[0])
-            this_data.append(tuple[1])
-        positions.append(this_position)
-        data.append(this_data)
+def rebuild_distr(all_d_content):
+    all_d_vec = np.array()
+    for d_vec in all_d_content:
+        d_vector = [0.000001] * len(all_d_content)
+        d_id = d_vec[0]
+        for keyval in d_vec[1]:
+            d_vector[keyval[0]] = keyval[1]
+        all_d_vec = np.append(all_d_vec, [d_id, d_vector], axis=0)
+    return all_d_vec
 
-    sparse_entities = lil_matrix((lilx, lily))
-    sparse_entities.rows = positions
-    sparse_entities.data = data
-    sparse_entities.tocsr()
-    return sparse_entities
+
+def kl_div(distributions):
+    if len(distributions) <2:
+        print "Nothing to compare.. exiting"
+    else:
+        all_div = []
+
+        for i in range(1, len(distributions)):
+            gold_standard = distributions[0][1]
+            this_entropy = entropy(gold_standard, distributions[i][1])
+            all_div.append([distributions[i][0],this_entropy])
+    return all_div
+
 
 def main(argv):
     filters = map(int, argv[2:])
-    all_d_content = load_distr()
+    all_d_content = load_distr(filters)
     all_ctg_to_id, all_id_to_ctg = get_ctg(filters)
     print "Create sparse vectors"
-    all_d_vec = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
+    distributions = rebuild_distr(all_d_content)
+
+    print "Built " + str(len(distributions)) + " probability density vectors"
+
+    # plot_d(distributions, argv)
+
+    all_divergences = kl_div(distributions)
+
+    print "KL Divergences are: "
+
+    plot_x = []
+    for d in (all_divergences):
+        print "     " + str(filters[0]) + " --> " + str(d[0]) + " : " + str(d[1])
+        plot_x.append(d[1])
 
 
 if __name__ == "__main__":

@@ -73,7 +73,28 @@ def main():
     centroids = brc.subcluster_centers_
     n_clusters = np.unique(labels).size
     print("n_clusters : %d" % n_clusters)
-    
+
+    unique_labels = set(labels)
+    colors = plt.cm.Spectral(np.linspace(0, 1, len(unique_labels)))
+
+    birch_target_entities = []
+    for k, col in zip(unique_labels, colors):
+        if k == -1:
+            # Black used for noise.
+            col = 'k'
+
+        class_member_mask = (labels == k)
+        this_class = []
+        idx = -1
+        while True:
+            try:
+                idx = class_member_mask.tolist().index(True, idx+1)
+                this_class.append(idx)
+            except ValueError:
+                break
+        birch_target_entities.append(this_class)
+    print birch_target_entities
+
     #-------------------------------------------------------------------------------------
     print "Precomputing Distances"
     XX = sklearn.metrics.pairwise.cosine_similarity(sparse_entities)
