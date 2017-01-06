@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/all_distr_weighted" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/Icon&#13;" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_Data_Prep/distr_vec.py" afterPath="$PROJECT_DIR$/0_Data_Prep/distr_vec.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DBSCAN.py" afterPath="$PROJECT_DIR$/DBSCAN.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/idf_weights.py" afterPath="$PROJECT_DIR$/idf_weights.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -43,13 +44,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="distr_vec.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="distr_vec.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/0_Data_Prep/distr_vec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.98079383">
-              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBSCAN.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DBSCAN.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.7285532">
+              <caret line="90" column="31" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -59,7 +72,7 @@
         <entry file="file://$PROJECT_DIR$/idf_weights.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="89" column="44" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
+              <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -86,7 +99,6 @@
         <option value="$PROJECT_DIR$/create_word2vectors.py" />
         <option value="$PROJECT_DIR$/create_vectors.py" />
         <option value="$PROJECT_DIR$/entropy_sample.py" />
-        <option value="$PROJECT_DIR$/DBSCAN.py" />
         <option value="$PROJECT_DIR$/index_analysis.py" />
         <option value="$PROJECT_DIR$/0_Data_Prep/correct_dataset.py" />
         <option value="$PROJECT_DIR$/distr_analysis.py" />
@@ -95,6 +107,7 @@
         <option value="$PROJECT_DIR$/distr_analysis_sparse.py" />
         <option value="$PROJECT_DIR$/0_Data_Prep/distr_vec.py" />
         <option value="$PROJECT_DIR$/idf_weights.py" />
+        <option value="$PROJECT_DIR$/DBSCAN.py" />
       </list>
     </option>
   </component>
@@ -515,6 +528,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -830,13 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DBSCAN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4609475">
-          <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/0_Data_Prep/correct_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30729833">
@@ -880,22 +889,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/0_Data_Prep/distr_vec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/idf_weights.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="44" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
+          <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0_Data_Prep/distr_vec.py">
+    <entry file="file://$PROJECT_DIR$/DBSCAN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.98079383">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.7285532">
+          <caret line="90" column="31" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="31" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="false" />
           </folding>
         </state>
       </provider>

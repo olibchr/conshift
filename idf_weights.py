@@ -5,7 +5,6 @@ import pickle, string
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import lil_matrix
-from itertools import izip
 
 """
 This program computes tf-idf scores based on density vectors, created by distr_vec for all density distributions of annotations.

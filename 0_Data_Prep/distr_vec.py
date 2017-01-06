@@ -1,11 +1,5 @@
 import csv, operator
 import sys
-import numpy as np
-import thread
-from sklearn.preprocessing import normalize
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.cluster import DBSCAN
-from sklearn.preprocessing import StandardScaler
 
 """
 This program calculates density distributions for all annotations and saves those as sparse vectors
