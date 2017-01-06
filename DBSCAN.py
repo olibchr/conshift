@@ -65,7 +65,7 @@ def main():
     print "Clustering.."
     sparse_entities = StandardScaler(with_mean=False).fit_transform(sparse_entities)
 
-    db = DBSCAN(eps=0.3, min_samples=10, algorithm='brute', metric='cosine').fit(sparse_entities)
+    db = DBSCAN(eps=0.3, min_samples=10, metric='cosine').fit(sparse_entities)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_

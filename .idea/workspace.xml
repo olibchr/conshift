@@ -57,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/DBSCAN.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.6158771">
-              <caret line="67" column="96" selection-start-line="67" selection-start-column="96" selection-end-line="67" selection-end-column="96" />
+              <caret line="67" column="41" selection-start-line="67" selection-start-column="41" selection-end-line="67" selection-end-column="41" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -909,7 +909,7 @@
     <entry file="file://$PROJECT_DIR$/DBSCAN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6158771">
-          <caret line="67" column="96" selection-start-line="67" selection-start-column="96" selection-end-line="67" selection-end-column="96" />
+          <caret line="67" column="41" selection-start-line="67" selection-start-column="41" selection-end-line="67" selection-end-column="41" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
