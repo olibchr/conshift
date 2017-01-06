@@ -59,13 +59,16 @@ def main():
     print "Loading data"
     all_d_content = load_distr()
     all_id_to_ctg = get_ctg()
+
     print "Create sparse vectors"
     sparse_entities = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
     del all_id_to_ctg, all_d_content
 
-    print "Clustering.."
+    print "Precomputing Distances"
     sparse_entities = StandardScaler(with_mean=False).fit_transform(sparse_entities)
     XX = sklearn.metrics.pairwise.cosine_similarity(sparse_entities)
+
+    print "Clustering.."
     db = DBSCAN(eps=0.3, min_samples=10, metric='precomputed').fit(XX)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
