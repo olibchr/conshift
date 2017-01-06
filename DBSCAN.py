@@ -1,6 +1,7 @@
 import csv
 import sys, string
 import numpy as np
+import sklearn
 from sklearn.cluster import DBSCAN
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
@@ -64,8 +65,8 @@ def main():
 
     print "Clustering.."
     sparse_entities = StandardScaler(with_mean=False).fit_transform(sparse_entities)
-
-    db = DBSCAN(eps=0.3, min_samples=10).fit(sparse_entities)
+    XX = sklearn.metrics.pairwise.cosine_similarity(sparse_entities)
+    db = DBSCAN(eps=0.3, min_samples=10, metric='precomputed').fit(XX)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
