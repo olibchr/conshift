@@ -89,7 +89,7 @@ def main():
     print "Articles: " + str(len(all_items))
 
     inverted_items = invert_items(all_items, filters, all_id_to_ctg)
-
+    return
     print len(inverted_items)
     all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
 

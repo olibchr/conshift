@@ -1,13 +1,8 @@
 
 import csv
 import sys
-import numpy as np
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 from scipy.stats import entropy
-from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise as pw
-from scipy.sparse import lil_matrix
 import string
 import warnings
 warnings.filterwarnings("ignore")
