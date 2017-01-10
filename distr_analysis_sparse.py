@@ -57,7 +57,7 @@ def load_distr(filters):
             features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
             l_features = [features[x] for x in range(0,len(features),2)]
             xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
-            print "     " + str(row[0]) + " --- " + str(len(xy_features))
+            #print "     " + str(row[0]) + " --- " + str(len(xy_features))
             all_d_content.append([int(row[0]),xy_features])
         del all_data
     return all_d_content
