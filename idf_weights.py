@@ -2,7 +2,7 @@ import csv
 import sys
 import numpy as np
 import pickle, string
-from sklearn.preprocessing import normalize
+#from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import lil_matrix
 
@@ -17,7 +17,7 @@ def load_distr():
     identity = string.maketrans('', '')
     nondigits = allchars.translate(identity, string.digits)
     with open(path + 'all_distributions.csv') as distr_vec:
-        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        reader = csv.reader(distr_vec, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
             l_features = [features[x] for x in range(0,len(features),2)]
@@ -86,6 +86,7 @@ def main():
     all_distributions = revert(sparse_entities)
     del sparse_entities
 
+    print all_distributions[:1]
     with open(path + 'all_distr_weighted.csv', 'wb') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
         for line in all_distributions:
