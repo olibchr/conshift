@@ -2,12 +2,9 @@
 import csv
 import sys
 import numpy as np
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 from scipy.stats import entropy
-from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise as pw
-import wikipedia
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -23,7 +20,7 @@ In detail, this tool creates density distribution vectors for the specified anno
 def get_ctg(filters):
     filter_id_to_ctg = {}
     all_id_to_ctg = {}
-    with open('annotation_to_index.csv') as annotation_dict:
+    with open('1_data/annotation_to_index.csv') as annotation_dict:
         reader = csv.reader(annotation_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             if int(row[1]) in filters:
@@ -35,7 +32,7 @@ def get_ctg(filters):
 
 def get_items():
     all_annotations = []
-    with open('annotation_vectors.csv') as annotation_vectors:
+    with open('1_data/annotation_vectors.csv') as annotation_vectors:
         reader = csv.reader(annotation_vectors, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for item in reader:
             annots = item[2][1:-1].split(',')
@@ -250,7 +247,7 @@ def main(argv):
         print "     " + str(filters[0]) + " --> " + str(filters[k]) + " : " + str(score) + " hits."
         k += 1
 
-    plt.plot(article_cnt.values()[1:], plot_x, 'rx')
+    #plt.plot(article_cnt.values()[1:], plot_x, 'rx')
     #plt.show()
 
 

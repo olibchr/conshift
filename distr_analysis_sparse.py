@@ -15,8 +15,18 @@ In detail, this tool creates density distribution vectors for the specified anno
  with a KL divergence / cosine metric to measure similarity.
  All output will be printed on screen.
 """
-path = sys.argv[1]
+path = sys.argv[2]
 csv.field_size_limit(sys.maxsize)
+
+mode = int(sys.argv[1])
+if mode == 0:
+    distr_file = 'all_distributions.csv'
+    q_char = '"'
+    print "MODE: Unweighted concept vectors"
+else:
+    distr_file = 'all_distr_weighted.csv'
+    q_char = '|'
+    print "MODE: Weighted concept vectors"
 
 
 def get_ctg(filters):
@@ -36,20 +46,20 @@ def load_distr(filters):
     allchars = ''.join(chr(i) for i in xrange(256))
     identity = string.maketrans('', '')
     nondigits = allchars.translate(identity, string.digits)
-    with open(path + 'all_distr_weighted.csv') as distr_vec:
-        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    with open(path + distr_file) as distr_vec:
         i = 0
+        reader = csv.reader(distr_vec, delimiter=',', quotechar=q_char, quoting=csv.QUOTE_MINIMAL)
+        all_data = []
         for row in reader:
-            if i not in filters:
-                i += 1
-                continue
-            i += 1
-
+            all_data.append(row)
+        for filter in filters:
+            row = all_data[filter]
             features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
             l_features = [features[x] for x in range(0,len(features),2)]
             xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
+            print "     " + str(row[0]) + " --- " + str(len(xy_features))
             all_d_content.append([int(row[0]),xy_features])
-
+        del all_data
     return all_d_content
 
 
@@ -103,7 +113,7 @@ def validation_scoring(distributions):
 
 
 def main(argv):
-    filters = map(int, argv[2:])
+    filters = map(int, argv[3:])
     print "Setting filters.. "
 
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
