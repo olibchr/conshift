@@ -12,6 +12,7 @@ This program computes tf-idf scores based on density vectors, created by distr_v
 csv.field_size_limit(sys.maxsize)
 path = sys.argv[1]
 dim_red = sys.argv[2]
+outfilename = 'all_distr_weighted.csv'
 
 
 def load_distr():
@@ -63,8 +64,11 @@ def build_all_idf(all_d_vec):
     sparse_entities = transformer.fit_transform(all_d_vec)
 
     if dim_red == '1':
+        global outfilename
+        print "Reducing Dimensionality"
         svd = TruncatedSVD(n_components=10000, n_iter=7)
         svd.fit(sparse_entities)
+        outfilename = 'all_distr_weighted_svd.csv'
         return svd.components_
 
     return sparse_entities
@@ -96,7 +100,7 @@ def main():
     del sparse_entities
 
     print all_distributions[:1]
-    with open(path + 'all_distr_weighted.csv', 'wb') as outfile:
+    with open(path + outfilename, 'wb') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
         for line in all_distributions:
             writer.writerow(line)

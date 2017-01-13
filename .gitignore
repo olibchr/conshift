@@ -4,3 +4,4 @@ IONData/dataset*
 *.tgz
 *.csv
 tests/*
+2_img/*
