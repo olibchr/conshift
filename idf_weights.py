@@ -2,7 +2,7 @@ import csv
 import sys
 import numpy as np
 import pickle, string
-#from sklearn.preprocessing import normalize
+from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import lil_matrix
 
@@ -11,6 +11,9 @@ This program computes tf-idf scores based on density vectors, created by distr_v
 """
 csv.field_size_limit(sys.maxsize)
 path = sys.argv[1]
+dim_red = sys.argv[2]
+
+
 def load_distr():
     all_d_content = []
     allchars = ''.join(chr(i) for i in xrange(256))
@@ -58,6 +61,12 @@ def build_sparse(all_d_content, lilx, lily):
 def build_all_idf(all_d_vec):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
+
+    if dim_red == '1':
+        svd = TruncatedSVD(n_components=10000, n_iter=7)
+        svd.fit(sparse_entities)
+        return svd.components_
+
     return sparse_entities
 
 
