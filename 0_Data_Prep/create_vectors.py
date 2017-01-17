@@ -134,9 +134,7 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
             print "progress: " + str(i) + ", " + str(len(article_vecs)) + ", " + str(
                 (i * 100) / float(1.0 * len(article_vecs))) + "%"
         i += 1
-
-        if article_vec[0] in kill_set:
-            continue
+        
         this_annot = []
         for annot in article_vec[2]:
             if annot in kill_set:
