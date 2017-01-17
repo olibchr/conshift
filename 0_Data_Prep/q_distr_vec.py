@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
     print "Give dir path to annotion files!"
     exit()
 path = sys.argv[1]
-quarters = [time.strptime("2014-11-01", "%y-%m-%d"), time.strptime("2015-02-01", "%y-%m-%d"), time.strptime("2015-05-01", "%y-%m-%d"), time.strptime("2015-08-01", "%y-%m-%d")]
+quarters = [time.strptime("2014-11-13", "%Y-%m-%d"), time.strptime("2015-02-13", "%Y-%m-%d"), time.strptime("2015-05-13", "%Y-%m-%d"), time.strptime("2015-08-13", "%Y-%m-%d")]
 
 
 def get_ctg():
@@ -28,7 +28,7 @@ def get_items():
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
             this_q = 0
-            this_release = time.strptime(item[1], "%y-%m-%d")
+            this_release = time.strptime(item[1], "%Y-%m-%d")
             if this_release <= quarters[0]:
                 this_q = 1
             elif this_release <= quarters[1]:
