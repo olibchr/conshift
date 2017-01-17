@@ -66,7 +66,7 @@ def get_data(dir):
             for i in range(0,len(id_abouts)):
                 about = id_abouts[i]
                 if 'wiki/wiki' in about:
-                    id_abouts[i] = about.replace('wiki/wiki', 'wiki')
+                    id_abouts[i] = about.replace('wiki/wiki/', 'wiki/')
             all_abouts.append(id_abouts)
         except Exception as e:
             #print "No annotations for article " + this_id
@@ -128,14 +128,22 @@ def invert_items(all_items, filter, all_id_to_ctg):
 def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
     clean_items = []
     clean_dict = {}
-
+    i = 0
     for article_vec in article_vecs:
+        if i % 1000 == 0:
+            print "progress: " + str(i) + ", " + str(len(article_vecs)) + ", " + str(
+                (i * 100) / float(1.0 * len(article_vecs))) + "%"
+        i += 1
+
         if article_vec[0] in kill_set:
             continue
-        for annot in article_vec[1]:
+        this_annot = []
+        for annot in article_vec[2]:
             if annot in kill_set:
                 continue
-        clean_items.append(article_vec)
+            else:
+                this_annot.append(annot)
+        clean_items.append([article_vec[0], article_vec[1], this_annot])
 
     for did in ctg_to_id.keys():
         if did in kill_set:
