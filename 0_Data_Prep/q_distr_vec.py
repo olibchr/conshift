@@ -118,6 +118,7 @@ def main():
     print "Articles: " + str(len(all_items))
 
     q_items = split_set(all_items)
+    del all_items
 
     i = 1
     for all_items in q_items:
