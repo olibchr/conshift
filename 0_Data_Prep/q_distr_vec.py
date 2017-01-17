@@ -8,6 +8,7 @@ if len(sys.argv) < 2:
     print "Give dir path to annotion files!"
     exit()
 path = sys.argv[1]
+quarters = [time.strptime("2014-11-01", "%y-%m-%d"), time.strptime("2015-02-01", "%y-%m-%d"), time.strptime("2015-05-01", "%y-%m-%d"), time.strptime("2015-08-01", "%y-%m-%d")]
 
 
 def get_ctg():
@@ -26,13 +27,38 @@ def get_items():
         for item in reader:
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
-
-            all_annotations.append([item[0], item[1], annots])
+            this_q = 0
+            this_release = time.strptime(item[1], "%y-%m-%d")
+            if this_release <= quarters[0]:
+                this_q = 1
+            elif this_release <= quarters[1]:
+                this_q = 2
+            elif this_release <= quarters[2]:
+                this_q = 3
+            elif this_release <= quarters[3]:
+                this_q = 4
+            all_annotations.append([item[0], this_q, annots])
     return sorted(all_annotations, key=lambda all_annotation: all_annotations[1])
 
 
+def split_set(all_items):
+    q1 = []
+    q2 = []
+    q3 = []
+    q4 = []
+    for item in all_items:
+        if item[1] == 1:
+            q1.append(item)
+        elif item[1] == 2:
+            q2.append(item)
+        elif item[1] == 3:
+            q3.append(item)
+        elif item[1] == 4:
+            q4.append(item)
+    return [q1,q2,q3,q4]
 
-def invert_items(all_items, filter, all_id_to_ctg):
+
+def invert_items(all_items, filter, all_id_to_ctg, i):
     index_cnt = {key: 0 for key in filter}
     inverted_items = []
 
@@ -41,7 +67,7 @@ def invert_items(all_items, filter, all_id_to_ctg):
             annot = int(annot)
             inverted_items.append([annot, item])
             index_cnt[annot] = index_cnt[annot] + 1
-    with open('index_cnt.csv', 'wb') as cnt_out:
+    with open('q' + str(i) + '_index_cnt.csv', 'wb') as cnt_out:
         writer = csv.writer(cnt_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         sorted_index_cnt = sorted(index_cnt.items(), key=operator.itemgetter(1), reverse=True)
         for key in sorted_index_cnt:
@@ -91,15 +117,20 @@ def main():
 
     print "Articles: " + str(len(all_items))
 
-    inverted_items = invert_items(all_items, filters, all_id_to_ctg, i)
+    q_items = split_set(all_items)
 
-    print len(inverted_items)
-    all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
+    i = 1
+    for all_items in q_items:
+        inverted_items = invert_items(all_items, filters, all_id_to_ctg, i)
 
-    with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:
-        writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for line in all_distributions:
-            writer.writerow(line)
+        print len(inverted_items)
+        all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
+
+        with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:
+            writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for line in all_distributions:
+                writer.writerow(line)
+        i+=1
 
 
 if __name__ == "__main__":
