@@ -48,6 +48,7 @@ def invert_items(all_items, filter, all_id_to_ctg):
             if "Category" in all_id_to_ctg[key[0]]:
                 continue
             writer.writerow([all_id_to_ctg[key[0]], key[0], key[1]])
+
     sorted(inverted_items, key=lambda key: inverted_items[0])
     return inverted_items
 
@@ -91,9 +92,9 @@ def main():
 
     print "Articles: " + str(len(all_items))
 
-    inverted_items = invert_items(all_items, filters, all_id_to_ctg, i)
+    inverted_items = invert_items(all_items, filters, all_id_to_ctg)
 
-    print len(inverted_items)
+    #print len(inverted_items)
     all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
 
     with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:

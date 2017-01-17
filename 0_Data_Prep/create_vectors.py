@@ -2,7 +2,7 @@ import json
 #from pyLD import jsonld
 import numpy as np
 import csv
-import sys, os
+import sys, os, operator
 
 """
 The purpose of this program is to load the json data from the 2014/2015 newspaper article data set and
@@ -91,42 +91,101 @@ def get_data(dir):
     return articles, ctg_set
 
 
-print "Loading data.." # we load the data
-articles, ctg_set = load_data()
-ctg_set = sorted(ctg_set)
+def format(articles, ctg_to_id):
+     # we build annotation vectors which contain the index of a positive entry (=1), rest is 0
+    article_vecs = []
+    annot_cnt = 0
+    for article in articles:
+        article_vec = []
+        for ctg in article[2]:
+            if ctg_to_id[ctg] is not None:
+                article_vec.append(ctg_to_id[ctg])
+                annot_cnt += 1
+        article_vecs.append([article[0],article[1], article_vec])
+    print "avg:" + str(annot_cnt / len(articles)) + " cnts: " + str(annot_cnt) + " len " + str(len(articles))
+    return article_vecs
 
-#for item in ctg_set:
-#    if 'wiki/wiki' in item:
-#        item.replace('wiki/wiki','wiki')
 
-print "Creating dictionary.." # put all annotations into dictionaries
-ctg_to_id = {ctg_set[i]: i for i in range(0,len(ctg_set))}
-id_to_ctg = {i:ctg_set[i] for i in range(0,len(ctg_set))}
+def invert_items(all_items, filter, all_id_to_ctg):
+    index_cnt = {key: 0 for key in filter}
+    inverted_items = []
 
-print "Found " + str(len(articles)) + " articles with " + str(len(ctg_to_id)) + " categories"
-print "No about annotations for " + str(NO_ANT_CNT) + "articles." + " No ctg annotations for " + str(NO_CTG_CNT) + "articles."
-print "Creating vectors.."
+    for item in all_items:
+        for annot in item[2]:
+            annot = int(annot)
+            inverted_items.append([annot, item])
+            index_cnt[annot] = index_cnt[annot] + 1
+    sorted_index_cnt = sorted(index_cnt.items(), key=operator.itemgetter(1), reverse=True)
+    kill_set = []
+    for key in sorted_index_cnt:
+        if key[1] == 1:
+            kill_set.append(key[0])
 
-# we build annotation vectors which contain the index of a positive entry (=1), rest is 0
-article_vecs = []
-annot_cnt = 0
-for article in articles:
-    article_vec = []
-    for ctg in article[2]:
-        if ctg_to_id[ctg] is not None:
-            article_vec.append(ctg_to_id[ctg])
-            annot_cnt += 1
+    sorted(inverted_items, key=lambda key: inverted_items[0])
+    return kill_set
 
-    article_vecs.append([article[0],article[1], article_vec])
-print "avg:" + str(annot_cnt / len(articles)) + " cnts: " + str(annot_cnt) + " len " + str(len(articles))
 
-with open('annotation_vectors.csv', 'wb') as article_vec_out:
-    writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    for a_vec in article_vecs:
-        writer.writerow(a_vec)
+def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
+    clean_items = []
+    clean_dict = {}
 
-with open('annotation_to_index.csv', 'wb') as article_dict_out:
-    writer = csv.writer(article_dict_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    for key, value in ctg_to_id.items():
-        writer.writerow([key.encode('utf-8'), value])
+    for article_vec in article_vecs:
+        if article_vec[0] in kill_set:
+            continue
+        for annot in article_vec[1]:
+            if annot in kill_set:
+                continue
+        clean_items.append(article_vec)
+
+    for did in ctg_to_id.keys():
+        if did in kill_set:
+            continue
+        else:
+            clean_dict[did] = ctg_to_id[did]
+
+    return clean_items, clean_dict
+
+
+
+def main():
+    print "Loading data.." # we load the data
+    articles, ctg_set = load_data()
+    ctg_set = sorted(ctg_set)
+
+    #for item in ctg_set:
+    #    if 'wiki/wiki' in item:
+    #        item.replace('wiki/wiki','wiki')
+
+    print "Creating dictionary.." # put all annotations into dictionaries
+    ctg_to_id = {ctg_set[i]: i for i in range(0,len(ctg_set))}
+    id_to_ctg = {i:ctg_set[i] for i in range(0,len(ctg_set))}
+
+    print "Found " + str(len(articles)) + " articles with " + str(len(ctg_to_id)) + " categories"
+    print "No about annotations for " + str(NO_ANT_CNT) + " articles." + " No ctg annotations for " + str(NO_CTG_CNT) + " articles."
+    print "Creating vectors.."
+
+    article_vecs = format(articles, ctg_to_id)
+
+    kill_set = invert_items(article_vecs, [x for x in id_to_ctg.keys()], id_to_ctg)
+
+    print "Erasing " + str(len(kill_set)) + " concepts which appear only once!"
+
+    del id_to_ctg
+    article_vecs, ctg_to_id = cleanse_concepts(kill_set, article_vecs, ctg_to_id)
+
+    with open('annotation_vectors.csv', 'wb') as article_vec_out:
+        writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for a_vec in article_vecs:
+            writer.writerow(a_vec)
+
+    with open('annotation_to_index.csv', 'wb') as article_dict_out:
+        writer = csv.writer(article_dict_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for key, value in ctg_to_id.items():
+            writer.writerow([key.encode('utf-8'), value])
+
+
+
+if __name__ == "__main__":
+    main()
+
 
