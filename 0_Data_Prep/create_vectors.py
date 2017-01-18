@@ -122,7 +122,7 @@ def invert_items(all_items, filter, all_id_to_ctg):
             kill_set.append(key[0])
 
     sorted(inverted_items, key=lambda key: inverted_items[0])
-    return kill_set
+    return frozenset(kill_set)
 
 
 def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
@@ -147,7 +147,7 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
                 break
 
     print "Cleaning dictionary.."
-    for did in ctg_to_id.keys():
+    for did in ctg_to_id.values():
         if did in kill_set:
             continue
         else:
