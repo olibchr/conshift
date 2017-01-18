@@ -160,8 +160,8 @@ def main():
     del all_items
 
     i = 1
-    for all_items in q_items:
-        inverted_items = invert_items(all_items, filters, all_id_to_ctg, i)
+    for qtr_items in q_items:
+        inverted_items = invert_items(qtr_items, filters, all_id_to_ctg, i)
 
         print len(inverted_items)
         q_distributions = build_vectors(inverted_items, filters)

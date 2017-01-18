@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" afterPath="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_Data_Prep/q_distr_vec.py" afterPath="$PROJECT_DIR$/0_Data_Prep/q_distr_vec.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -43,14 +43,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="q_distr_vec.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="q_distr_vec.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/0_Data_Prep/q_distr_vec.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.9987196">
-              <caret line="165" column="33" selection-start-line="165" selection-start-column="33" selection-end-line="165" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="104" column="34" selection-start-line="104" selection-start-column="34" selection-end-line="104" selection-end-column="34" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_vectors.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/0_Data_Prep/create_vectors.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.2304738">
+              <caret line="164" column="32" selection-start-line="164" selection-start-column="32" selection-end-line="164" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,10 +103,10 @@
         <option value="$PROJECT_DIR$/distr_analysis_sparse.py" />
         <option value="$PROJECT_DIR$/4_extraction/entity extraction.py" />
         <option value="$PROJECT_DIR$/0_Data_Prep/distr_vec.py" />
-        <option value="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" />
         <option value="$PROJECT_DIR$/idf_weights.py" />
         <option value="$PROJECT_DIR$/time_analysis_q.py" />
         <option value="$PROJECT_DIR$/0_Data_Prep/q_distr_vec.py" />
+        <option value="$PROJECT_DIR$/0_Data_Prep/create_vectors.py" />
       </list>
     </option>
   </component>
@@ -760,21 +770,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0_Data_Prep/create_vectors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.15236875">
-          <caret line="145" column="17" selection-start-line="145" selection-start-column="17" selection-end-line="145" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/0_Data_Prep/q_distr_vec.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9987196">
-          <caret line="165" column="33" selection-start-line="165" selection-start-column="33" selection-end-line="165" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="34" selection-start-line="104" selection-start-column="34" selection-end-line="104" selection-end-column="34" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/0_Data_Prep/create_vectors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2304738">
+          <caret line="164" column="32" selection-start-line="164" selection-start-column="32" selection-end-line="164" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>

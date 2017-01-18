@@ -135,15 +135,16 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
             print "progress: " + str(i) + ", " + str(len(article_vecs)) + ", " + str(
                 (i * 100) / float(1.0 * len(article_vecs))) + "%"
         i += 1
-        for article_vec in article_vecs:
-            for annot in article_vec[2]:
-                if annot == kid:
-                    annot = -1
+        for k in range(0,len(article_vecs)):
+            for j in range(0,len(article_vecs[k][2])):
+                if article_vecs[k][2][j] == kid:
+                    article_vecs[k][2][j] = -1
                     t = True
                     break
+
             if t == True:
+                t = False
                 break
-        t = False
 
     print "Cleaning dictionary.."
     for did in ctg_to_id.keys():
