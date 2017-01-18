@@ -129,20 +129,23 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
     clean_items = []
     clean_dict = {}
     i = 0
-    for article_vec in article_vecs:
+    t = False
+    for kid in kill_set:
         if i % 1000 == 0:
             print "progress: " + str(i) + ", " + str(len(article_vecs)) + ", " + str(
                 (i * 100) / float(1.0 * len(article_vecs))) + "%"
         i += 1
-        
-        this_annot = []
-        for annot in article_vec[2]:
-            if annot in kill_set:
-                continue
-            else:
-                this_annot.append(annot)
-        clean_items.append([article_vec[0], article_vec[1], this_annot])
+        for article_vec in article_vecs:
+            for annot in article_vec[2]:
+                if annot == kid:
+                    annot = -1
+                    t = True
+                    break
+            if t == True:
+                break
+        t = False
 
+    print "Cleaning dictionary.."
     for did in ctg_to_id.keys():
         if did in kill_set:
             continue
@@ -150,7 +153,6 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
             clean_dict[did] = ctg_to_id[did]
 
     return clean_items, clean_dict
-
 
 
 def main():

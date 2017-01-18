@@ -1,5 +1,8 @@
 import csv, operator
-import sys, time
+import sys, time, string
+from sklearn.feature_extraction.text import TfidfTransformer
+from scipy.sparse import lil_matrix
+from sklearn.preprocessing import normalize
 
 """
 This program calculates density distributions for all annotations and saves those as sparse vectors
@@ -104,6 +107,42 @@ def build_vectors(inverted_items, filters, length):
     return all_d_vector
 
 
+def build_sparse(all_d_content, lilx, lily):
+    positions = []
+    data = []
+    for distr in all_d_content:
+        this_position = []
+        this_data = []
+        for tuple in distr[1]:
+            this_position.append(tuple[0])
+            this_data.append(tuple[1])
+        positions.append(this_position)
+        data.append(this_data)
+    sparse_entities = lil_matrix((lilx, lily))
+    sparse_entities.rows = positions
+    sparse_entities.data = data
+    sparse_entities.tocsr()
+    return sparse_entities
+
+
+def build_all_idf(all_d_vec):
+    transformer = TfidfTransformer(smooth_idf=False)
+    sparse_entities = transformer.fit_transform(all_d_vec)
+    return normalize(sparse_entities, norm='l1', axis=1)
+
+
+def revert(sparse_entities):
+    all_distributions = []
+    sparse_entities = sparse_entities.tolil()
+    for i in range(0,sparse_entities.shape[0]):
+        this_row = sparse_entities.getrow(i)
+        this_features = []
+        for offset in range(0,len(this_row.data[0])):
+            this_features.append((this_row.rows[0][offset], this_row.data[0][offset]))
+        all_distributions.append((i,this_features))
+    return all_distributions
+
+
 def main():
     filter_id_to_ctg, all_id_to_ctg = get_ctg()
 
@@ -125,11 +164,17 @@ def main():
         inverted_items = invert_items(all_items, filters, all_id_to_ctg, i)
 
         print len(inverted_items)
-        all_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
+        q_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
+
+        q_distributions = build_sparse(q_distributions)
+
+        w_q_distr = build_all_idf(q_distributions)
+
+        w_q_distr = revert(w_q_distr)
 
         with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:
             writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for line in all_distributions:
+            for line in w_q_distr:
                 writer.writerow(line)
         i+=1
 

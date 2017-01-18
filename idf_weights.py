@@ -5,13 +5,13 @@ import pickle, string
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfTransformer
 from scipy.sparse import lil_matrix
+from sklearn.preprocessing import normalize
 
 """
 This program computes tf-idf scores based on density vectors, created by distr_vec for all density distributions of annotations.
 """
 csv.field_size_limit(sys.maxsize)
 path = sys.argv[1]
-dim_red = sys.argv[2]
 outfilename = 'all_distr_weighted.csv'
 
 
@@ -63,15 +63,15 @@ def build_all_idf(all_d_vec):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
 
-    if dim_red == '1':
-        global outfilename
-        print "Reducing Dimensionality"
-        svd = TruncatedSVD(n_components=10000, n_iter=7)
-        svd.fit(sparse_entities)
-        outfilename = 'all_distr_weighted_svd.csv'
-        return svd.components_
+    #if dim_red == '1':
+    #global outfilename
+    #print "Reducing Dimensionality"
+    #svd = TruncatedSVD(n_components=10000, n_iter=7)
+    #svd.fit(sparse_entities)
+    #outfilename = 'all_distr_weighted_svd.csv'
+    #return svd.components_
 
-    return sparse_entities
+    return normalize(sparse_entities, norm='l1', axis=1)
 
 
 def revert(sparse_entities):
@@ -95,11 +95,9 @@ def main():
     print "Inverse Document Frequency"
     sparse_entities = build_all_idf(sparse_entities)
 
-    # print "Results: " + str(len(sparse_entities))
     all_distributions = revert(sparse_entities)
     del sparse_entities
 
-    print all_distributions[:1]
     with open(path + outfilename, 'wb') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
         for line in all_distributions:
