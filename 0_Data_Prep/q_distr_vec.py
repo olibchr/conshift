@@ -81,12 +81,12 @@ def invert_items(all_items, filter, all_id_to_ctg, i):
     return inverted_items
 
 
-def build_vectors(inverted_items, filters, length):
+def build_vectors(inverted_items, filters):
     all_d_vector = []
     i = 0
 
     for filter in filters:
-        if i % 200 == 0:
+        if i % 500 == 0:
             print "progress: " + str(i) + ", " + str(len(filters)) + ", " + str(
                 (i * 100) / float(1.0 * len(filters))) + "%"
         i += 1
@@ -164,7 +164,7 @@ def main():
         inverted_items = invert_items(all_items, filters, all_id_to_ctg, i)
 
         print len(inverted_items)
-        q_distributions = build_vectors(inverted_items, filters, len(all_id_to_ctg))
+        q_distributions = build_vectors(inverted_items, filters)
 
         q_distributions = build_sparse(q_distributions)
 
