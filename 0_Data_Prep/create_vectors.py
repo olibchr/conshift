@@ -125,7 +125,7 @@ def invert_items(all_items, filter, all_id_to_ctg):
     return frozenset(kill_set)
 
 
-def cleanse_concepts(kill_set, article_vecs, ctg_to_id, id_to_ctg):
+def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
     clean_items = []
     clean_dict = {}
     i = 0
@@ -179,8 +179,7 @@ def main():
 
     print "Erasing " + str(len(kill_set)) + " concepts which appear only once!"
 
-    del id_to_ctg
-    article_vecs, ctg_to_id = cleanse_concepts(kill_set, article_vecs, ctg_to_id, id_to_ctg)
+    article_vecs, ctg_to_id = cleanse_concepts(kill_set, article_vecs, ctg_to_id)
 
     with open('annotation_vectors.csv', 'wb') as article_vec_out:
         writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
