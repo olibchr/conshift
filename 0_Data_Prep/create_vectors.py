@@ -152,8 +152,9 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
             continue
         else:
             clean_dict[key] = val
+    print "done"
 
-    return clean_items, clean_dict
+    return article_vecs, clean_dict
 
 
 def main():
