@@ -21,7 +21,6 @@ path = sys.argv[1]
 def load_data():
     #load the data from the directories
     ctg_set = set()
-
     for filename in os.listdir(path):
         if ".jsonld" not in filename:
             continue
@@ -108,13 +107,25 @@ def format(articles, ctg_to_id):
 
 def invert_items(all_items, filter, all_id_to_ctg):
     index_cnt = {key: 0 for key in filter}
+    apprvd = {key: 0 for key in filter}
     inverted_items = []
+    finite_items = []
 
     for item in all_items:
         for annot in item[2]:
             annot = int(annot)
             inverted_items.append([annot, item])
             index_cnt[annot] = index_cnt[annot] + 1
+            """TBD
+            #only puts items in finite if appears more than once
+            if index_cnt[annot] > 1 and apprvd[annot] == 0:
+                for i in range(0,len(inverted_items)):
+                    if inverted_items[i][0] == annot:
+                        finite_items.append(inverted_items[i])
+                apprvd[annot] = 1
+            elif apprvd[annot] != 0:
+                finite_items.append([annot, item])
+            """
     sorted_index_cnt = sorted(index_cnt.items(), key=operator.itemgetter(1), reverse=True)
     kill_set = []
     for key in sorted_index_cnt:
@@ -130,6 +141,7 @@ def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
     clean_dict = {}
     i = 0
     t = False
+
     for kid in kill_set:
         if i % 1000 == 0:
             print "progress: " + str(i) + ", " + str(len(article_vecs)) + ", " + str(

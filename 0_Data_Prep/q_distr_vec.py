@@ -30,6 +30,7 @@ def get_items():
         for item in reader:
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
+            annots = [x.replace('-1','') for x in annots]
             this_q = 0
             this_release = time.strptime(item[1], "%Y-%m-%d")
             if this_release <= quarters[0]:
@@ -64,9 +65,10 @@ def split_set(all_items):
 def invert_items(all_items, filter, all_id_to_ctg, i):
     index_cnt = {key: 0 for key in filter}
     inverted_items = []
-
     for item in all_items:
         for annot in item[2]:
+            if annot == '':
+                continue
             annot = int(annot)
             inverted_items.append([annot, item])
             index_cnt[annot] = index_cnt[annot] + 1
@@ -161,8 +163,9 @@ def main():
 
     i = 1
     for qtr_items in q_items:
+        print "Quarter " + str(i) + ": " + str(len(qtr_items)) + " items."
         inverted_items = invert_items(qtr_items, filters, all_id_to_ctg, i)
-
+        
         print len(inverted_items)
         q_distributions = build_vectors(inverted_items, filters)
 
@@ -177,6 +180,7 @@ def main():
             for line in w_q_distr:
                 writer.writerow(line)
         i+=1
+        print "q done"
 
 
 if __name__ == "__main__":
