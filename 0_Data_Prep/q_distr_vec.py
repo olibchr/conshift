@@ -86,7 +86,6 @@ def invert_items(all_items, filter, all_id_to_ctg, i):
 def build_vectors(inverted_items, filters):
     all_d_vector = []
     i = 0
-
     for filter in filters:
         if i % 500 == 0:
             print "progress: " + str(i) + ", " + str(len(filters)) + ", " + str(
@@ -165,11 +164,11 @@ def main():
     for qtr_items in q_items:
         print "Quarter " + str(i) + ": " + str(len(qtr_items)) + " items."
         inverted_items = invert_items(qtr_items, filters, all_id_to_ctg, i)
-        
+
         print len(inverted_items)
         q_distributions = build_vectors(inverted_items, filters)
 
-        q_distributions = build_sparse(q_distributions)
+        q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
 
         w_q_distr = build_all_idf(q_distributions)
 
