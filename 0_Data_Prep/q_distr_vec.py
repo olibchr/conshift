@@ -27,11 +27,7 @@ def get_items():
     all_annotations = []
     with open(path + 'annotation_vectors.csv') as annotation_vectors:
         reader = csv.reader(annotation_vectors, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        i = 0
         for item in reader:
-            i += 1
-            if i > 1000:
-                break
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
             r_annots = []
@@ -140,7 +136,7 @@ def build_sparse(all_d_content, lilx, lily):
 def build_all_idf(all_d_vec):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
-    return sparse_entities
+    return normalize(sparse_entities, norm='l1', axis=1)
 
 
 def revert(sparse_entities):
@@ -180,15 +176,15 @@ def main():
         q_distributions = build_vectors(inverted_items, filters)
 
         print "Successfully built "
-        q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
-        print "test1"
-        w_q_distr = build_all_idf(q_distributions)
-        print "test2"
-        w_q_distr = revert(w_q_distr)
-        print "test3"
+        #q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
+        #print "test1"
+        #w_q_distr = build_all_idf(q_distributions)
+        #print "test2"
+        #w_q_distr = revert(w_q_distr)
+        #print "test3"
         with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:
             writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for line in w_q_distr:
+            for line in q_distributions:
                 writer.writerow(line)
         i+=1
         print "q done"
