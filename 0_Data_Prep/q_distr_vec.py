@@ -165,8 +165,8 @@ def main():
     print "Articles: " + str(len(all_items))
 
     q_items = split_set(all_items)
-    del all_items
 
+    print len(q_items)
     i = 1
     for qtr_items in q_items:
         print "Quarter " + str(i) + ": " + str(len(qtr_items)) + " items."
