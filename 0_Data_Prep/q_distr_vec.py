@@ -27,7 +27,11 @@ def get_items():
     all_annotations = []
     with open(path + 'annotation_vectors.csv') as annotation_vectors:
         reader = csv.reader(annotation_vectors, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        i = 0
         for item in reader:
+            i += 1
+            if i > 1000:
+                break
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
             r_annots = []
@@ -175,6 +179,7 @@ def main():
         print len(inverted_items)
         q_distributions = build_vectors(inverted_items, filters)
 
+        print "Successfully built "
         q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
 
         w_q_distr = build_all_idf(q_distributions)
