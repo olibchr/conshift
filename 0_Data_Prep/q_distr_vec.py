@@ -30,7 +30,7 @@ def get_items():
         i = 0
         for item in reader:
             i += 1
-            if i > 1000:
+            if i < 1000:
                 break
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
@@ -180,15 +180,15 @@ def main():
         q_distributions = build_vectors(inverted_items, filters)
 
         print "Successfully built "
-        q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
+        #q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
 
-        w_q_distr = build_all_idf(q_distributions)
+        #w_q_distr = build_all_idf(q_distributions)
 
-        w_q_distr = revert(w_q_distr)
+        #w_q_distr = revert(w_q_distr)
 
         with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:
             writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for line in w_q_distr:
+            for line in q_distributions:
                 writer.writerow(line)
         i+=1
         print "q done"
