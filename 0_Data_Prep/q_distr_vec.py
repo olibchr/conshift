@@ -176,19 +176,19 @@ def main():
         print "Quarter " + str(i) + ": " + str(len(qtr_items)) + " items."
         inverted_items = invert_items(qtr_items, filters, all_id_to_ctg, i)
 
-        print len(inverted_items)
+        print "Annotations: " + str(len(inverted_items))
         q_distributions = build_vectors(inverted_items, filters)
 
         print "Successfully built "
-        #q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
-
-        #w_q_distr = build_all_idf(q_distributions)
-
-        #w_q_distr = revert(w_q_distr)
-
+        q_distributions = build_sparse(q_distributions, len(q_distributions), len(all_id_to_ctg))
+        print "test1"
+        w_q_distr = build_all_idf(q_distributions)
+        print "test2"
+        w_q_distr = revert(w_q_distr)
+        print "test3"
         with open('q' + str(i) + '_distributions.csv', 'wb') as out_file:
             writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for line in q_distributions:
+            for line in w_q_distr:
                 writer.writerow(line)
         i+=1
         print "q done"
