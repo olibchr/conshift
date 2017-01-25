@@ -30,7 +30,7 @@ def get_items():
         i = 0
         for item in reader:
             i += 1
-            if i < 1000:
+            if i > 1000:
                 break
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
