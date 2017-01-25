@@ -30,7 +30,12 @@ def get_items():
         for item in reader:
             annots = item[2][1:-1].split(',')
             annots = [x.strip(' ') for x in annots]
-            annots = [x.replace('-1','') for x in annots]
+            r_annots = []
+            for an in annots:
+                if an == '-1':
+                    continue
+                r_annots.append(an)
+            #annots = [x.replace('-1','') for x in annots]
             this_q = 0
             this_release = time.strptime(item[1], "%Y-%m-%d")
             if this_release <= quarters[0]:
@@ -41,7 +46,7 @@ def get_items():
                 this_q = 3
             elif this_release <= quarters[3]:
                 this_q = 4
-            all_annotations.append([item[0], this_q, annots])
+            all_annotations.append([item[0], this_q, r_annots])
     return sorted(all_annotations, key=lambda all_annotation: all_annotations[1])
 
 
@@ -115,6 +120,8 @@ def build_sparse(all_d_content, lilx, lily):
         this_position = []
         this_data = []
         for tuple in distr[1]:
+            if tuple[0] == '' or tuple[1] == '':
+                continue
             this_position.append(tuple[0])
             this_data.append(tuple[1])
         positions.append(this_position)
