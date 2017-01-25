@@ -140,7 +140,7 @@ def build_sparse(all_d_content, lilx, lily):
 def build_all_idf(all_d_vec):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
-    return normalize(sparse_entities, norm='l1', axis=1)
+    return sparse_entities
 
 
 def revert(sparse_entities):
