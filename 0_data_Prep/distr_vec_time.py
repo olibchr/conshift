@@ -1,9 +1,7 @@
 import csv, operator
 import sys, time, string
-from sklearn.feature_extraction.text import TfidfTransformer
-from scipy.sparse import lil_matrix
 from datetime import datetime
-from sklearn.preprocessing import normalize
+from itertools import chain
 
 if len(sys.argv) < 2:
     print "Give dir path to annotion files!"
@@ -60,9 +58,10 @@ def build_vectors(all_annotations_id, all_annotations_doc):
     i = 0
     all_d_vector = []
     for ids in all_annotations_id:
-        if i % 500 == 0:
+        if i % 100 == 0:
             print "progress: " + str(i) + ", " + str(len(all_annotations_id)) + ", " + str(
                 (i * 100) / float(1.0 * len(all_annotations_id))) + "%"
+            if i != 0: break
         i += 1
         vector = {}
         indeces = []
@@ -92,7 +91,8 @@ def main():
     with open('all_distributions_time.csv', 'wb') as out_file:
         writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for line in all_d_vecs_time:
-            writer.writerow(line)
+            tmp = list(chain.from_iterable(line[1]))
+            writer.writerow([line[0]] + tmp)
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ import string
 import warnings
 import time
 import datetime
+import ast
 warnings.filterwarnings("ignore")
 
 """
@@ -52,10 +53,13 @@ allchars = ''.join(chr(i) for i in xrange(256))
 identity = string.maketrans('', '')
 nondigits = allchars.translate(identity, string.digits)
 with open(path + 'all_distributions_time.csv') as distr_vec:
-    reader = csv.reader(distr_vec, delimiter=',', quotechar=q_char, quoting=csv.QUOTE_MINIMAL)
+    reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     all_data = []
-        for row in reader:
-            all_data.append(row)
+    for row in reader:
+        if int(row[0]) not in filters: continue
+        all_data.append([int(row[0]), ast.literal_eval(row[1])])
+
+            print row
         for filter in filters:
             row = all_data[filter]
             features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
