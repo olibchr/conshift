@@ -23,7 +23,7 @@ def load_data():
     ctg_set = set()
     i = 0
     for filename in os.listdir(path):
-        
+
         if ".jsonld" not in filename:
             continue
         print filename
@@ -146,7 +146,6 @@ def cleanse_concepts(kill_set, invert_vec, ctg_to_id):
                 invert_vec[k] = []
                 offset = k
                 break
-
 
     """for key,val in ctg_to_id.iteritems():
         if val in kill_set:
