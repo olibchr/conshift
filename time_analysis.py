@@ -24,17 +24,6 @@ csv.field_size_limit(sys.maxsize)
 q_char = '|'
 
 
-def timeframes(concept, window):
-    start_date = time.strptime("2014-08-13", "%Y-%m-%d")
-    end_date = time.strptime("2015-08-13", "%Y-%m-%d")
-    all_frames = []
-    this_date = start_date
-    while this_date <= end_date:
-        this_date = this_date + datetime.timedelta(days=window)
-        all_frames.append(this_date)
-    return timeframes()
-
-
 def get_ctg(filters):
     filter_id_to_ctg = {}
     all_id_to_ctg = {}
@@ -48,26 +37,30 @@ def get_ctg(filters):
 
 
 def load_distr(filters):
-all_d_content = []
-allchars = ''.join(chr(i) for i in xrange(256))
-identity = string.maketrans('', '')
-nondigits = allchars.translate(identity, string.digits)
-with open(path + 'all_distributions_time.csv') as distr_vec:
-    reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    all_data = []
-    for row in reader:
-        if int(row[0]) not in filters: continue
-        all_data.append([int(row[0]), ast.literal_eval(row[1])])
-
-            print row
-        for filter in filters:
-            row = all_data[filter]
-            features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
-            l_features = [features[x] for x in range(0,len(features),2)]
-            xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
-            all_d_content.append([int(row[0]),xy_features])
-        del all_data
+    all_d_content = []
+    with open(path + 'all_distributions_time.csv') as distr_vec:
+        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        all_data = []
+        for row in reader:
+            if int(row[0]) not in filters: continue
+            all_data.append([int(row[0]),row[1:]])
+    for item in all_data:
+        tups = []
+        for i in range(0,len(item[1])-2,2):
+            tups.append((item[1][i], int(item[1][i+1])))
+        all_d_content.append([item[0], tups])
     return all_d_content
+
+
+def timeframes(concept, window):
+    start_date = time.strptime("2014-08-13", "%Y-%m-%d")
+    end_date = time.strptime("2015-08-13", "%Y-%m-%d")
+    all_frames = []
+    this_date = start_date
+    while this_date <= end_date:
+        this_date = this_date + datetime.timedelta(days=window)
+        all_frames.append(this_date)
+    return timeframes()
 
 
 def rebuild_distr(all_d_content, vlen):
