@@ -12,7 +12,8 @@ This program computes tf-idf scores based on density vectors, created by distr_v
 """
 csv.field_size_limit(sys.maxsize)
 path = sys.argv[1]
-outfilename = 'all_distr_weighted.csv'
+infilename = sys.argv[2] + "_distributions.csv"
+outfilename = sys.argv[2] + '_distributions_idf.csv'
 
 
 def load_distr():
@@ -20,10 +21,14 @@ def load_distr():
     allchars = ''.join(chr(i) for i in xrange(256))
     identity = string.maketrans('', '')
     nondigits = allchars.translate(identity, string.digits)
-    with open(path + 'all_distributions.csv') as distr_vec:
+    with open(path + infilename) as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
-            features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
+            tmp_features = [(k.translate(identity, nondigits)) for k in row[1].split(",")]
+            features = []
+            for k in tmp_features:
+                if len(k) > 1:
+                    features.append(int(k))
             l_features = [features[x] for x in range(0,len(features),2)]
             xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
             all_d_content.append([int(row[0]),xy_features])
@@ -62,14 +67,6 @@ def build_sparse(all_d_content, lilx, lily):
 def build_all_idf(all_d_vec):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
-
-    #if dim_red == '1':
-    #global outfilename
-    #print "Reducing Dimensionality"
-    #svd = TruncatedSVD(n_components=10000, n_iter=7)
-    #svd.fit(sparse_entities)
-    #outfilename = 'all_distr_weighted_svd.csv'
-    #return svd.components_
 
     return normalize(sparse_entities, norm='l1', axis=1)
 

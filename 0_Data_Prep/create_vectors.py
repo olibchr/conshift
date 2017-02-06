@@ -21,7 +21,9 @@ path = sys.argv[1]
 def load_data():
     #load the data from the directories
     ctg_set = set()
+    i = 0
     for filename in os.listdir(path):
+        
         if ".jsonld" not in filename:
             continue
         print filename
@@ -107,66 +109,53 @@ def format(articles, ctg_to_id):
 
 def invert_items(all_items, filter, all_id_to_ctg):
     index_cnt = {key: 0 for key in filter}
-    apprvd = {key: 0 for key in filter}
     inverted_items = []
-    finite_items = []
 
     for item in all_items:
+        annot_to_item = []
         for annot in item[2]:
             annot = int(annot)
-            inverted_items.append([annot, item])
+            #inverted_items.append([annot, item[0], item[1]])
+            annot_to_item.append([annot, item[0], item[1]])
             index_cnt[annot] = index_cnt[annot] + 1
-            """TBD
-            #only puts items in finite if appears more than once
-            if index_cnt[annot] > 1 and apprvd[annot] == 0:
-                for i in range(0,len(inverted_items)):
-                    if inverted_items[i][0] == annot:
-                        finite_items.append(inverted_items[i])
-                apprvd[annot] = 1
-            elif apprvd[annot] != 0:
-                finite_items.append([annot, item])
-            """
+
+        if len(annot_to_item) > 1:
+            for item in annot_to_item:
+                inverted_items.append(item)
     sorted_index_cnt = sorted(index_cnt.items(), key=operator.itemgetter(1), reverse=True)
     kill_set = []
     for key in sorted_index_cnt:
         if key[1] == 1:
             kill_set.append(key[0])
+    inverted_items = sorted(inverted_items, key=lambda item: item[0])
+    return inverted_items, frozenset(kill_set)
 
-    sorted(inverted_items, key=lambda key: inverted_items[0])
-    return frozenset(kill_set)
 
-
-def cleanse_concepts(kill_set, article_vecs, ctg_to_id):
-    clean_items = []
-    clean_dict = {}
+def cleanse_concepts(kill_set, invert_vec, ctg_to_id):
+    turbo_invert = [x[0] for x in invert_vec]
+    offset = 0
     i = 0
-    t = False
 
-    for kid in kill_set:
-        if i % 1000 == 0:
-            print "progress: " + str(i) + ", " + str(len(article_vecs)) + ", " + str(
-                (i * 100) / float(1.0 * len(article_vecs))) + "%"
+    for kill in kill_set:
+        if i % 200 == 0:
+            print "     Progress: " + str((i * 1.0) / (len(kill_set) * 1.0)) + " % /// " + str(i) + " /// " + str(len(kill_set)) + " /// " + str(offset) + " /// " + str(len(invert_vec))
         i += 1
-        for k in range(0,len(article_vecs)):
-            for j in range(0,len(article_vecs[k][2])):
-                if article_vecs[k][2][j] == kid:
-                    article_vecs[k][2][j] = -1
-                    t = True
-                    break
+        for k in range(offset,len(invert_vec)+10):
 
-            if t == True:
-                t = False
+            if kill == turbo_invert[k]:
+                invert_vec[k] = []
+                offset = k
                 break
 
-    print "Cleaning dictionary.."
-    for key,val in ctg_to_id.iteritems():
+
+    """for key,val in ctg_to_id.iteritems():
         if val in kill_set:
             continue
         else:
-            clean_dict[key] = val
+            clean_dict[key] = val"""
     print "done"
 
-    return article_vecs, clean_dict
+    return invert_vec, ctg_to_id
 
 
 def main():
@@ -188,15 +177,19 @@ def main():
 
     article_vecs = format(articles, ctg_to_id)
 
-    kill_set = invert_items(article_vecs, [x for x in id_to_ctg.keys()], id_to_ctg)
+    invert_vec, kill_set = invert_items(article_vecs, [x for x in id_to_ctg.keys()], id_to_ctg)
 
+    print len(invert_vec)
     print "Erasing " + str(len(kill_set)) + " concepts which appear only once!"
+    article_vecs, ctg_to_id = cleanse_concepts(kill_set, invert_vec, ctg_to_id)
 
-    article_vecs, ctg_to_id = cleanse_concepts(kill_set, article_vecs, ctg_to_id)
+    print len(article_vecs)
 
     with open('annotation_vectors.csv', 'wb') as article_vec_out:
         writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for a_vec in article_vecs:
+            if len(a_vec) <= 1:
+                continue
             writer.writerow(a_vec)
 
     with open('annotation_to_index.csv', 'wb') as article_dict_out:

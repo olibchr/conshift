@@ -47,7 +47,7 @@ def get_items():
             elif this_release <= quarters[3]:
                 this_q = 4
             all_annotations.append([item[0], this_q, r_annots])
-    return sorted(all_annotations, key=lambda all_annotation: all_annotations[1])
+    return sorted(all_annotations, key=lambda annotation: annotation[1])
 
 
 def split_set(all_items):

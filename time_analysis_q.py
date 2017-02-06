@@ -15,14 +15,11 @@ In detail, this tool creates density distribution vectors for the specified anno
  with a KL divergence / cosine metric to measure similarity.
  All output will be printed on screen.
 """
-path = sys.argv[2]
+path = sys.argv[1]
 csv.field_size_limit(sys.maxsize)
-
-mode = int(sys.argv[1])
 
 distr_file = ['q1_distributions.csv','q2_distributions.csv','q3_distributions.csv','q4_distributions.csv', ]
 q_char = '|'
-print "MODE: Quarterly concept vectors"
 
 
 def get_ctg(filters):
@@ -47,11 +44,19 @@ def load_distr(filters):
             reader = csv.reader(distr_vec, delimiter=',', quotechar=q_char, quoting=csv.QUOTE_MINIMAL)
             qtr_data = []
             qtr_d_content = []
+            qtr_map = {}
+            i = 0
             for row in reader:
                 qtr_data.append(row)
+                qtr_map[int(row[0])] = i
+                i += 1
             for filter in filters:
-                row = qtr_data[filter]
-                features = [int(k.translate(identity, nondigits)) for k in row[1].split(",")]
+                row = qtr_data[qtr_map[filter]]
+                tmp_features = [(k.translate(identity, nondigits)) for k in row[1].split(",")]
+                features = []
+                for k in tmp_features:
+                    if len(k)>=1:
+                        features.append(int(k))
                 l_features = [features[x] for x in range(0,len(features),2)]
                 xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
                 #print "     " + str(row[0]) + " --- " + str(len(xy_features))
@@ -62,33 +67,33 @@ def load_distr(filters):
 
 
 def rebuild_distr(all_d_content, vlen):
+    #print all_d_content
+    vlen = 111953
     all_d_vec = []
     for d_vec in all_d_content:
         d_vector = [0.000001] * vlen
         d_id = d_vec[0]
         for keyval in d_vec[1]:
             d_vector[keyval[0]] = keyval[1]
+        #print "     " + str(sum(d_vector))
         all_d_vec.append([d_id, d_vector])
     return all_d_vec
 
 
 # might be problem: distributions might not contain a specific vector --> need identifier
-def kl_div(distributions):
-    if len(distributions) <2:
-        print "Nothing to compare.. exiting"
-        exit()
-    else:
-        all_div = []
-        for i in range(1,len(distributions[0])):
-            this_ents = []
-            this_distr = distributions[0][i]
-            for k in range(1,len(distributions)):
-                next_distr = distributions[k][i]
-                this_entropy = entropy(this_distr, next_distr)
-                this_ents.append(this_entropy)
-                this_distr = next_distr
-            all_div.append(this_ents)
-        return all_div
+def kl_div(distr):
+    all_div = []
+    for i in range(0,len(distr)-1):
+        this_distr = distr[i][1]
+        next_distr = distr[i+1][1]
+        if sum(this_distr) < 1 or sum(next_distr) < 1:
+            print "Cant compare quarter " + str(i+1) + " to " + str(i+2) + ". One Vector empty: " + str(sum(this_distr)) + " or " + str(sum(next_distr))
+            all_div.append('NaN')
+            continue
+        this_entropy = entropy(this_distr, next_distr)
+        all_div.append(this_entropy)
+    all_div.append(entropy(distr[0][1], distr[len(distr)-1][1]))
+    return all_div
 
 
 def validation_scoring(distributions):
@@ -103,8 +108,21 @@ def validation_scoring(distributions):
     return scoring
 
 
+def remap(distributions, filters):
+    distr_per_id = []
+    for i in range(0,len(filters)):
+        this_dist = []
+        this_dist.append(distributions[0][i])
+        this_dist.append(distributions[1][i])
+        this_dist.append(distributions[2][i])
+        this_dist.append(distributions[3][i])
+        distr_per_id.append(this_dist)
+    return distr_per_id
+
+
+
 def main(argv):
-    filters = map(int, argv[3:])
+    filters = map(int, argv[2:])
     print "Setting filters.. "
 
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
@@ -120,12 +138,19 @@ def main(argv):
 
     print "Built " + str(len(distributions[0])) + " probability density vectors"
 
-    all_divergences = kl_div(distributions)
+    distributions = remap(distributions, filters)
 
-    print "KL Divergences are: "
+    divergences_per_id = []
+    for distr in distributions:
+        divergences_per_id.append(kl_div(distr))
+    for i in range(0,len(filters)):
+        print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
 
-    for d in all_divergences:
-        print "     " + str(filters[0]) + " --> " + str(d[0]) + " : " + str(d[1])
+        print "     Quarter 1 to Quarter 2: " + str(divergences_per_id[i][0])
+        print "     Quarter 2 to Quarter 3: " + str(divergences_per_id[i][1])
+        print "     Quarter 3 to Quarter 4: " + str(divergences_per_id[i][2])
+        print "     Quarter 1 to Quarter 4: " + str(divergences_per_id[i][3])
+        print ""
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
