@@ -52,15 +52,28 @@ def load_distr(filters):
     return all_d_content
 
 
-def timeframes(concept, window):
+def timeframes(concept, bucketsize):
     start_date = time.strptime("2014-08-13", "%Y-%m-%d")
-    end_date = time.strptime("2015-08-13", "%Y-%m-%d")
     all_frames = []
     this_date = start_date
-    while this_date <= end_date:
-        this_date = this_date + datetime.timedelta(days=window)
+    if sum([v for k,v in concept[1]]) <= 2 * bucketsize: buckets=2
+    else: buckets = sum([v for k,v in concept[1]])/bucketsize
+    for i in range(0,buckets):
+        this_date = this_date + datetime.timedelta(days=365/buckets)
         all_frames.append(this_date)
-    return timeframes()
+    all_buckets = [dict() for x in range(buckets)]
+    for annotation in concept[1]:
+        for i in range(len(all_frames)-1, 0,-1):
+            if time.strptime(annotation[0].rsplit('_')[-1], "%Y-%m-%d") < all_frames[i]:
+                continue
+            elif (annotation[0].split('_')[0]) in all_buckets[i]:
+                all_buckets[i][(annotation[0].split('_')[0])] = all_buckets[i][(annotation[0].split('_')[0])] + annotation[1]
+                break
+            else:
+                all_buckets[i][(annotation[0].split('_')[0])] = annotation[1]
+                break
+            print "DATE ERROR"
+    return [concept[0], all_buckets]
 
 
 def rebuild_distr(all_d_content, vlen):

@@ -61,7 +61,6 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         if i % 100 == 0:
             print "progress: " + str(i) + ", " + str(len(all_annotations_id)) + ", " + str(
                 (i * 100) / float(1.0 * len(all_annotations_id))) + "%"
-            if i != 0: break
         i += 1
         vector = {}
         indeces = []
