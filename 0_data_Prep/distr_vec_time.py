@@ -53,8 +53,9 @@ def doc_mapping(all_annotations):
 def build_vectors(all_annotations_id, all_annotations_doc):
     i = 0
     all_d_vector = []
+    doc_match_list = {all_annotations_doc[i][0][0]: i for i in range(len(all_annotations_doc))}
     for ids in all_annotations_id:
-        if i % 200 == 0:
+        if i % 500 == 0:
             print "progress: " + str(i) + ", " + str(len(all_annotations_id)) + ", " + str(
                 (i * 100) / float(1.0 * len(all_annotations_id))) + "%"
             #if i != 0: break
@@ -63,13 +64,10 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         indeces = []
         for item in ids:
             docid = item[1]
-            for idx, doc in enumerate(all_annotations_doc):
-                if doc[0][0] == docid:
-                    for doc_w_docid in doc:
-                        dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
-                        vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
-                    #all_annotations_doc.pop(idx) # cant pop it. will reappear
-                    break
+            doc = all_annotations_doc[doc_match_list[docid]]
+            for doc_w_docid in doc:
+                dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
+                vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
         for k, v in vector.iteritems():
             indeces.append([k, v])
         all_d_vector.append([int(ids[0][0]), indeces])
