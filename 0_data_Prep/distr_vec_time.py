@@ -54,7 +54,7 @@ def build_vectors(all_annotations_id, all_annotations_doc):
     i = 0
     all_d_vector = []
     for ids in all_annotations_id:
-        if i % 100 == 0:
+        if i % 200 == 0:
             print "progress: " + str(i) + ", " + str(len(all_annotations_id)) + ", " + str(
                 (i * 100) / float(1.0 * len(all_annotations_id))) + "%"
             #if i != 0: break
@@ -68,7 +68,7 @@ def build_vectors(all_annotations_id, all_annotations_doc):
                     for doc_w_docid in doc:
                         dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
                         vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
-                    all_annotations_doc.pop(idx)
+                    #all_annotations_doc.pop(idx) # cant pop it. will reappear
                     break
         for k, v in vector.iteritems():
             indeces.append([k, v])

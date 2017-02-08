@@ -54,35 +54,43 @@ def load_distr(filters):
 
 def timeframes(concept, bucketsize):
     all_frames = []
-    if sum([v for k,v in concept[1]]) <= 2 * bucketsize:
+    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(item[0].split('_')[2], "%Y-%m-%d"), item[1]] for item in concept[1]]
+    tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
+    tag_len = len(set([tag[1] for tag in tag_quad]))
+    if tag_len <= 2 * bucketsize:
         buckets=2
     else:
-        buckets = int(round(sum([v for k,v in concept[1]])/(1.0 * bucketsize)))
-    bucketsize = int(round(sum([v for k,v in concept[1]]) / (1.0 * buckets)))
+        buckets = int(round(tag_len/(1.0 * bucketsize)))
+    #bucketsize = int(round(tag_len / (1.0 * buckets)))
     all_buckets = [dict() for x in range(buckets)]
-    all_last_adds = []
-    date_annots = sorted([[datetime.datetime.strptime(annotation[0].rsplit('_')[-1], "%Y-%m-%d"),int(annotation[0].split('_')[0]), annotation[1]] for annotation in concept[1]], key=lambda date: date[0])
-    for this_bucket in all_buckets:
-        t = 0
-        last_add = time.strptime("2015-08-13", "%Y-%m-%d")
-        while(t < bucketsize):
+    all_last_adds = buckets * [time.strptime("2015-08-13", "%Y-%m-%d")]
+    i = 0
+    t = 0
+    this_bucket = all_buckets[0]
+    last_tag_doc = tag_quad[0][1]
+    for tag in tag_quad:
+        tag_id = tag[0]
+        tag_doc = tag[1]
+        tag_date = tag[2]
+        tag_cnt = tag[3]
+        if i > bucketsize:
+            i = 0
             t += 1
-            if len(date_annots) < 1:
-                break
-            to_be_added = date_annots.pop(0)
-            if to_be_added[1] in this_bucket:
-                this_bucket[to_be_added[1]] = this_bucket[to_be_added[1]] + to_be_added[2]
-            else:
-                this_bucket[to_be_added[1]] = to_be_added[2]
-            last_add = to_be_added[0]
-        all_last_adds.append(last_add)
+            this_bucket = all_buckets[t]
+        all_last_adds[t] = tag_date
+        if last_tag_doc != tag_doc:
+            i+=1
+            last_tag_doc = tag_doc
+        if tag_id in this_bucket:
+            this_bucket[tag_id] = this_bucket[tag_id] + tag_cnt
+        else:
+            this_bucket[tag_id] = tag_cnt
     for this_bucket, last_add in zip(all_buckets, all_last_adds):
         all_frames.append([concept[0], [[k,v] for k,v in this_bucket.iteritems()], last_add])
     return all_frames
 
 
 def rebuild_distr(all_d_content, vlen):
-    #print all_d_content
     vlen = 111953
     all_d_vec = []
     for d_vec in all_d_content:
@@ -91,7 +99,7 @@ def rebuild_distr(all_d_content, vlen):
         for keyval in d_vec[1]:
             d_vector[keyval[0]] = keyval[1]
         #print "     " + str(sum(d_vector))
-        all_d_vec.append([d_id, d_vector, all_d_content[2]])
+        all_d_vec.append([d_id, d_vector, d_vec[2]])
     return all_d_vec
 
 
@@ -124,7 +132,7 @@ def validation_scoring(distributions):
 
 
 def main(argv):
-    bucketsize = map(int, argv[2])
+    bucketsize = map(int, argv[2])[0]
     filters = map(int, argv[3:])
     print "Setting filters.. "
 
@@ -149,7 +157,7 @@ def main(argv):
     for i in range(0,len(filters)):
         print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(divergences_per_id[i])-1):
-            print "     Window " + str(distributions[i][k][2][-1]) + " to " + str(distributions[i][k+1][2][-1]) + ": " + str(divergences_per_id[i][k])
+            print "     Window " + str(distributions[i][k][2]) + " to " + str(distributions[i][k+1][2]) + ": " + str(divergences_per_id[i][k])
         print ""
 
 if __name__ == "__main__":
