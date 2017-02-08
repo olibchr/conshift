@@ -53,27 +53,32 @@ def load_distr(filters):
 
 
 def timeframes(concept, bucketsize):
-    start_date = time.strptime("2014-08-13", "%Y-%m-%d")
     all_frames = []
-    this_date = start_date
-    if sum([v for k,v in concept[1]]) <= 2 * bucketsize: buckets=2
-    else: buckets = sum([v for k,v in concept[1]])/bucketsize
-    for i in range(0,buckets):
-        this_date = this_date + datetime.timedelta(days=365/buckets)
-        all_frames.append(this_date)
+    if sum([v for k,v in concept[1]]) <= 2 * bucketsize:
+        buckets=2
+    else:
+        buckets = int(round(sum([v for k,v in concept[1]])/(1.0 * bucketsize)))
+    bucketsize = int(round(sum([v for k,v in concept[1]]) / (1.0 * buckets)))
     all_buckets = [dict() for x in range(buckets)]
-    for annotation in concept[1]:
-        for i in range(len(all_frames)-1, 0,-1):
-            if time.strptime(annotation[0].rsplit('_')[-1], "%Y-%m-%d") < all_frames[i]:
-                continue
-            elif (annotation[0].split('_')[0]) in all_buckets[i]:
-                all_buckets[i][(annotation[0].split('_')[0])] = all_buckets[i][(annotation[0].split('_')[0])] + annotation[1]
+    all_last_adds = []
+    date_annots = sorted([[datetime.datetime.strptime(annotation[0].rsplit('_')[-1], "%Y-%m-%d"),int(annotation[0].split('_')[0]), annotation[1]] for annotation in concept[1]], key=lambda date: date[0])
+    for this_bucket in all_buckets:
+        t = 0
+        last_add = time.strptime("2015-08-13", "%Y-%m-%d")
+        while(t < bucketsize):
+            t += 1
+            if len(date_annots) < 1:
                 break
+            to_be_added = date_annots.pop(0)
+            if to_be_added[1] in this_bucket:
+                this_bucket[to_be_added[1]] = this_bucket[to_be_added[1]] + to_be_added[2]
             else:
-                all_buckets[i][(annotation[0].split('_')[0])] = annotation[1]
-                break
-            print "DATE ERROR"
-    return [concept[0], all_buckets]
+                this_bucket[to_be_added[1]] = to_be_added[2]
+            last_add = to_be_added[0]
+        all_last_adds.append(last_add)
+    for this_bucket, last_add in zip(all_buckets, all_last_adds):
+        all_frames.append([concept[0], [[k,v] for k,v in this_bucket.iteritems()], last_add])
+    return all_frames
 
 
 def rebuild_distr(all_d_content, vlen):
@@ -86,7 +91,7 @@ def rebuild_distr(all_d_content, vlen):
         for keyval in d_vec[1]:
             d_vector[keyval[0]] = keyval[1]
         #print "     " + str(sum(d_vector))
-        all_d_vec.append([d_id, d_vector])
+        all_d_vec.append([d_id, d_vector, all_d_content[2]])
     return all_d_vec
 
 
@@ -118,21 +123,9 @@ def validation_scoring(distributions):
     return scoring
 
 
-def remap(distributions, filters):
-    distr_per_id = []
-    for i in range(0,len(filters)):
-        this_dist = []
-        this_dist.append(distributions[0][i])
-        this_dist.append(distributions[1][i])
-        this_dist.append(distributions[2][i])
-        this_dist.append(distributions[3][i])
-        distr_per_id.append(this_dist)
-    return distr_per_id
-
-
-
 def main(argv):
-    filters = map(int, argv[2:])
+    bucketsize = map(int, argv[2])
+    filters = map(int, argv[3:])
     print "Setting filters.. "
 
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
@@ -144,22 +137,19 @@ def main(argv):
 
     print "Create sparse vectors"
     for i in range(0,len(distributions)):
-        distributions[i] = rebuild_distr(distributions[i], len(all_id_to_ctg))
+        concept = timeframes(distributions[i], bucketsize)
+        distributions[i] = rebuild_distr(concept, len(all_id_to_ctg))
 
     print "Built " + str(len(distributions[0])) + " probability density vectors"
-
-    distributions = remap(distributions, filters)
 
     divergences_per_id = []
     for distr in distributions:
         divergences_per_id.append(kl_div(distr))
+
     for i in range(0,len(filters)):
         print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
-
-        print "     Quarter 1 to Quarter 2: " + str(divergences_per_id[i][0])
-        print "     Quarter 2 to Quarter 3: " + str(divergences_per_id[i][1])
-        print "     Quarter 3 to Quarter 4: " + str(divergences_per_id[i][2])
-        print "     Quarter 1 to Quarter 4: " + str(divergences_per_id[i][3])
+        for k in range(len(divergences_per_id[i])-1):
+            print "     Window " + str(distributions[i][k][2][-1]) + " to " + str(distributions[i][k+1][2][-1]) + ": " + str(divergences_per_id[i][k])
         print ""
 
 if __name__ == "__main__":
