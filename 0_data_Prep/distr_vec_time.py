@@ -54,6 +54,8 @@ def build_vectors(all_annotations_id, all_annotations_doc):
     i = 0
     all_d_vector = []
     doc_match_list = {all_annotations_doc[i][0][0]: i for i in range(len(all_annotations_doc))}
+    outfile = open('all_distributions_time.csv', 'wb')
+    writer = csv.writer(outfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     for ids in all_annotations_id:
         if i % 500 == 0:
             print "progress: " + str(i) + ", " + str(len(all_annotations_id)) + ", " + str(
@@ -70,7 +72,9 @@ def build_vectors(all_annotations_id, all_annotations_doc):
                 vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
         for k, v in vector.iteritems():
             indeces.append([k, v])
-        all_d_vector.append([int(ids[0][0]), indeces])
+        tmp = list(chain.from_iterable(indeces))
+        writer.writerow(int(ids[0][0]) + tmp)
+        #all_d_vector.append([int(ids[0][0]), indeces])
     return all_d_vector
 
 
@@ -84,7 +88,7 @@ def main():
         writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for line in all_d_vecs_time:
             tmp = list(chain.from_iterable(line[1]))
-            writer.writerow([line[0]] + tmp)
+            #writer.writerow([line[0]] + tmp)
 
 
 if __name__ == "__main__":
