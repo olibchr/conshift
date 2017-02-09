@@ -73,7 +73,7 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         for k, v in vector.iteritems():
             indeces.append([k, v])
         tmp = list(chain.from_iterable(indeces))
-        writer.writerow(int(ids[0][0]) + tmp)
+        writer.writerow([int(ids[0][0])] + tmp)
         #all_d_vector.append([int(ids[0][0]), indeces])
     return all_d_vector
 
