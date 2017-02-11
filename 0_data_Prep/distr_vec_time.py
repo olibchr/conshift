@@ -66,7 +66,10 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         indeces = []
         for item in ids:
             docid = item[1]
-            doc = all_annotations_doc[doc_match_list[docid]]
+            try:
+                doc = all_annotations_doc[doc_match_list[docid]]
+            except Exception:
+                continue
             for doc_w_docid in doc:
                 dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
                 vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
