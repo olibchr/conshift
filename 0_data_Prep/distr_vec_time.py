@@ -66,15 +66,15 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         indeces = []
         for item in ids:
             docid = item[1]
-            try:
-                doc = all_annotations_doc[doc_match_list[docid]]
-            except Exception:
-                continue
+            doc = all_annotations_doc[doc_match_list[docid]]
+            #except Exception:
+            #    print "error"
+            #    continue
             for doc_w_docid in doc:
                 dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
                 vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
         for k, v in vector.iteritems():
-            indeces.append([k, v])
+            indeces.append([k])
         tmp = list(chain.from_iterable(indeces))
         writer.writerow([int(ids[0][0])] + tmp)
         #all_d_vector.append([int(ids[0][0]), indeces])
