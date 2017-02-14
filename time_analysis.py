@@ -61,7 +61,7 @@ def timeframes(concept, bucketsize):
         buckets=2
     else:
         buckets = int(round(tag_len/(1.0 * bucketsize)))
-    #bucketsize = int(round(tag_len / (1.0 * buckets)))
+    tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
     all_buckets = [dict() for x in range(buckets)]
     all_last_adds = buckets * [time.strptime("2015-08-13", "%Y-%m-%d")]
     i = 0
@@ -73,7 +73,7 @@ def timeframes(concept, bucketsize):
         tag_doc = tag[1]
         tag_date = tag[2]
         tag_cnt = tag[3]
-        if i > bucketsize:
+        if i > tmpbucketsize:
             i = 0
             t += 1
             this_bucket = all_buckets[t]
