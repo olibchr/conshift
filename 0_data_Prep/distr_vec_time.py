@@ -98,8 +98,8 @@ def main():
 
     with open('docid_to_date.csv', 'wb') as out_file:
         writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for line in doc_id_to_date:
-            writer.writerow(line)
+        for k,v in doc_id_to_date.iteritems():
+            writer.writerow([k,v.encode('utf-8')])
 
 if __name__ == "__main__":
     main()
