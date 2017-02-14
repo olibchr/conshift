@@ -101,7 +101,9 @@ def format(articles, ctg_to_id):
         article_vec = []
         for ctg in article[2]:
             try: ctg_to_id[ctg]
-            except KeyError: err_cnt +=1
+            except KeyError:
+                err_cnt +=1
+                continue
             if ctg_to_id[ctg] is not None:
                 article_vec.append(ctg_to_id[ctg])
                 annot_cnt += 1
