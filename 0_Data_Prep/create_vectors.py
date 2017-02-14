@@ -131,7 +131,18 @@ def invert_items(all_items, filter, all_id_to_ctg):
     return inverted_items, frozenset(kill_set)
 
 
-def cleanse_concepts(kill_set, invert_vec, ctg_to_id):
+def cleanse_dict(kill_set, ctg_to_id):
+    clean_dict = {}
+    for key,val in ctg_to_id.iteritems():
+        if val in kill_set:
+            continue
+        else:
+            clean_dict[key] = val
+    print "done"
+    return clean_dict
+
+
+def cleanse_concepts(kill_set, invert_vec):
     turbo_invert = [x[0] for x in invert_vec]
     offset = 0
     i = 0
@@ -146,25 +157,13 @@ def cleanse_concepts(kill_set, invert_vec, ctg_to_id):
                 invert_vec[k] = []
                 offset = k
                 break
-
-    """for key,val in ctg_to_id.iteritems():
-        if val in kill_set:
-            continue
-        else:
-            clean_dict[key] = val"""
-    print "done"
-
-    return invert_vec, ctg_to_id
+    return invert_vec
 
 
 def main():
     print "Loading data.." # we load the data
     articles, ctg_set = load_data()
     ctg_set = sorted(ctg_set)
-
-    #for item in ctg_set:
-    #    if 'wiki/wiki' in item:
-    #        item.replace('wiki/wiki','wiki')
 
     print "Creating dictionary.." # put all annotations into dictionaries
     ctg_to_id = {ctg_set[i]: i for i in range(0,len(ctg_set))}
@@ -176,13 +175,23 @@ def main():
 
     article_vecs = format(articles, ctg_to_id)
 
+    _, kill_set = invert_items(article_vecs, [x for x in id_to_ctg.keys()], id_to_ctg)
+
+    print "Cleaning Dictionary and redo some steps"
+    ctg_to_id = cleanse_dict(kill_set, ctg_to_id)
+    id_to_ctg = {v:k for k,v in ctg_to_id.iteritems()}
+
+    # We redo the steps to get rid of the annotations
+
+    print "Found " + str(len(articles)) + " articles with " + str(len(ctg_to_id)) + " categories"
+    print "No about annotations for " + str(NO_ANT_CNT) + " articles." + " No ctg annotations for " + str(NO_CTG_CNT) + " articles."
+    print "Creating vectors.."
+    article_vecs = format(articles, ctg_to_id)
     invert_vec, kill_set = invert_items(article_vecs, [x for x in id_to_ctg.keys()], id_to_ctg)
-
-    print len(invert_vec)
     print "Erasing " + str(len(kill_set)) + " concepts which appear only once!"
-    article_vecs, ctg_to_id = cleanse_concepts(kill_set, invert_vec, ctg_to_id)
+    article_vecs, ctg_to_id = cleanse_concepts(kill_set, invert_vec)
 
-    print len(article_vecs)
+
 
     with open('annotation_vectors.csv', 'wb') as article_vec_out:
         writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -196,10 +205,7 @@ def main():
         for key, value in ctg_to_id.items():
             writer.writerow([key.encode('utf-8'), value])
 
-    with open('annotation_to_index.csv', 'wb') as article_dict_out:
-        writer = csv.writer(article_dict_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for key in kill_set:
-            writer.writerow(id_to_ctg[key])
+
 
 
 
