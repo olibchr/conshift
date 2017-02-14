@@ -134,6 +134,7 @@ def validation_scoring(distributions):
 def main(argv):
     bucketsize = map(int, argv[2])[0]
     filters = map(int, argv[3:])
+    print "Bucketsize of " + str(bucketsize)
     print "Setting filters.. "
 
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
@@ -157,6 +158,8 @@ def main(argv):
     for i in range(0,len(filters)):
         print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(divergences_per_id[i])-1):
+            if divergences_per_id[i][k] == 'NaN':
+                continue
             print "     Window " + str(distributions[i][k][2]) + " to " + str(distributions[i][k+1][2]) + ": " + str(divergences_per_id[i][k])
         print ""
 

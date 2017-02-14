@@ -67,10 +67,11 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         indeces = []
         for item in ids:
             docid = item[1]
-            doc = all_annotations_doc[doc_match_list[docid]]
-            #except Exception:
-            #    print "error"
-            #    continue
+            try:
+                doc = all_annotations_doc[doc_match_list[docid]]
+            except KeyError:
+                print "error"
+                continue
             for doc_w_docid in doc:
                 dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
                 vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0])] = 1
@@ -80,7 +81,7 @@ def build_vectors(all_annotations_id, all_annotations_doc):
         tmp = list(chain.from_iterable(indeces))
         writer.writerow([int(ids[0][0])] + tmp)
         #all_d_vector.append([int(ids[0][0]), indeces])
-    return all_d_vector
+    return all_d_vector, doc_id_to_date
 
 
 def main():
@@ -88,13 +89,17 @@ def main():
     all_annotations_id, all_annotations_doc, doc_to_id = get_items()
     all_annotations_doc = doc_mapping(all_annotations_doc)
     print "Building Distributions"
-    all_d_vecs_time = build_vectors(all_annotations_id, all_annotations_doc)
+    all_d_vecs_time, doc_id_to_date = build_vectors(all_annotations_id, all_annotations_doc)
     with open('all_distributions_time.csv', 'wb') as out_file:
         writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for line in all_d_vecs_time:
             tmp = list(chain.from_iterable(line[1]))
             #writer.writerow([line[0]] + tmp)
 
+    with open('docid_to_date.csv') as out_file:
+        writer.csvwriter(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for line in doc_id_to_date:
+            writer.writerow(line)
 
 if __name__ == "__main__":
     main()
