@@ -145,7 +145,7 @@ def cleanse_dict(kill_set, ctg_to_id):
         else:
             clean_dict[key] = val
     print "done"
-    return clean_dict
+    return [clean_dict.keys()]
 
 
 def cleanse_concepts(kill_set, invert_vec):
@@ -185,6 +185,7 @@ def main():
 
     print "Cleaning Dictionary and redo some steps"
     ctg_to_id = cleanse_dict(kill_set, ctg_to_id)
+    ctg_to_id = {ctg_to_id[i]: i for i in range(len(ctg_to_id))}
     id_to_ctg = {v:k for k,v in ctg_to_id.iteritems()}
 
     # We redo the steps to get rid of the annotations
@@ -195,7 +196,7 @@ def main():
     article_vecs = format(articles, ctg_to_id)
     invert_vec, kill_set = invert_items(article_vecs, [x for x in id_to_ctg.keys()], id_to_ctg)
     print "Erasing " + str(len(kill_set)) + " concepts which appear only once!"
-    article_vecs, ctg_to_id = cleanse_concepts(kill_set, invert_vec)
+    article_vecs = cleanse_concepts(kill_set, invert_vec)
 
 
 
