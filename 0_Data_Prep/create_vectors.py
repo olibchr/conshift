@@ -96,14 +96,18 @@ def format(articles, ctg_to_id):
      # we build annotation vectors which contain the index of a positive entry (=1), rest is 0
     article_vecs = []
     annot_cnt = 0
+    err_cnt = 0
     for article in articles:
         article_vec = []
         for ctg in article[2]:
+            try: ctg_to_id[ctg]
+            except KeyError: err_cnt +=1
             if ctg_to_id[ctg] is not None:
                 article_vec.append(ctg_to_id[ctg])
                 annot_cnt += 1
         article_vecs.append([article[0],article[1], article_vec])
     print "avg:" + str(annot_cnt / len(articles)) + " cnts: " + str(annot_cnt) + " len " + str(len(articles))
+    print err_cnt
     return article_vecs
 
 
