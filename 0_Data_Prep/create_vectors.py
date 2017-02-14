@@ -196,6 +196,11 @@ def main():
         for key, value in ctg_to_id.items():
             writer.writerow([key.encode('utf-8'), value])
 
+    with open('annotation_to_index.csv', 'wb') as article_dict_out:
+        writer = csv.writer(article_dict_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for key in kill_set:
+            writer.writerow(id_to_ctg[key])
+
 
 
 if __name__ == "__main__":

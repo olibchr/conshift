@@ -96,7 +96,7 @@ def main():
             tmp = list(chain.from_iterable(line[1]))
             #writer.writerow([line[0]] + tmp)
 
-    with open('docid_to_date.csv') as out_file:
+    with open('docid_to_date.csv', 'wb') as out_file:
         writer.csvwriter(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for line in doc_id_to_date:
             writer.writerow(line)
