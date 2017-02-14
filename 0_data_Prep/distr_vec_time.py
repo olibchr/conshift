@@ -70,7 +70,7 @@ def build_vectors(all_annotations_id, all_annotations_doc):
             try:
                 doc = all_annotations_doc[doc_match_list[docid]]
             except KeyError:
-                print "error"
+                print "key error"
                 continue
             for doc_w_docid in doc:
                 dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
