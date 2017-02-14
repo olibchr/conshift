@@ -53,6 +53,7 @@ def doc_mapping(all_annotations):
 def build_vectors(all_annotations_id, all_annotations_doc):
     i = 0
     all_d_vector = []
+    doc_id_to_date = {}
     doc_match_list = {all_annotations_doc[i][0][0]: i for i in range(len(all_annotations_doc))}
     outfile = open('all_distributions_time.csv', 'wb')
     writer = csv.writer(outfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -72,7 +73,8 @@ def build_vectors(all_annotations_id, all_annotations_doc):
             #    continue
             for doc_w_docid in doc:
                 dtime = datetime(*doc[0][2][:6]).isoformat()[:10]
-                vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0]) + '_' + dtime] = 1
+                vector[str(doc_w_docid[1]) + '_' + str(doc_w_docid[0])] = 1
+                doc_id_to_date[doc_w_docid[0]] = dtime
         for k, v in vector.iteritems():
             indeces.append([k])
         tmp = list(chain.from_iterable(indeces))

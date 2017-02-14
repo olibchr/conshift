@@ -54,7 +54,7 @@ def load_distr(filters):
 
 def timeframes(concept, bucketsize):
     all_frames = []
-    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(item[0].split('_')[2], "%Y-%m-%d"), item[1]] for item in concept[1]]
+    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(item[0].split('_')[2], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
     tag_len = len(set([tag[1] for tag in tag_quad]))
     if tag_len <= 2 * bucketsize:
