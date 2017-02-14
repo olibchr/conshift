@@ -145,7 +145,7 @@ def cleanse_dict(kill_set, ctg_to_id):
         else:
             clean_dict[key] = val
     print "done"
-    return [clean_dict.keys()]
+    return clean_dict.keys()
 
 
 def cleanse_concepts(kill_set, invert_vec):
