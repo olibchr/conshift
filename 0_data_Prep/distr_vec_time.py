@@ -8,6 +8,9 @@ if len(sys.argv) < 2:
     exit()
 path = sys.argv[1]
 
+"""
+This program builds concept distributions vectors for a time analysis
+"""
 
 def get_items():
     all_annotations_id = []
