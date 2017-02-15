@@ -44,26 +44,41 @@ def load_distr(filters):
         for row in reader:
             if int(row[0]) not in filters: continue
             all_data.append([int(row[0]),row[1:]])
+            if len(all_data) == len(filters):
+                break
     for item in all_data:
         tups = []
         for i in range(0,len(item[1])-2,2):
-            tups.append((item[1][i], int(item[1][i+1])))
+            # change this to
+            tups.append((item[1][i], 1))
+            #tups.append((item[1][i], int(item[1][i+1])))
         all_d_content.append([item[0], tups])
     return all_d_content
 
 
-def timeframes(concept, bucketsize):
+def load_doc_map():
+    docid_to_date = {}
+    with open(path + 'docid_to_date.csv') as docmap:
+        reader = csv.reader(docmap, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for row in reader:
+            docid_to_date[int(row[0])] = row[1]
+    return docid_to_date
+
+
+def timeframes(concept, bucketsize, docid_to_date):
     all_frames = []
-    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(item[0].split('_')[2], "%Y-%m-%d"), 1] for item in concept[1]]
+    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
     tag_len = len(set([tag[1] for tag in tag_quad]))
+    #print len(tag_quad)
+    #print tag_len
     if tag_len <= 2 * bucketsize:
         buckets=2
     else:
         buckets = int(round(tag_len/(1.0 * bucketsize)))
     tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
     all_buckets = [dict() for x in range(buckets)]
-    all_last_adds = buckets * [time.strptime("2015-08-13", "%Y-%m-%d")]
+    all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
     i = 0
     t = 0
     this_bucket = all_buckets[0]
@@ -106,16 +121,19 @@ def rebuild_distr(all_d_content, vlen):
 # might be problem: distributions might not contain a specific vector --> need identifier
 def kl_div(distr):
     all_div = []
+    emptbucks = 0
     for i in range(0,len(distr)-1):
         this_distr = distr[i][1]
         next_distr = distr[i+1][1]
         if sum(this_distr) < 1 or sum(next_distr) < 1:
-            print "Cant compare quarter " + str(i+1) + " to " + str(i+2) + ". One Vector empty: " + str(sum(this_distr)) + " or " + str(sum(next_distr))
+            emptbucks +=1
+            #print "Cant compare quarter " + str(i+1) + " to " + str(i+2) + ". One Vector empty: " + str(sum(this_distr)) + " or " + str(sum(next_distr))
             all_div.append('NaN')
             continue
         this_entropy = entropy(this_distr, next_distr)
         all_div.append(this_entropy)
     all_div.append(entropy(distr[0][1], distr[len(distr)-1][1]))
+    print '     ' + str(emptbucks) + ' empty buckets in ' + str(distr[0][0])
     return all_div
 
 
@@ -139,17 +157,19 @@ def main(argv):
 
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
 
-    for filter in filters:
-        print "     " + str(filter) + ": " + str(filter_id_to_ctg[filter].split('/')[-1])
-
     distributions = load_distr(filters)
+    for filter in filters:
+        for idx in range(len(distributions)):
+            if distributions[idx][0] == filter: print "     " + str(filter) + ": " + str(filter_id_to_ctg[filter].split('/')[-1]) + " with " + str(len(distributions[idx][1])) + ' annotations in ' + str(len(set(item[0].split('_')[1] for item in distributions[idx][1]))) + ' articles.'
+
+
+    docid_to_date = load_doc_map()
 
     print "Create sparse vectors"
     for i in range(0,len(distributions)):
-        concept = timeframes(distributions[i], bucketsize)
+        concept = timeframes(distributions[i], bucketsize, docid_to_date)
         distributions[i] = rebuild_distr(concept, len(all_id_to_ctg))
-
-    print "Built " + str(len(distributions[0])) + " probability density vectors"
+        print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
 
     divergences_per_id = []
     for distr in distributions:
