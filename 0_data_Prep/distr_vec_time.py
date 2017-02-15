@@ -93,11 +93,11 @@ def main():
     all_annotations_doc = doc_mapping(all_annotations_doc)
     print "Building Distributions"
     all_d_vecs_time, doc_id_to_date = build_vectors(all_annotations_id, all_annotations_doc)
-    with open('all_distributions_time.csv', 'wb') as out_file:
-        writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for line in all_d_vecs_time:
-            tmp = list(chain.from_iterable(line[1]))
-            #writer.writerow([line[0]] + tmp)
+    #with open('all_distributions_time.csv', 'wb') as out_file:
+    #    writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    #    for line in all_d_vecs_time:
+    #        tmp = list(chain.from_iterable(line[1]))
+    #        #writer.writerow([line[0]] + tmp)
 
     with open('docid_to_date.csv', 'wb') as out_file:
         writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
