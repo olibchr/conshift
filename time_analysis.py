@@ -45,6 +45,7 @@ def load_distr(filters):
             if int(row[0]) not in filters: continue
             all_data.append([int(row[0]),row[1:]])
             if len(all_data) == len(filters):
+                del reader
                 break
     for item in all_data:
         tups = []
@@ -70,13 +71,14 @@ def timeframes(concept, bucketsize, docid_to_date):
     tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
     tag_len = len(set([tag[1] for tag in tag_quad]))
-    #print len(tag_quad)
-    #print tag_len
+    print len(tag_quad)
+    print tag_len
     if tag_len <= 2 * bucketsize:
         buckets=2
     else:
         buckets = int(round(tag_len/(1.0 * bucketsize)))
     tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
+    print tmpbucketsize
     all_buckets = [dict() for x in range(buckets)]
     all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
     i = 0
@@ -150,7 +152,7 @@ def validation_scoring(distributions):
 
 
 def main(argv):
-    bucketsize = map(int, argv[2])[0]
+    bucketsize = int(argv[2])
     filters = map(int, argv[3:])
     print "Bucketsize of " + str(bucketsize)
     print "Setting filters.. "
