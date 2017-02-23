@@ -12,26 +12,21 @@ This program computes tf-idf scores based on density vectors, created by distr_v
 """
 csv.field_size_limit(sys.maxsize)
 path = sys.argv[1]
-infilename = sys.argv[2] + "_distributions.csv"
-outfilename = sys.argv[2] + '_distributions_idf.csv'
 
 
 def load_distr():
     all_d_content = []
-    allchars = ''.join(chr(i) for i in xrange(256))
-    identity = string.maketrans('', '')
-    nondigits = allchars.translate(identity, string.digits)
-    with open(path + infilename) as distr_vec:
+    with open(path + 'all_distributions_time.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
-            tmp_features = [(k.translate(identity, nondigits)) for k in row[1].split(",")]
-            features = []
-            for k in tmp_features:
-                if len(k) > 1:
-                    features.append(int(k))
-            l_features = [features[x] for x in range(0,len(features),2)]
-            xy_features = [(k,v) for k,v in {l_features[y/2-1]:features[y] for y in range(1,len(features),2)}.items()]
-            all_d_content.append([int(row[0]),xy_features])
+            features = {}
+            thisCon = row[1:]
+            for feat in thisCon:
+                feat = feat.split("_")[0]
+                if feat in features:
+                    features[int(feat)] += 1
+                else: features[int(feat)] = 1
+            all_d_content.append([int(row[0]), [[k,v] for k,v in features.iteritems()]])
     return all_d_content
 
 
@@ -64,23 +59,11 @@ def build_sparse(all_d_content, lilx, lily):
     return sparse_entities
 
 
-def build_all_idf(all_d_vec):
+def build_all_idf(all_d_vec, all_d_content):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
-
-    return normalize(sparse_entities, norm='l1', axis=1)
-
-
-def revert(sparse_entities):
-    all_distributions = []
-    sparse_entities = sparse_entities.tolil()
-    for i in range(0,sparse_entities.shape[0]):
-        this_row = sparse_entities.getrow(i)
-        this_features = []
-        for offset in range(0,len(this_row.data[0])):
-            this_features.append((this_row.rows[0][offset], this_row.data[0][offset]))
-        all_distributions.append((i,this_features))
-    return all_distributions
+    idf = transformer.idf_
+    return dict(zip([i[0] for i in all_d_content], idf))
 
 
 def main():
@@ -88,17 +71,13 @@ def main():
     all_id_to_ctg = get_ctg()
     print "Create sparse vectors"
     sparse_entities = build_sparse(all_d_content, len(all_d_content), len(all_id_to_ctg))
-    del all_id_to_ctg, all_d_content
     print "Inverse Document Frequency"
-    sparse_entities = build_all_idf(sparse_entities)
+    weights_sparse_entities = build_all_idf(sparse_entities, all_d_content)
 
-    all_distributions = revert(sparse_entities)
-    del sparse_entities
-
-    with open(path + outfilename, 'wb') as outfile:
+    with open(path + "all_distributions_weights.csv", 'wb') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
-        for line in all_distributions:
-            writer.writerow(line)
+        for key, value in weights_sparse_entities.items():
+            writer.writerow([key, value])
 
 
 if __name__ == "__main__":

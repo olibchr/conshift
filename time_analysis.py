@@ -66,19 +66,29 @@ def load_doc_map():
     return docid_to_date
 
 
+def load_idf_weights(filters):
+    filter_id_to_weight = {}
+    with open(path + "all_distribution_weights.csv") as weights_map:
+        reader = csv.reader(weights_map, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
+        for row in reader:
+            if row[0] in filters:
+                filter_id_to_weight[row[0]] = row[1]
+    return filter_id_to_weight
+
+
 def timeframes(concept, bucketsize, docid_to_date):
     all_frames = []
     tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
     tag_len = len(set([tag[1] for tag in tag_quad]))
-    print len(tag_quad)
-    print tag_len
+    #print len(tag_quad)
+    #print tag_len
     if tag_len <= 2 * bucketsize:
         buckets=2
     else:
         buckets = int(round(tag_len/(1.0 * bucketsize)))
     tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
-    print tmpbucketsize
+    #print tmpbucketsize
     all_buckets = [dict() for x in range(buckets)]
     all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
     i = 0
@@ -132,9 +142,14 @@ def kl_div(distr):
             #print "Cant compare quarter " + str(i+1) + " to " + str(i+2) + ". One Vector empty: " + str(sum(this_distr)) + " or " + str(sum(next_distr))
             all_div.append('NaN')
             continue
-        this_entropy = entropy(this_distr, next_distr)
-        all_div.append(this_entropy)
-    all_div.append(entropy(distr[0][1], distr[len(distr)-1][1]))
+        #this_entropy = entropy(this_distr, next_distr)
+        this_cnt = [1 if i > 0.1 else 0 for i in this_distr]
+        next_cnt = [1 if i > 0.1 else 0 for i in next_distr]
+        changes = [1 if a ^ b else 0 for a, b in zip(this_cnt, next_cnt)]
+        this_entropy = pw.cosine_similarity(this_distr, next_distr)
+        all_div.append([this_entropy, [sum(this_cnt), sum(next_cnt), sum(changes)]])
+    #all_div.append(entropy(distr[0][1], distr[len(distr)-1][1]))
+    all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1]))
     print '     ' + str(emptbucks) + ' empty buckets in ' + str(distr[0][0])
     return all_div
 
@@ -180,9 +195,9 @@ def main(argv):
     for i in range(0,len(filters)):
         print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(divergences_per_id[i])-1):
-            if divergences_per_id[i][k] == 'NaN':
+            if divergences_per_id[i][k][0] == 'NaN':
                 continue
-            print "     Window " + str(distributions[i][k][2]) + " to " + str(distributions[i][k+1][2]) + ": " + str(divergences_per_id[i][k])
+            print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(("%.2f" % divergences_per_id[i][k][0])) + "  /// Sum of changes: " + str((divergences_per_id[i][k][1]))
         print ""
 
 if __name__ == "__main__":
