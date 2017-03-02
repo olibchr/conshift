@@ -80,11 +80,9 @@ def randomBuckets(concept, docid_to_date):
             lastArticle = thisArticle
             articleTags.append(thisArticleTagSet)
             thisArticleTagSet = [tag[0]]
-
     randomSize = 100
-    buckets = int(round(len(articleTags)/(1.0 * randomSize)))
+    buckets = 5*int(round(len(articleTags)/(1.0 * randomSize)))
     all_buckets = [dict() for x in range(buckets)]
-
     for bucket in all_buckets:
         for i in range(randomSize):
             randomArticle = articleTags[random.randrange(len(articleTags))]
@@ -161,9 +159,9 @@ def main(argv):
         for k in range(len(divergences_per_id[i])-1):
             if divergences_per_id[i][k][0] == 'NaN':
                 continue
-            cosineSum +=divergences_per_id[i][k][0]
+            cosineSum +=divergences_per_id[i][k][0][0]
             #print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(("%.5f" % divergences_per_id[i][k][0])) + "  /// Sum of changes: " + str((divergences_per_id[i][k][1]))
-        print cosineSum/len(divergences_per_id)
+        print cosineSum/len(divergences_per_id[i])
         print ""
 
 if __name__ == "__main__":
