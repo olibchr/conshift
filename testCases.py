@@ -6,18 +6,10 @@ from sklearn.metrics import pairwise as pw
 import string
 import warnings
 import time
-import datetime
+import datetime, random
 import ast
 warnings.filterwarnings("ignore")
 
-"""
-The purpose of this program is to do an investigation of the data which was produced with the create vectors tool.
-You have to specify one or several IDs of annotations to investigate about (ID mapping can be found in separate csv file,
-produce by create vector tool as well)
-In detail, this tool creates density distribution vectors for the specified annotations and compares them to each other
- with a KL divergence / cosine metric to measure similarity.
- All output will be printed on screen.
-"""
 path = sys.argv[1]
 csv.field_size_limit(sys.maxsize)
 
@@ -73,44 +65,34 @@ def load_idf_weights():
     return filter_id_to_weight
 
 
-def timeframes(concept, bucketsize, docid_to_date):
+def randomBuckets(concept, docid_to_date):
     all_frames = []
     tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
-    tag_len = len(set([tag[1] for tag in tag_quad]))
-    #print len(tag_quad)
-    #print tag_len
-    if tag_len <= 2 * bucketsize:
-        buckets=2
-    else:
-        buckets = int(round(tag_len/(1.0 * bucketsize)))
-    tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
-    #print tmpbucketsize
-    all_buckets = [dict() for x in range(buckets)]
-    all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
-    i = 0
-    t = 0
-    this_bucket = all_buckets[0]
-    last_tag_doc = tag_quad[0][1]
+    articleTags = []
+    lastArticle = tag_quad[0][1]
+    thisArticleTagSet = []
     for tag in tag_quad:
-        tag_id = tag[0]
-        tag_doc = tag[1]
-        tag_date = tag[2]
-        tag_cnt = tag[3]
-        if i > tmpbucketsize:
-            i = 0
-            t += 1
-            this_bucket = all_buckets[t]
-        all_last_adds[t] = tag_date
-        if last_tag_doc != tag_doc:
-            i+=1
-            last_tag_doc = tag_doc
-        if tag_id in this_bucket:
-            this_bucket[tag_id] = this_bucket[tag_id] + tag_cnt
+        thisArticle = tag[1]
+        if thisArticle == lastArticle:
+            thisArticleTagSet.append(tag[0])
         else:
-            this_bucket[tag_id] = tag_cnt
-    for this_bucket, last_add in zip(all_buckets, all_last_adds):
-        all_frames.append([concept[0], [[k,v] for k,v in this_bucket.iteritems()], last_add])
+            lastArticle = thisArticle
+            articleTags.append(thisArticleTagSet)
+            thisArticleTagSet = [tag[0]]
+
+    randomSize = 100
+    buckets = int(round(len(articleTags)/(1.0 * randomSize)))
+    all_buckets = [dict() for x in range(buckets)]
+
+    for bucket in all_buckets:
+        for i in range(randomSize):
+            randomArticle = articleTags[random.randrange(len(articleTags))]
+            for annot in randomArticle:
+                if annot in bucket: bucket[annot] += 1
+                else: bucket[annot]=1
+    for this_bucket in all_buckets:
+        all_frames.append([concept[0], [[k,v] for k,v in this_bucket.iteritems()]])
     return all_frames
 
 
@@ -121,7 +103,7 @@ def rebuild_distr(all_d_content, vlen, weights):
         d_id = d_vec[0]
         for keyval in d_vec[1]:
             d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
-        all_d_vec.append([d_id, d_vector, d_vec[2]])
+        all_d_vec.append([d_id, d_vector])
     return all_d_vec
 
 
@@ -141,56 +123,47 @@ def kl_div(distr, all_id_to_ctg):
         changes = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
         top_change = [all_id_to_ctg[idx][28:] for a, idx in sorted(changes, reverse=True)[:5]]
         this_entropy = pw.cosine_similarity(this_distr, next_distr)
-        all_div.append([this_entropy, top_change])
+        all_div.append(this_entropy)
     all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1]))
     print '     ' + str(emptbucks) + ' empty buckets in ' + str(distr[0][0])
     return all_div
 
-
-def validation_scoring(distributions):
-    scoring = [0] * len(distributions)
-    gold_standard = distributions[0]
-    k = 0
-    for d in distributions:
-        for i in range(0,len(d[1])):
-            if (d[1][i] >= 0.00001) and (gold_standard[1][i] >= 0.00001):
-                scoring[k] += 1
-        k += 1
-    return scoring
 
 
 def main(argv):
     bucketsize = int(argv[2])
     filters = map(int, argv[3:])
     weights = load_idf_weights()
+    docid_to_date = load_doc_map()
     print "Bucketsize of " + str(bucketsize)
     print "Setting filters.. "
-
     filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
-
     distributions = load_distr(filters)
     for filter in filters:
         for idx in range(len(distributions)):
-            if distributions[idx][0] == filter: print "     " + str(filter) + ": " + str(filter_id_to_ctg[filter].split('/')[-1]) + " with " + str(len(distributions[idx][1])) + ' annotations in ' + str(len(set(item[0].split('_')[1] for item in distributions[idx][1]))) + ' articles.'
+            if distributions[idx][0] == filter:
+                print "     " + str(filter) + ": " + str(filter_id_to_ctg[filter].split('/')[-1]) + " with " + str(len(distributions[idx][1])) + ' annotations in ' + str(len(set(item[0].split('_')[1] for item in distributions[idx][1]))) + ' articles.'
 
-    docid_to_date = load_doc_map()
 
     print "Create sparse vectors"
     for i in range(0,len(distributions)):
-        concept = timeframes(distributions[i], bucketsize, docid_to_date)
+        concept = randomBuckets(distributions[i], docid_to_date)
         distributions[i] = rebuild_distr(concept, len(all_id_to_ctg), weights)
         print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
 
     divergences_per_id = []
-    for distr in distributions:
-        divergences_per_id.append(kl_div(distr, all_id_to_ctg))
+    for distribution in distributions:
+        divergences_per_id.append(kl_div(distribution, all_id_to_ctg))
 
+    cosineSum = 0
     for i in range(0,len(filters)):
         print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(divergences_per_id[i])-1):
             if divergences_per_id[i][k][0] == 'NaN':
                 continue
-            print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(("%.5f" % divergences_per_id[i][k][0])) + "  /// Sum of changes: " + str((divergences_per_id[i][k][1]))
+            cosineSum +=divergences_per_id[i][k][0]
+            #print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(("%.5f" % divergences_per_id[i][k][0])) + "  /// Sum of changes: " + str((divergences_per_id[i][k][1]))
+        print cosineSum/len(divergences_per_id)
         print ""
 
 if __name__ == "__main__":
