@@ -94,6 +94,41 @@ def randomBuckets(concept, docid_to_date):
     return all_frames
 
 
+def firstNtoNextN(concept, docid_to_date):
+    all_frames = []
+    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
+    tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
+    articleTags = []
+    lastArticle = tag_quad[0][1]
+    thisArticleTagSet = []
+    for tag in tag_quad:
+        thisArticle = tag[1]
+        if thisArticle == lastArticle:
+            thisArticleTagSet.append(tag[0])
+        else:
+            lastArticle = thisArticle
+            articleTags.append(thisArticleTagSet)
+            thisArticleTagSet = [tag[0]]
+    incrementor = 50
+    thisBucketSize = 0
+    buckets = int(round(len(articleTags)/(1.0 * incrementor)))
+    bucketOffset = 0
+    all_buckets = [dict() for x in range(buckets)]
+    while ((thisBucketSize+incrementor) *2 <= len(articleTags)):
+        thisBucketSize += incrementor
+        thisBucket = all_buckets[bucketOffset]
+        bucketOffset += 1
+        for i in range(0, thisBucketSize):
+            thisArticle = articleTags[i]
+            for annot in thisArticle:
+                if annot in thisBucket: thisBucket[annot] += 1
+                else: thisBucket[annot] = 1
+    for this_bucket in all_buckets:
+        if len(this_bucket) <= 0: continue
+        all_frames.append([concept[0], [[k,v] for k,v in this_bucket.iteritems()]])
+    return all_frames
+
+
 def rebuild_distr(all_d_content, vlen, weights):
     all_d_vec = []
     for d_vec in all_d_content:
@@ -122,7 +157,7 @@ def kl_div(distr, all_id_to_ctg):
         top_change = [all_id_to_ctg[idx][28:] for a, idx in sorted(changes, reverse=True)[:5]]
         this_entropy = pw.cosine_similarity(this_distr, next_distr)
         all_div.append(this_entropy)
-    all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1]))
+    #all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1]))
     print '     ' + str(emptbucks) + ' empty buckets in ' + str(distr[0][0])
     return all_div
 
@@ -142,27 +177,52 @@ def main(argv):
             if distributions[idx][0] == filter:
                 print "     " + str(filter) + ": " + str(filter_id_to_ctg[filter].split('/')[-1]) + " with " + str(len(distributions[idx][1])) + ' annotations in ' + str(len(set(item[0].split('_')[1] for item in distributions[idx][1]))) + ' articles.'
 
-
-    print "Create sparse vectors"
+    nDists = []
     for i in range(0,len(distributions)):
-        concept = randomBuckets(distributions[i], docid_to_date)
-        distributions[i] = rebuild_distr(concept, len(all_id_to_ctg), weights)
+        nConcept = firstNtoNextN(distributions[i], docid_to_date)
+        nDists.append(rebuild_distr(nConcept, len(all_id_to_ctg), weights))
         print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
 
-    divergences_per_id = []
-    for distribution in distributions:
-        divergences_per_id.append(kl_div(distribution, all_id_to_ctg))
+    nDivergences_per_id = []
+    for sparseDist in nDists:
+        nDivergences_per_id.append(kl_div(sparseDist, all_id_to_ctg))
 
     cosineSum = 0
     for i in range(0,len(filters)):
         print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
-        for k in range(len(divergences_per_id[i])-1):
-            if divergences_per_id[i][k][0] == 'NaN':
+        for k in range(len(nDivergences_per_id[i])-1):
+            if nDivergences_per_id[i][k][0] == 'NaN':
                 continue
-            cosineSum +=divergences_per_id[i][k][0][0]
-            #print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(("%.5f" % divergences_per_id[i][k][0])) + "  /// Sum of changes: " + str((divergences_per_id[i][k][1]))
-        print cosineSum/len(divergences_per_id[i])
+            cosineSum +=nDivergences_per_id[i][k][0][0]
+            print "     Window " + " to " + ": " + str(("%.5f" % nDivergences_per_id[i][k][0]))
+        print cosineSum/len(nDivergences_per_id[i])
+        print "---"
+    print "------------------------"
+
+
+    randomDists = []
+    print "Create sparse vectors"
+    for i in range(0,len(distributions)):
+        randomConcept = randomBuckets(distributions[i], docid_to_date)
+        randomDists.append(rebuild_distr(randomConcept, len(all_id_to_ctg), weights))
+        print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
+
+    random_divergences_per_id = []
+    for sparseDist in randomDists:
+        random_divergences_per_id.append(kl_div(sparseDist, all_id_to_ctg))
+
+    cosineSum = 0
+    for i in range(0,len(filters)):
+        print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
+        for k in range(len(random_divergences_per_id[i])-1):
+            if random_divergences_per_id[i][k][0] == 'NaN':
+                continue
+            cosineSum +=random_divergences_per_id[i][k][0][0]
+            print "     Window " + str(k) + " to " + str(k+1) + ": " + str(("%.5f" % random_divergences_per_id[i][k][0]))
+        print cosineSum/len(random_divergences_per_id[i])
         print ""
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
