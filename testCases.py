@@ -162,7 +162,6 @@ def kl_div(distr, all_id_to_ctg):
     return all_div
 
 
-
 def main(argv):
     bucketsize = int(argv[2])
     filters = map(int, argv[3:])
@@ -223,9 +222,8 @@ def main(argv):
         print ""
 
 
-
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print "Usage: enter one or several indices from the dictionary hinting at wikipedia annotations which are preferably related. This program calculates the cosine similarity between the first entered index and all other entered indeces."
+        print "Usage: enter one or several indices from the dictionary hinting at wikipedia annotations."
     else:
         main(sys.argv)
