@@ -140,7 +140,6 @@ def rebuild_distr(all_d_content, vlen, weights):
     return all_d_vec
 
 
-# might be problem: distributions might not contain a specific vector --> need identifier
 def kl_div(distr, all_id_to_ctg):
     all_div = []
     emptbucks = 0
@@ -194,7 +193,7 @@ def main(argv):
                 continue
             cosineSum +=nDivergences_per_id[i][k][0][0]
             print "     Window " + " to " + ": " + str(("%.5f" % nDivergences_per_id[i][k][0]))
-        print cosineSum/len(nDivergences_per_id[i])
+        #print cosineSum/len(nDivergences_per_id[i])
         print "---"
     print "------------------------"
 
@@ -217,7 +216,7 @@ def main(argv):
             if random_divergences_per_id[i][k][0] == 'NaN':
                 continue
             cosineSum +=random_divergences_per_id[i][k][0][0]
-            print "     Window " + str(k) + " to " + str(k+1) + ": " + str(("%.5f" % random_divergences_per_id[i][k][0]))
+            #print "     Window " + str(k) + " to " + str(k+1) + ": " + str(("%.5f" % random_divergences_per_id[i][k][0]))
         print cosineSum/len(random_divergences_per_id[i])
         print ""
 
