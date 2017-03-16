@@ -117,7 +117,7 @@ def timeframes(concept, bucketsize, docid_to_date):
 def rebuild_distr(all_d_content, vlen, weights):
     all_d_vec = []
     for d_vec in all_d_content:
-        d_vector = [0.000001] * vlen
+        d_vector = [100] * vlen
         d_id = d_vec[0]
         for keyval in d_vec[1]:
             d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
@@ -139,7 +139,8 @@ def kl_div(distr, all_id_to_ctg):
         this_cnt = [int(i) if i > 0.1 else 0 for i in this_distr]
         next_cnt = [int(i) if i > 0.1 else 0 for i in next_distr]
         changes = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-        top_change = [all_id_to_ctg[idx][28:] for a, idx in sorted(changes, reverse=True)[:5]]
+        #if sum(changes)==0: top_change = ["no changes"]
+        top_change = [] #[all_id_to_ctg[idx][28:] for a, idx in sorted(changes, reverse=True)[:5]]
         this_entropy = pw.cosine_similarity(this_distr, next_distr)
         all_div.append([this_entropy, top_change])
     all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1]))
@@ -186,11 +187,11 @@ def main(argv):
         divergences_per_id.append(kl_div(distr, all_id_to_ctg))
 
     for i in range(0,len(filters)):
-        print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
+        print "Cosine Sim within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(divergences_per_id[i])-1):
             if divergences_per_id[i][k][0] == 'NaN':
                 continue
-            print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(("%.5f" % divergences_per_id[i][k][0])) + "  /// Sum of changes: " + str((divergences_per_id[i][k][1]))
+            print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(divergences_per_id[i][k][0] if type(divergences_per_id[i][k][0]) is str else ("%.5f" % divergences_per_id[i][k][0])) + "  /// Top changes: " + str((divergences_per_id[i][k][1]))
         print ""
 
 if __name__ == "__main__":

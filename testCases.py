@@ -65,7 +65,7 @@ def load_idf_weights():
     return filter_id_to_weight
 
 
-def randomBuckets(concept, docid_to_date):
+def randomBuckets(concept, docid_to_date, bucketsize):
     all_frames = []
     tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
@@ -80,7 +80,7 @@ def randomBuckets(concept, docid_to_date):
             lastArticle = thisArticle
             articleTags.append(thisArticleTagSet)
             thisArticleTagSet = [tag[0]]
-    randomSize = 100
+    randomSize = bucketsize
     buckets = 5*int(round(len(articleTags)/(1.0 * randomSize)))
     all_buckets = [dict() for x in range(buckets)]
     for bucket in all_buckets:
@@ -94,7 +94,7 @@ def randomBuckets(concept, docid_to_date):
     return all_frames
 
 
-def firstNtoNextN(concept, docid_to_date):
+def firstNtoNextN(concept, docid_to_date, bucketsize):
     all_frames = []
     tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
     tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
@@ -109,7 +109,7 @@ def firstNtoNextN(concept, docid_to_date):
             lastArticle = thisArticle
             articleTags.append(thisArticleTagSet)
             thisArticleTagSet = [tag[0]]
-    incrementor = 50
+    incrementor = bucketsize
     thisBucketSize = 0
     buckets = int(round(len(articleTags)/(1.0 * incrementor)))
     bucketOffset = 0
@@ -177,7 +177,7 @@ def main(argv):
 
     nDists = []
     for i in range(0,len(distributions)):
-        nConcept = firstNtoNextN(distributions[i], docid_to_date)
+        nConcept = firstNtoNextN(distributions[i], docid_to_date, bucketsize)
         nDists.append(rebuild_distr(nConcept, len(all_id_to_ctg), weights))
         print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
 
@@ -187,7 +187,7 @@ def main(argv):
 
     cosineSum = 0
     for i in range(0,len(filters)):
-        print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
+        print "Cosine Sim within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(nDivergences_per_id[i])-1):
             if nDivergences_per_id[i][k][0] == 'NaN':
                 continue
@@ -201,7 +201,7 @@ def main(argv):
     randomDists = []
     print "Create sparse vectors"
     for i in range(0,len(distributions)):
-        randomConcept = randomBuckets(distributions[i], docid_to_date)
+        randomConcept = randomBuckets(distributions[i], docid_to_date, bucketsize)
         randomDists.append(rebuild_distr(randomConcept, len(all_id_to_ctg), weights))
         print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
 
@@ -211,7 +211,7 @@ def main(argv):
 
     cosineSum = 0
     for i in range(0,len(filters)):
-        print "KL Divergences within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
+        print "Cosine Sim within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
         for k in range(len(random_divergences_per_id[i])-1):
             if random_divergences_per_id[i][k][0] == 'NaN':
                 continue
