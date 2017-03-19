@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/time_analysis_proper.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testCases.py" afterPath="$PROJECT_DIR$/testCases.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/time_analysis.py" afterPath="$PROJECT_DIR$/time_analysis.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/time_analysis_proper.py" afterPath="$PROJECT_DIR$/time_analysis_proper.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,11 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="time_analysis.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="time_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/time_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6252839">
-              <caret line="174" column="283" selection-start-line="174" selection-start-column="48" selection-end-line="174" selection-end-column="283" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="159" column="18" selection-start-line="159" selection-start-column="18" selection-end-line="159" selection-end-column="18" />
               <folding>
                 <element signature="e#1#11#0" expanded="true" />
               </folding>
@@ -47,23 +45,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="time_analysis_proper.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="time_analysis_proper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-27.777779">
-              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.43283582">
+              <caret line="89" column="102" selection-start-line="89" selection-start-column="102" selection-end-line="89" selection-end-column="102" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#465#3500#0" expanded="false" />
-                <element signature="e#752#2237#0" expanded="false" />
-                <element signature="e#2275#2517#0" expanded="false" />
-                <element signature="e#2552#3500#0" expanded="false" />
-                <element signature="e#3522#3948#0" expanded="false" />
-                <element signature="e#3975#4239#0" expanded="false" />
-                <element signature="e#4270#4580#0" expanded="false" />
-                <element signature="e#4612#5627#0" expanded="false" />
-                <element signature="e#5654#6014#0" expanded="false" />
-                <element signature="e#6033#6459#0" expanded="false" />
+                <element signature="e#811#2296#0" expanded="false" />
+                <element signature="e#2334#2576#0" expanded="false" />
+                <element signature="e#4008#4434#0" expanded="false" />
+                <element signature="e#4461#4725#0" expanded="false" />
+                <element signature="e#4756#5066#0" expanded="false" />
+                <element signature="e#5098#6113#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -117,10 +111,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2387" />
-    <option name="y" value="-141" />
-    <option name="width" value="2135" />
-    <option name="height" value="1418" />
+    <option name="x" value="-1920" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -147,8 +140,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -183,6 +174,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -205,6 +198,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="941" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -487,10 +481,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2387" y="-141" width="2135" height="1418" extended-state="0" />
+    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12271663" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14010416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39925373" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -880,7 +874,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.068887204">
           <caret line="34" column="105" selection-start-line="34" selection-start-column="71" selection-end-line="34" selection-end-column="105" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -888,44 +881,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.660106">
           <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/time_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="159" column="18" selection-start-line="159" selection-start-column="18" selection-end-line="159" selection-end-column="18" />
           <folding>
-            <element signature="e#1#11#0" expanded="false" />
-            <element signature="e#291#717#0" expanded="false" />
-            <element signature="e#749#1462#0" expanded="false" />
-            <element signature="e#1489#1753#0" expanded="false" />
-            <element signature="e#1784#2094#0" expanded="false" />
-            <element signature="e#4870#5138#0" expanded="false" />
-            <element signature="e#5179#6077#0" expanded="false" />
+            <element signature="e#1#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.777779">
-          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.43283582">
+          <caret line="89" column="102" selection-start-line="89" selection-start-column="102" selection-end-line="89" selection-end-column="102" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#465#3500#0" expanded="false" />
-            <element signature="e#752#2237#0" expanded="false" />
-            <element signature="e#2275#2517#0" expanded="false" />
-            <element signature="e#2552#3500#0" expanded="false" />
-            <element signature="e#3522#3948#0" expanded="false" />
-            <element signature="e#3975#4239#0" expanded="false" />
-            <element signature="e#4270#4580#0" expanded="false" />
-            <element signature="e#4612#5627#0" expanded="false" />
-            <element signature="e#5654#6014#0" expanded="false" />
-            <element signature="e#6033#6459#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6252839">
-          <caret line="174" column="283" selection-start-line="174" selection-start-column="48" selection-end-line="174" selection-end-column="283" />
-          <folding>
-            <element signature="e#1#11#0" expanded="true" />
+            <element signature="e#811#2296#0" expanded="false" />
+            <element signature="e#2334#2576#0" expanded="false" />
+            <element signature="e#4008#4434#0" expanded="false" />
+            <element signature="e#4461#4725#0" expanded="false" />
+            <element signature="e#4756#5066#0" expanded="false" />
+            <element signature="e#5098#6113#0" expanded="false" />
           </folding>
         </state>
       </provider>

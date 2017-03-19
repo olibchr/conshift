@@ -29,7 +29,9 @@ class Concept():
         self.vector = []
         self.intervals = []
         self.cosim = []
-        self.topadds = []
+        self.top_adds = []
+        self.top_removals = []
+        self.top_core = []
 
     def into_timeframes(self):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
@@ -85,12 +87,17 @@ class Concept():
                 continue
             this_cnt = [int(i) if i > 0.1 else 0 for i in this_distr]
             next_cnt = [int(i) if i > 0.1 else 0 for i in next_distr]
-            changes = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-            top_change = [all_id_to_ctg[idx][28:] for a, idx in sorted(changes, reverse=True)[:5]]
+            additions = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
+            removals = [[a[0], idx] if bool(a[0]) and not bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
+            core = [[a[1],idx] if (bool(a[0]) and bool(a[1])) and idx != self.id else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
+            top_adds = [all_id_to_ctg[idx][28:] for a, idx in sorted(additions, reverse=True)[:5]]
+            top_rem = [all_id_to_ctg[idx][28:] for a, idx in sorted(removals, reverse=True)[:5]]
+            top_core = [all_id_to_ctg[idx][28:] for a, idx in sorted(core, reverse=True)[:5]]
             this_entropy = pw.cosine_similarity(this_distr, next_distr)
             self.cosim.append(this_entropy)
-            self.topadds.append(top_change)
-        #all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1])) # to compare first to last distr..
+            self.top_adds.append(top_adds)
+            self.top_removals.append(top_rem)
+            self.top_core.append(top_core)
 
 
 def get_ctg():
@@ -151,7 +158,9 @@ def pretty_print():
         print "Cosine Sim within filter " + concept.name + " are: "
         for i in range(len(concept.intervals)-1):
             if concept.cosim[i] =="NaN": continue
-            print "     Window " + concept.intervals[i] + " to " + concept.intervals[i+1] + ": " + str(concept.cosim[i]) + "  /// Top adds: " + str(concept.topadds[i])
+            print "     Window " + concept.intervals[i] + " to " + concept.intervals[i+1] + ": " + str(concept.cosim[i]) \
+                  + "  /// Top adds: " + str(concept.top_adds[i])  + "  /// Top rems: " + str(concept.top_removals[i])  \
+                  + "  /// Top core: " + str(concept.top_core[i])
 
 
 def main():
