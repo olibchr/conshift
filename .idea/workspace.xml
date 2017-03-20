@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/time_analysis_proper.py" afterPath="$PROJECT_DIR$/time_analysis_proper.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -48,17 +47,30 @@
       <file leaf-file-name="time_analysis_proper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43283582">
-              <caret line="89" column="102" selection-start-line="89" selection-start-column="102" selection-end-line="89" selection-end-column="102" />
+            <state vertical-scroll-proportion="0.6569697">
+              <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#811#2296#0" expanded="false" />
-                <element signature="e#2334#2576#0" expanded="false" />
-                <element signature="e#4008#4434#0" expanded="false" />
-                <element signature="e#4461#4725#0" expanded="false" />
-                <element signature="e#4756#5066#0" expanded="false" />
-                <element signature="e#5098#6113#0" expanded="false" />
+                <element signature="e#493#4027#0" expanded="false" />
+                <element signature="e#839#2324#0" expanded="false" />
+                <element signature="e#2362#2604#0" expanded="false" />
+                <element signature="e#2639#4027#0" expanded="false" />
+                <element signature="e#4049#4475#0" expanded="false" />
+                <element signature="e#4502#4766#0" expanded="false" />
+                <element signature="e#4797#5107#0" expanded="false" />
+                <element signature="e#5139#6154#0" expanded="false" />
+                <element signature="e#6181#6684#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="distr_vec_time.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/0_Data_Prep/distr_vec_time.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="60" column="27" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,9 +123,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1920" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -481,10 +492,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14010416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18680556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39925373" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -520,7 +531,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="22" />
+      <option name="time" value="23" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -870,13 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0_Data_Prep/distr_vec_time.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.068887204">
-          <caret line="34" column="105" selection-start-line="34" selection-start-column="71" selection-end-line="34" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testCases.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.660106">
@@ -894,18 +898,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/0_Data_Prep/distr_vec_time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="27" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43283582">
-          <caret line="89" column="102" selection-start-line="89" selection-start-column="102" selection-end-line="89" selection-end-column="102" />
+        <state vertical-scroll-proportion="0.6569697">
+          <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#811#2296#0" expanded="false" />
-            <element signature="e#2334#2576#0" expanded="false" />
-            <element signature="e#4008#4434#0" expanded="false" />
-            <element signature="e#4461#4725#0" expanded="false" />
-            <element signature="e#4756#5066#0" expanded="false" />
-            <element signature="e#5098#6113#0" expanded="false" />
+            <element signature="e#493#4027#0" expanded="false" />
+            <element signature="e#839#2324#0" expanded="false" />
+            <element signature="e#2362#2604#0" expanded="false" />
+            <element signature="e#2639#4027#0" expanded="false" />
+            <element signature="e#4049#4475#0" expanded="false" />
+            <element signature="e#4502#4766#0" expanded="false" />
+            <element signature="e#4797#5107#0" expanded="false" />
+            <element signature="e#5139#6154#0" expanded="false" />
+            <element signature="e#6181#6684#0" expanded="false" />
           </folding>
         </state>
       </provider>

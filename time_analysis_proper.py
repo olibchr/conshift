@@ -6,6 +6,7 @@ import string
 import warnings
 import time
 import datetime
+from itertools import chain
 import ast
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
@@ -90,9 +91,9 @@ class Concept():
             additions = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
             removals = [[a[0], idx] if bool(a[0]) and not bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
             core = [[a[1],idx] if (bool(a[0]) and bool(a[1])) and idx != self.id else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-            top_adds = [all_id_to_ctg[idx][28:] for a, idx in sorted(additions, reverse=True)[:5]]
-            top_rem = [all_id_to_ctg[idx][28:] for a, idx in sorted(removals, reverse=True)[:5]]
-            top_core = [all_id_to_ctg[idx][28:] for a, idx in sorted(core, reverse=True)[:5]]
+            top_adds = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(additions, reverse=True)[:5]]
+            top_rem = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(removals, reverse=True)[:5]]
+            top_core = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(core, reverse=True)[:5]]
             this_entropy = pw.cosine_similarity(this_distr, next_distr)
             self.cosim.append(this_entropy)
             self.top_adds.append(top_adds)
@@ -163,6 +164,26 @@ def pretty_print():
                   + "  /// Top core: " + str(concept.top_core[i])
 
 
+def save_state():
+    with open('2_results/analysis_results_' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for con in concepts:
+            for i in range(len(con.intervals)-1):
+                flat_topcore = con.top_core[i]
+                flat_topadds = con.top_adds[i]
+                flat_toprems = con.top_adds[i]
+
+                flat_topcore = [val for sublist in [con.top_core[j] for j in range(len(con.top_core)-1)] for val in sublist]
+            print con.top_core
+            print flat_topcore
+            flat_topadds = [val for sublist in [con.top_adds[j] for j in range(len(con.top_adds)-1)] for val in sublist]
+            flat_toprems = [val for sublist in [con.top_removals[j] for j in range(len(con.top_removals)-1)] for val in sublist]
+            flat_tp = [val for sublist in [[con.intervals[i], con.cosim[i][0][0], con.top_core[i], con.top_adds, con.top_removals] for i in range(len(con.intervals)-1)] for val in sublist]
+            printlist = [con.id, con.name] + flat_tp #+ flat_topcore + flat_topadds + flat_toprems
+            writer.writerow(printlist)
+
+
+
 def main():
     print "Setting filters.. "
     global filter_id_to_ctg, all_id_to_ctg, concepts, docid_to_date, weights
@@ -177,6 +198,7 @@ def main():
         concept.rebuild_dist()
         concept.get_cosim()
     pretty_print()
+    save_state()
 
 
 if __name__ == "__main__":
