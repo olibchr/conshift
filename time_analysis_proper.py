@@ -93,7 +93,7 @@ class Concept():
             core = [[a[1],idx] if (bool(a[0]) and bool(a[1])) and idx != self.id else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
             top_adds = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(additions, reverse=True)[:5]]
             top_rem = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(removals, reverse=True)[:5]]
-            top_core = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(core, reverse=True)[:5]]
+            top_core = [[all_id_to_ctg[idx][38:],a] for a, idx in sorted(core, reverse=True)[:5]]
             this_entropy = pw.cosine_similarity(this_distr, next_distr)
             self.cosim.append(this_entropy)
             self.top_adds.append(top_adds)
@@ -174,15 +174,24 @@ def save_state():
                 flat_toprems = [val for sublist in con.top_adds[i] for val in sublist]
                 print_list = [con.id, con.name, con.intervals[i], con.cosim[i][0][0]] + flat_topcore + flat_topadds + flat_toprems
                 writer.writerow(print_list)
-            """flat_topcore = [val for sublist in [con.top_core[j] for j in range(len(con.top_core)-1)] for val in sublist]
-            print con.top_core
-            print flat_topcore
-            flat_topadds = [val for sublist in [con.top_adds[j] for j in range(len(con.top_adds)-1)] for val in sublist]
-            flat_toprems = [val for sublist in [con.top_removals[j] for j in range(len(con.top_removals)-1)] for val in sublist]
-            flat_tp = [val for sublist in [[con.intervals[i], con.cosim[i][0][0], con.top_core[i], con.top_adds, con.top_removals] for i in range(len(con.intervals)-1)] for val in sublist]
-            printlist = [con.id, con.name] + flat_tp #+ flat_topcore + flat_topadds + flat_toprems
-            writer.writerow(printlist)"""
 
+
+def save_core():
+    with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        printlist = []
+        context_set = set()
+        date_set = set()
+        for con in concepts:
+            for i in range(len(con.intervals)-1):
+                for j in range(len(con.top_core[0])):
+                    printlist.append(con.top_core[i][j] + [con.intervals[i]])
+                    #context_set.add(con.top_core[i][j][0])
+                    #date_set.add(con.intervals[i])
+        for item in sorted(printlist, key=lambda con:(con[0], con[2])):
+            writer.writerow(item)
+                #flat_topcore = [val for sublist in con.top_core[i] for val in sublist]
+                #print_list = [con.id, con.name, con.intervals[i]] + flat_topcore
 
 
 def main():
@@ -200,6 +209,7 @@ def main():
         concept.get_cosim()
     pretty_print()
     save_state()
+    save_core()
 
 
 if __name__ == "__main__":
