@@ -47,11 +47,10 @@
       <file leaf-file-name="time_analysis_proper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6569697">
-              <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.8181818">
+              <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#493#4027#0" expanded="false" />
                 <element signature="e#839#2324#0" expanded="false" />
                 <element signature="e#2362#2604#0" expanded="false" />
                 <element signature="e#2639#4027#0" expanded="false" />
@@ -60,6 +59,8 @@
                 <element signature="e#4797#5107#0" expanded="false" />
                 <element signature="e#5139#6154#0" expanded="false" />
                 <element signature="e#6181#6684#0" expanded="false" />
+                <element signature="e#6709#8171#0" expanded="false" />
+                <element signature="e#8191#8634#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -908,11 +909,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6569697">
-          <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.8181818">
+          <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#493#4027#0" expanded="false" />
             <element signature="e#839#2324#0" expanded="false" />
             <element signature="e#2362#2604#0" expanded="false" />
             <element signature="e#2639#4027#0" expanded="false" />
@@ -921,6 +921,8 @@
             <element signature="e#4797#5107#0" expanded="false" />
             <element signature="e#5139#6154#0" expanded="false" />
             <element signature="e#6181#6684#0" expanded="false" />
+            <element signature="e#6709#8171#0" expanded="false" />
+            <element signature="e#8191#8634#0" expanded="false" />
           </folding>
         </state>
       </provider>

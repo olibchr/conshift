@@ -169,18 +169,19 @@ def save_state():
         writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for con in concepts:
             for i in range(len(con.intervals)-1):
-                flat_topcore = con.top_core[i]
-                flat_topadds = con.top_adds[i]
-                flat_toprems = con.top_adds[i]
-
-                flat_topcore = [val for sublist in [con.top_core[j] for j in range(len(con.top_core)-1)] for val in sublist]
+                flat_topcore = [val for sublist in con.top_core[i] for val in sublist]
+                flat_topadds = [val for sublist in con.top_adds[i] for val in sublist]
+                flat_toprems = [val for sublist in con.top_adds[i] for val in sublist]
+                print_list = [con.id, con.name, con.intervals[i], con.cosim[i][0][0]] + flat_topcore + flat_topadds + flat_toprems
+                writer.writerow(print_list)
+            """flat_topcore = [val for sublist in [con.top_core[j] for j in range(len(con.top_core)-1)] for val in sublist]
             print con.top_core
             print flat_topcore
             flat_topadds = [val for sublist in [con.top_adds[j] for j in range(len(con.top_adds)-1)] for val in sublist]
             flat_toprems = [val for sublist in [con.top_removals[j] for j in range(len(con.top_removals)-1)] for val in sublist]
             flat_tp = [val for sublist in [[con.intervals[i], con.cosim[i][0][0], con.top_core[i], con.top_adds, con.top_removals] for i in range(len(con.intervals)-1)] for val in sublist]
             printlist = [con.id, con.name] + flat_tp #+ flat_topcore + flat_topadds + flat_toprems
-            writer.writerow(printlist)
+            writer.writerow(printlist)"""
 
 
 
