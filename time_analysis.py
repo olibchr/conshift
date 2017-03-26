@@ -1,4 +1,3 @@
-
 import csv
 import sys
 from scipy.stats import entropy
@@ -7,22 +6,103 @@ import string
 import warnings
 import time
 import datetime
+from itertools import chain
 import ast
 warnings.filterwarnings("ignore")
-
-"""
-The purpose of this program is to do an investigation of the data which was produced with the create vectors tool.
-You have to specify one or several IDs of annotations to investigate about (ID mapping can be found in separate csv file,
-produce by create vector tool as well)
-In detail, this tool creates density distribution vectors for the specified annotations and compares them to each other
- with a KL divergence / cosine metric to measure similarity.
- All output will be printed on screen.
-"""
-path = sys.argv[1]
 csv.field_size_limit(sys.maxsize)
 
+# Parse arguments
+path = sys.argv[1]
+bucketsize = int(sys.argv[2])
+filters = map(int, sys.argv[3:])
 
-def get_ctg(filters):
+# Init global vars
+concepts = []
+filter_id_to_ctg, all_id_to_ctg, docid_to_date, weights = {}, {}, {}, {}
+
+
+class Concept():
+    def __init__(self, id, name, features):
+        self.id = id
+        self.name = name
+        self.features = features
+        self.frames = []
+        self.vector = []
+        self.intervals = []
+        self.cosim = []
+        self.top_adds = []
+        self.top_removals = []
+        self.top_core = []
+        self.core_set = set()
+
+    def into_timeframes(self):
+        tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
+        tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
+        tag_len = len(set([tag[1] for tag in tag_quad]))
+        if tag_len <= 2 * bucketsize: buckets=2
+        else: buckets = int(round(tag_len/(1.0 * bucketsize)))
+        tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
+        all_buckets = [dict() for x in range(buckets)]
+        all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
+        i = 0
+        t = 0
+        this_bucket = all_buckets[0]
+        last_tag_doc = tag_quad[0][1]
+        for tag in tag_quad:
+            tag_id = tag[0]
+            tag_doc = tag[1]
+            tag_date = tag[2]
+            tag_cnt = tag[3]
+            if i > tmpbucketsize:
+                i = 0
+                t += 1
+                this_bucket = all_buckets[t]
+            all_last_adds[t] = tag_date
+            if last_tag_doc != tag_doc:
+                i+=1
+                last_tag_doc = tag_doc
+            if tag_id in this_bucket:
+                this_bucket[tag_id] = this_bucket[tag_id] + tag_cnt
+            else:
+                this_bucket[tag_id] = tag_cnt
+        for this_bucket, last_add in zip(all_buckets, all_last_adds):
+            self.frames.append([k,v] for k,v in this_bucket.iteritems())
+            self.intervals.append(str(last_add)[:10])
+
+    def rebuild_dist(self):
+        vlen = len(all_id_to_ctg)
+        for d_vec in self.frames:
+            d_vector = [0.00001] * vlen
+            for keyval in d_vec:
+                d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
+            self.vector.append(d_vector)
+
+    def get_cosim(self):
+        distr = self.vector
+        emptbucks = 0
+        for i in range(0,len(distr)-1):
+            this_distr = distr[i]
+            next_distr = distr[i+1]
+            if sum(this_distr) < 1 or sum(next_distr) < 1:
+                emptbucks +=1
+                self.cosim.append("NaN")
+                continue
+            this_cnt = [int(i) if i > 0.1 else 0 for i in this_distr]
+            next_cnt = [int(i) if i > 0.1 else 0 for i in next_distr]
+            additions = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
+            removals = [[a[0], idx] if bool(a[0]) and not bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
+            core = [[a[1],idx] if (bool(a[0]) and bool(a[1])) and idx != self.id else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
+            top_adds = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(additions, reverse=True)[:5]]
+            top_rem = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(removals, reverse=True)[:5]]
+            top_core = [[all_id_to_ctg[idx][38:],a] for a, idx in sorted(core, reverse=True)[:5]]
+            this_entropy = pw.cosine_similarity(this_distr, next_distr)
+            self.cosim.append(this_entropy)
+            self.top_adds.append(top_adds)
+            self.top_removals.append(top_rem)
+            self.top_core.append(top_core)
+
+
+def get_ctg():
     filter_id_to_ctg = {}
     all_id_to_ctg = {}
     with open(path + 'annotation_to_index.csv') as annotation_dict:
@@ -32,27 +112,6 @@ def get_ctg(filters):
                 filter_id_to_ctg[int(row[1])] = row[0]
             all_id_to_ctg[int(row[1])] = row[0]
     return filter_id_to_ctg, all_id_to_ctg
-
-
-def load_distr(filters):
-    all_d_content = []
-    with open(path + 'all_distributions_time.csv') as distr_vec:
-        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        all_data = []
-        for row in reader:
-            if int(row[0]) not in filters: continue
-            all_data.append([int(row[0]),row[1:]])
-            if len(all_data) == len(filters):
-                del reader
-                break
-    for item in all_data:
-        tups = []
-        for i in range(0,len(item[1])-2,2):
-            # change this to
-            tups.append((item[1][i], 1))
-            #tups.append((item[1][i], int(item[1][i+1])))
-        all_d_content.append([item[0], tups])
-    return all_d_content
 
 
 def load_doc_map():
@@ -73,129 +132,101 @@ def load_idf_weights():
     return filter_id_to_weight
 
 
-def timeframes(concept, bucketsize, docid_to_date):
-    all_frames = []
-    tag_quad = [[int(item[0].split('_')[0]), int(item[0].split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item[0].split('_')[1])], "%Y-%m-%d"), 1] for item in concept[1]]
-    tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
-    tag_len = len(set([tag[1] for tag in tag_quad]))
-    #print len(tag_quad)
-    #print tag_len
-    if tag_len <= 2 * bucketsize:
-        buckets=2
-    else:
-        buckets = int(round(tag_len/(1.0 * bucketsize)))
-    tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
-    #print tmpbucketsize
-    all_buckets = [dict() for x in range(buckets)]
-    all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
-    i = 0
-    t = 0
-    this_bucket = all_buckets[0]
-    last_tag_doc = tag_quad[0][1]
-    for tag in tag_quad:
-        tag_id = tag[0]
-        tag_doc = tag[1]
-        tag_date = tag[2]
-        tag_cnt = tag[3]
-        if i > tmpbucketsize:
-            i = 0
-            t += 1
-            this_bucket = all_buckets[t]
-        all_last_adds[t] = tag_date
-        if last_tag_doc != tag_doc:
-            i+=1
-            last_tag_doc = tag_doc
-        if tag_id in this_bucket:
-            this_bucket[tag_id] = this_bucket[tag_id] + tag_cnt
-        else:
-            this_bucket[tag_id] = tag_cnt
-    for this_bucket, last_add in zip(all_buckets, all_last_adds):
-        all_frames.append([concept[0], [[k,v] for k,v in this_bucket.iteritems()], last_add])
-    return all_frames
+def load_distr(filters):
+    all_d_content = []
+    with open(path + 'all_distributions_time.csv') as distr_vec:
+        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        all_data = []
+        for row in reader:
+            if int(row[0]) not in filters: continue
+            all_data.append([int(row[0]),row[1:]])
+            if len(all_data) == len(filters):
+                del reader
+                break
+    for item in all_data:
+        tups = []
+        for i in range(0,len(item[1])-2,2):
+            # change this to
+            tups.append(item[1][i])
+            #tups.append((item[1][i], int(item[1][i+1])))
+        this_concept = Concept(item[0], filter_id_to_ctg[item[0]].split('/')[-1],tups)
+        print "     " + str(this_concept.id) + ": " + this_concept.name + " with " + str(len(this_concept.features)) + ' annotations in ' + str(len(set(item.split('_')[1] for item in this_concept.features))) + ' articles.'
+        all_d_content.append(this_concept)
+    return all_d_content
 
 
-def rebuild_distr(all_d_content, vlen, weights):
-    all_d_vec = []
-    for d_vec in all_d_content:
-        d_vector = [100] * vlen
-        d_id = d_vec[0]
-        for keyval in d_vec[1]:
-            d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
-        all_d_vec.append([d_id, d_vector, d_vec[2]])
-    return all_d_vec
+def pretty_print():
+    for concept in concepts:
+        print "Cosine Sim within filter " + concept.name + " are: "
+        for i in range(len(concept.intervals)-1):
+            if concept.cosim[i] =="NaN": continue
+            print "     Window " + concept.intervals[i] + " to " + concept.intervals[i+1] + ": " + str(concept.cosim[i]) \
+                  + "  /// Top adds: " + str(concept.top_adds[i])  + "  /// Top rems: " + str(concept.top_removals[i])  \
+                  + "  /// Top core: " + str(concept.top_core[i])
 
 
-# might be problem: distributions might not contain a specific vector --> need identifier
-def kl_div(distr, all_id_to_ctg):
-    all_div = []
-    emptbucks = 0
-    for i in range(0,len(distr)-1):
-        this_distr = distr[i][1]
-        next_distr = distr[i+1][1]
-        if sum(this_distr) < 1 or sum(next_distr) < 1:
-            emptbucks +=1
-            all_div.append('NaN')
-            continue
-        this_cnt = [int(i) if i > 0.1 else 0 for i in this_distr]
-        next_cnt = [int(i) if i > 0.1 else 0 for i in next_distr]
-        changes = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-        #if sum(changes)==0: top_change = ["no changes"]
-        top_change = [] #[all_id_to_ctg[idx][28:] for a, idx in sorted(changes, reverse=True)[:5]]
-        this_entropy = pw.cosine_similarity(this_distr, next_distr)
-        all_div.append([this_entropy, top_change])
-    all_div.append(pw.cosine_similarity(distr[0][1], distr[len(distr)-1][1]))
-    print '     ' + str(emptbucks) + ' empty buckets in ' + str(distr[0][0])
-    return all_div
+def save_state():
+    with open('2_results/analysis_results_' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for con in concepts:
+            for i in range(len(con.intervals)-1):
+                flat_topcore = [val for sublist in con.top_core[i] for val in sublist]
+                flat_topadds = [val for sublist in con.top_adds[i] for val in sublist]
+                flat_toprems = [val for sublist in con.top_adds[i] for val in sublist]
+                print_list = [con.id, con.name, con.intervals[i], con.cosim[i][0][0]] + flat_topcore + flat_topadds + flat_toprems
+                writer.writerow(print_list)
 
 
-def validation_scoring(distributions):
-    scoring = [0] * len(distributions)
-    gold_standard = distributions[0]
-    k = 0
-    for d in distributions:
-        for i in range(0,len(d[1])):
-            if (d[1][i] >= 0.00001) and (gold_standard[1][i] >= 0.00001):
-                scoring[k] += 1
-        k += 1
-    return scoring
+def save_core():
+    with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        printlist = []
+        for con in concepts:
+            core_no_key = []
+            for i in range(len(con.intervals)-1):
+                core_no_key.append([t[0] for t in con.top_core[i]])
+                for j in range(len(con.top_core[0])):
+                    if len(con.top_core[i][j][0]) == 0: continue
+                    con.core_set.add(con.top_core[i][j][0])
+            for core_item in con.core_set:
+                for j in range(len(con.top_core)):
+                    if core_item in core_no_key[j]:
+                        printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.intervals[j]])
+                    else:
+                        printlist.append([core_item, 10, con.intervals[j]])
+        for core in printlist:
+            writer.writerow(core)
+    with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for con in concepts:
+            for j in range(len(con.intervals)-1):
+                for t in range(len(con.top_adds[j])):
+                    writer.writerow([con.top_adds[j][t][0],con.top_adds[j][t][1],con.intervals[j]])
 
 
-def main(argv):
-    bucketsize = int(argv[2])
-    filters = map(int, argv[3:])
-    weights = load_idf_weights()
-    print "Bucketsize of " + str(bucketsize)
+
+def main():
     print "Setting filters.. "
-
-    filter_id_to_ctg, all_id_to_ctg = get_ctg(filters)
-
-    distributions = load_distr(filters)
-    for filter in filters:
-        for idx in range(len(distributions)):
-            if distributions[idx][0] == filter: print "     " + str(filter) + ": " + str(filter_id_to_ctg[filter].split('/')[-1]) + " with " + str(len(distributions[idx][1])) + ' annotations in ' + str(len(set(item[0].split('_')[1] for item in distributions[idx][1]))) + ' articles.'
-
+    global filter_id_to_ctg, all_id_to_ctg, concepts, docid_to_date, weights
+    filter_id_to_ctg, all_id_to_ctg = get_ctg()
     docid_to_date = load_doc_map()
+    weights = load_idf_weights()
+    concepts = load_distr(filters)
 
-    print "Create sparse vectors"
-    for i in range(0,len(distributions)):
-        concept = timeframes(distributions[i], bucketsize, docid_to_date)
-        distributions[i] = rebuild_distr(concept, len(all_id_to_ctg), weights)
-        print "     " + str(filters[i]) + ": Built " + str(len(distributions[i])) + " probability density vectors"
+    print "Building Concepts"
+    for concept in concepts:
+        concept.into_timeframes()
+        concept.rebuild_dist()
+        concept.get_cosim()
+    #pretty_print()
+    save_state()
+    save_core()
 
-    divergences_per_id = []
-    for distr in distributions:
-        divergences_per_id.append(kl_div(distr, all_id_to_ctg))
-
-    for i in range(0,len(filters)):
-        print "Cosine Sim within filter " + str(filter_id_to_ctg[filters[i]].split('/')[-1]) + " are: "
-        for k in range(len(divergences_per_id[i])-1):
-            if divergences_per_id[i][k][0] == 'NaN':
-                continue
-            print "     Window " + str(distributions[i][k][2])[:10] + " to " + str(distributions[i][k+1][2])[:10] + ": " + str(divergences_per_id[i][k][0] if type(divergences_per_id[i][k][0]) is str else ("%.5f" % divergences_per_id[i][k][0])) + "  /// Top changes: " + str((divergences_per_id[i][k][1]))
-        print ""
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print "Usage: enter one or several indices from the dictionary hinting at wikipedia annotations which are preferably related. This program calculates the cosine similarity between the first entered index and all other entered indeces."
+        print "Not enough arguments"
     else:
-        main(sys.argv)
+        main()
+
+
