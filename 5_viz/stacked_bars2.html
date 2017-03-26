@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<svg class="chart"></svg>
+<script>
+
+function on_date(callbackData){
+  var dates = new Set([]);
+  callbackData.sort(function(a, b) { 
+    return a.date - b.date;
+  })
+  var lastDate = callbackData[0].date;
+  var allItems = [];
+  var lastItems = [];
+  for (d in callbackData) {
+      if (d.date == lastDate) {
+        lastItems.push(d);
+      }
+      else {
+        allItems.push(lastItems);
+        lastItems = [];
+        lastItems.push(d);
+      }
+  }
+  return allItems;
+}
+
+
+}
+var format = d3.time.format("%Y-%m-%d");
+var callbackError;
+var callbackData;
+var initData;
+var year = 0;
+var y; 
+var x;
+var chart;
+var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+d3.csv("testadds.csv", type, function(error, data) {
+    callbackError = error;
+    callbackData = data;
+    console.log(callbackData);
+});
+
+function type(d) {
+  d.value = +d.value; // coerce to number
+  d.date = format.parse(d.date);
+  return d;
+}
+
+</script>

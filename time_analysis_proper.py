@@ -33,6 +33,7 @@ class Concept():
         self.top_adds = []
         self.top_removals = []
         self.top_core = []
+        self.core_set = set()
 
     def into_timeframes(self):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
@@ -180,18 +181,28 @@ def save_core():
     with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         printlist = []
-        context_set = set()
-        date_set = set()
         for con in concepts:
+            core_no_key = []
             for i in range(len(con.intervals)-1):
+                core_no_key.append([t[0] for t in con.top_core[i]])
                 for j in range(len(con.top_core[0])):
-                    printlist.append(con.top_core[i][j] + [con.intervals[i]])
-                    #context_set.add(con.top_core[i][j][0])
-                    #date_set.add(con.intervals[i])
-        for item in sorted(printlist, key=lambda con:(con[0], con[2])):
-            writer.writerow(item)
-                #flat_topcore = [val for sublist in con.top_core[i] for val in sublist]
-                #print_list = [con.id, con.name, con.intervals[i]] + flat_topcore
+                    if len(con.top_core[i][j][0]) == 0: continue
+                    con.core_set.add(con.top_core[i][j][0])
+            for core_item in con.core_set:
+                for j in range(len(con.top_core)):
+                    if core_item in core_no_key[j]:
+                        printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.intervals[j]])
+                    else:
+                        printlist.append([core_item, 10, con.intervals[j]])
+        for core in printlist:
+            writer.writerow(core)
+    with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for con in concepts:
+            for j in range(len(con.intervals)-1):
+                for t in range(len(con.top_adds[j])):
+                    writer.writerow([con.top_adds[j][t][0],con.top_adds[j][t][1],con.intervals[j]])
+
 
 
 def main():
@@ -207,7 +218,7 @@ def main():
         concept.into_timeframes()
         concept.rebuild_dist()
         concept.get_cosim()
-    pretty_print()
+    #pretty_print()
     save_state()
     save_core()
 

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/time_analysis_proper.py" afterPath="$PROJECT_DIR$/time_analysis_proper.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -47,20 +48,20 @@
       <file leaf-file-name="time_analysis_proper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8181818">
-              <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.34545454">
+              <caret line="202" column="16" selection-start-line="202" selection-start-column="16" selection-end-line="202" selection-end-column="16" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#839#2324#0" expanded="false" />
-                <element signature="e#2362#2604#0" expanded="false" />
-                <element signature="e#2639#4027#0" expanded="false" />
-                <element signature="e#4049#4475#0" expanded="false" />
-                <element signature="e#4502#4766#0" expanded="false" />
-                <element signature="e#4797#5107#0" expanded="false" />
-                <element signature="e#5139#6154#0" expanded="false" />
-                <element signature="e#6181#6684#0" expanded="false" />
-                <element signature="e#6709#8171#0" expanded="false" />
-                <element signature="e#8191#8634#0" expanded="false" />
+                <element signature="e#493#4057#0" expanded="false" />
+                <element signature="e#869#2354#0" expanded="false" />
+                <element signature="e#2392#2634#0" expanded="false" />
+                <element signature="e#2669#4057#0" expanded="false" />
+                <element signature="e#4079#4505#0" expanded="false" />
+                <element signature="e#4532#4796#0" expanded="false" />
+                <element signature="e#4827#5137#0" expanded="false" />
+                <element signature="e#5169#6184#0" expanded="false" />
+                <element signature="e#6211#6714#0" expanded="false" />
+                <element signature="e#6739#7435#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -152,6 +153,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -186,8 +189,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -496,7 +497,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18680556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13958333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39925373" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -909,20 +910,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/time_analysis_proper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8181818">
-          <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.34545454">
+          <caret line="202" column="16" selection-start-line="202" selection-start-column="16" selection-end-line="202" selection-end-column="16" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#839#2324#0" expanded="false" />
-            <element signature="e#2362#2604#0" expanded="false" />
-            <element signature="e#2639#4027#0" expanded="false" />
-            <element signature="e#4049#4475#0" expanded="false" />
-            <element signature="e#4502#4766#0" expanded="false" />
-            <element signature="e#4797#5107#0" expanded="false" />
-            <element signature="e#5139#6154#0" expanded="false" />
-            <element signature="e#6181#6684#0" expanded="false" />
-            <element signature="e#6709#8171#0" expanded="false" />
-            <element signature="e#8191#8634#0" expanded="false" />
+            <element signature="e#493#4057#0" expanded="false" />
+            <element signature="e#869#2354#0" expanded="false" />
+            <element signature="e#2392#2634#0" expanded="false" />
+            <element signature="e#2669#4057#0" expanded="false" />
+            <element signature="e#4079#4505#0" expanded="false" />
+            <element signature="e#4532#4796#0" expanded="false" />
+            <element signature="e#4827#5137#0" expanded="false" />
+            <element signature="e#5169#6184#0" expanded="false" />
+            <element signature="e#6211#6714#0" expanded="false" />
+            <element signature="e#6739#7435#0" expanded="false" />
           </folding>
         </state>
       </provider>
