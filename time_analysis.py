@@ -34,7 +34,6 @@ class Concept():
         self.top_removals = []
         self.top_core = []
         self.core_set = set()
-
     def into_timeframes(self):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
@@ -68,7 +67,7 @@ class Concept():
         for this_bucket, last_add in zip(all_buckets, all_last_adds):
             self.frames.append([k,v] for k,v in this_bucket.iteritems())
             self.intervals.append(str(last_add)[:10])
-
+        self.intervals = list(set(self.intervals))
     def rebuild_dist(self):
         vlen = len(all_id_to_ctg)
         for d_vec in self.frames:
@@ -76,7 +75,6 @@ class Concept():
             for keyval in d_vec:
                 d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
             self.vector.append(d_vector)
-
     def get_cosim(self):
         distr = self.vector
         emptbucks = 0
@@ -179,11 +177,11 @@ def save_state():
 
 def save_core():
     with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         printlist = []
         for con in concepts:
             core_no_key = []
-            for i in range(len(con.intervals)-1):
+            for i in range(len(con.intervals)):
                 core_no_key.append([t[0] for t in con.top_core[i]])
                 for j in range(len(con.top_core[0])):
                     if len(con.top_core[i][j][0]) == 0: continue
@@ -193,16 +191,67 @@ def save_core():
                     if core_item in core_no_key[j]:
                         printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.intervals[j]])
                     else:
-                        printlist.append([core_item, 10, con.intervals[j]])
+                        printlist.append([core_item, 1, con.intervals[j]])
         for core in printlist:
             writer.writerow(core)
-    with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for con in concepts:
-            for j in range(len(con.intervals)-1):
-                for t in range(len(con.top_adds[j])):
-                    writer.writerow([con.top_adds[j][t][0],con.top_adds[j][t][1],con.intervals[j]])
 
+def save_adds():
+    with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        for con in concepts:
+            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            printlist = {t:[] for t in con.intervals}
+            add_no_key = []
+            con.core_set = set()
+            for i in range(len(con.intervals)):
+                add_no_key.append([t[0] for t in con.top_adds[i]])
+                for j in range(len(con.top_adds[0])):
+                    if len(con.top_adds[i][j][0]) == 0: continue
+                    con.core_set.add(con.top_adds[i][j][0])
+            for core_item in con.core_set:
+                for j in range(len(con.top_adds)):
+                    if core_item in add_no_key[j]:
+                        printlist[con.intervals[j]].append({core_item: con.top_adds[j][add_no_key[j].index(core_item)][1]})
+                    else:
+                        printlist[con.intervals[j]].append({core_item: 0})
+            writer.writerow(["Date"] + list(con.core_set))
+
+            f = []
+            for k,p in printlist.iteritems():
+                tmp = [k]
+                for v in p:
+                    tmp.append(v.values()[0])
+                f.append(tmp)
+            f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
+            writer.writerows(f)
+
+def save_rems():
+    with open('2_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        for con in concepts:
+            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            printlist = {t:[] for t in con.intervals}
+            rem_no_key = []
+            con.core_set = set()
+            for i in range(len(con.intervals)-1):
+                rem_no_key.append([t[0] for t in con.top_removals[i]])
+                for j in range(len(con.top_removals[0])):
+                    if len(con.top_removals[i][j][0]) == 0: continue
+                    con.core_set.add(con.top_removals[i][j][0])
+            for core_item in con.core_set:
+                for j in range(len(con.top_removals)):
+                    if core_item in rem_no_key[j]:
+                        printlist[con.intervals[j]].append({core_item: con.top_removals[j][rem_no_key[j].index(core_item)][1]})
+                    else:
+                        printlist[con.intervals[j]].append({core_item: 0})
+            writer.writerow(["Date"] + list(con.core_set))
+
+            f = []
+            for k,p in printlist.iteritems():
+                tmp = [k]
+                for v in p:
+                    tmp.append(v.values()[0])
+                f.append(tmp)
+            f = sorted(f, key=lambda d:time.strptime(d[0], "%Y-%m-%d"))
+            writer.writerows(f)
 
 
 def main():
@@ -212,15 +261,15 @@ def main():
     docid_to_date = load_doc_map()
     weights = load_idf_weights()
     concepts = load_distr(filters)
-
     print "Building Concepts"
     for concept in concepts:
         concept.into_timeframes()
         concept.rebuild_dist()
         concept.get_cosim()
     #pretty_print()
-    save_state()
+    #save_state()
     save_core()
+    save_adds()
 
 
 if __name__ == "__main__":
