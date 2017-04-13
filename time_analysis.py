@@ -195,6 +195,37 @@ def save_core():
         for core in printlist:
             writer.writerow(core)
 
+
+def save_core_bars():
+    with open('2_results/analysis_core_bars' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+        for con in concepts:
+            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            printlist = {t:[] for t in con.intervals}
+            core_no_key = []
+            con.core_set = set()
+            for i in range(len(con.intervals)):
+                core_no_key.append([t[0] for t in con.top_core[i]])
+                for j in range(len(con.top_core[0])):
+                    if len(con.top_core[i][j][0]) == 0: continue
+                    con.core_set.add(con.top_core[i][j][0])
+            for core_item in con.core_set:
+                for j in range(len(con.top_adds)):
+                    if core_item in core_no_key[j]:
+                        printlist[con.intervals[j]].append({core_item: con.top_core[j][core_no_key[j].index(core_item)][1]})
+                    else:
+                        printlist[con.intervals[j]].append({core_item: 0})
+            writer.writerow(["Date"] + list(con.core_set))
+
+            f = []
+            for k,p in printlist.iteritems():
+                tmp = [k]
+                for v in p:
+                    tmp.append(v.values()[0])
+                f.append(tmp)
+            f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
+            writer.writerows(f)
+
+
 def save_adds():
     with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
@@ -231,7 +262,7 @@ def save_rems():
             printlist = {t:[] for t in con.intervals}
             rem_no_key = []
             con.core_set = set()
-            for i in range(len(con.intervals)-1):
+            for i in range(len(con.intervals)):
                 rem_no_key.append([t[0] for t in con.top_removals[i]])
                 for j in range(len(con.top_removals[0])):
                     if len(con.top_removals[i][j][0]) == 0: continue
@@ -268,8 +299,10 @@ def main():
         concept.get_cosim()
     #pretty_print()
     #save_state()
-    save_core()
+    #save_core()
+    save_core_bars()
     save_adds()
+    save_rems()
 
 
 if __name__ == "__main__":
