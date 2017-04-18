@@ -21,10 +21,10 @@ def load_data():
 
 def load_doc_map():
     doc_to_id = {}
-    with open(path + 'doc_to_id.csv','r') as in_file:
+    with open('../1_data/doc_to_id.csv','r') as in_file:
         reader = csv.reader(in_file, delimiter=',')
         for line in reader:
-            doc_to_id[line[0] = line[1]
+            doc_to_id[line[0]] = line[1]
     return doc_to_id
 
 
@@ -43,20 +43,19 @@ def get_data(dir):
         this_date = content['publisher'][i]['datePublished']
         this_headline = content['publisher'][i]['headline']
         this_url = content['publisher'][i]['url']
-        c.execute("INSERT INTO articles VALUES (?,?,?,?,?,?)", (this_id, publisher, this_date, this_headline, this_url, doc_to_id[this_id]))
+        try:
+            c.execute("INSERT INTO articles VALUES (?,?,?,?,?,?)", (this_id, publisher, this_date, this_headline, this_url, doc_to_id[this_id]))
+        except Exception as e:
+            print 'Key Error'
     return 0
 
-def main():
-    global doc_to_id
-    conn = sqlite3.connect('articles.db')
-    c = conn.cursor()
-    c.execute('''DROP TABLE articles''')
-    c.execute('''CREATE TABLE articles
-                 (id text, publisher text, datePublished text, headline text, url text, docID text)''')
-    doc_to_id = load_doc_map()
-    load_data()
-    c.close()
 
+conn = sqlite3.connect('../1_data/articles.db')
+c = conn.cursor()
+c.execute('''DROP TABLE articles''')
+c.execute('''CREATE TABLE articles
+             (id text, publisher text, datePublished text, headline text, url text, docID text)''')
+doc_to_id = load_doc_map()
+load_data()
+c.close()
 
-if __name__ == '__main__':
-    main()

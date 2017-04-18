@@ -26,6 +26,7 @@ class Concept():
         self.id = id
         self.name = name
         self.features = features
+        self.docID_frames = []
         self.frames = []
         self.vector = []
         self.intervals = []
@@ -47,6 +48,7 @@ class Concept():
         t = 0
         this_bucket = all_buckets[0]
         last_tag_doc = tag_quad[0][1]
+        all_tag_docs = []
         for tag in tag_quad:
             tag_id = tag[0]
             tag_doc = tag[1]
@@ -64,7 +66,9 @@ class Concept():
                 this_bucket[tag_id] = this_bucket[tag_id] + tag_cnt
             else:
                 this_bucket[tag_id] = tag_cnt
+            all_tag_docs.append(tag_doc)
         for this_bucket, last_add in zip(all_buckets, all_last_adds):
+            self.docID_frames.append(all_tag_docs)
             self.frames.append([k,v] for k,v in this_bucket.iteritems())
             self.intervals.append(str(last_add)[:10])
         self.intervals = list(set(self.intervals))
@@ -255,6 +259,7 @@ def save_adds():
                 f.append(tmp)
             f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
             writer.writerows(f)
+
 
 def save_rems():
     with open('2_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
