@@ -235,6 +235,7 @@ def save_adds():
             con.core_set = set()
             for i in range(len(con.intervals)):
                 add_no_key.append([t[0] for t in con.top_adds[i]])
+
                 for j in range(len(con.top_adds[0])):
                     if len(con.top_adds[i][j][0]) == 0: continue
                     con.core_set.add(con.top_adds[i][j][0])
