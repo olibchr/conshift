@@ -1,20 +1,14 @@
 import csv
 import sys
-from scipy.stats import entropy
 from sklearn.metrics import pairwise as pw
-import string
 import warnings
-import time
 import datetime
-import sqlite3
-from itertools import chain
-import ast
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 
 # Parse arguments
-path = sys.argv[1]
-bucketsize = int(sys.argv[2])
+path = sys.argv[2]
+st_path = sys.argv[1]
 filters = map(int, sys.argv[3:])
 
 # Init global vars
@@ -22,7 +16,7 @@ concepts = []
 filter_id_to_ctg, all_id_to_ctg, docid_to_date, weights = {}, {}, {}, {}
 
 
-class Concept():
+class Concept:
     def __init__(self, publisher, id, name, features):
         self.publisher = publisher
         self.id = id
@@ -60,7 +54,7 @@ class Concept():
 def get_ctg():
     filter_id_to_ctg = {}
     all_id_to_ctg = {}
-    with open(path + 'annotation_to_index.csv') as annotation_dict:
+    with open(st_path + 'annotation_to_index.csv') as annotation_dict:
         reader = csv.reader(annotation_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             if int(row[1]) in filters:
@@ -71,7 +65,7 @@ def get_ctg():
 
 def load_doc_map():
     docid_to_date = {}
-    with open(path + 'docid_to_date.csv') as docmap:
+    with open(st_path + 'docid_to_date.csv') as docmap:
         reader = csv.reader(docmap, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             docid_to_date[int(row[0])] = row[1]
@@ -80,7 +74,7 @@ def load_doc_map():
 
 def load_idf_weights():
     filter_id_to_weight = {}
-    with open(path + "all_distributions_weights.csv") as weights_map:
+    with open(st_path + "all_distributions_weights.csv") as weights_map:
         reader = csv.reader(weights_map, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             filter_id_to_weight[int(row[0])] = float(row[1])
@@ -139,6 +133,23 @@ def load_distr(filters):
         print "     NYT: " + str(this_concept.id) + ": " + this_concept.name + " with " + str(len(this_concept.features)) + ' annotations in ' + str(len(set(item.split('_')[1] for item in this_concept.features))) + ' articles.'
         all_d_content.append(this_concept)
 
+    with open(path + 'DM_distributions_time.csv') as distr_vec:
+        reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        all_data = []
+        for row in reader:
+            if int(row[0]) not in filters: continue
+            all_data.append([int(row[0]),row[1:]])
+            if len(all_data) == len(filters):
+                del reader
+                break
+    for item in all_data:
+        tups = []
+        for i in range(0,len(item[1])-2,2):
+            tups.append(item[1][i])
+        this_concept = Concept('DM', item[0], filter_id_to_ctg[item[0]].split('/')[-1],tups)
+        print "     DM: " + str(this_concept.id) + ": " + this_concept.name + " with " + str(len(this_concept.features)) + ' annotations in ' + str(len(set(item.split('_')[1] for item in this_concept.features))) + ' articles.'
+        all_d_content.append(this_concept)
+
     with open(path + 'IND_distributions_time.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         all_data = []
@@ -164,8 +175,8 @@ def get_similarities():
         for ccon in concepts:
             if con.publisher == ccon.publisher:
                 con.cosim.append(0)
-                con.top_uncommon.append(0)
-                con.top_common.append(0)
+                con.top_uncommon.append(" ")
+                con.top_common.append(" ")
                 continue
             con.cosim.append(pw.cosine_similarity(con.vector, ccon.vector))
             con_cnt = [int(i) if i > 0.1 else 0 for i in con.vector]
@@ -182,14 +193,14 @@ def pretty_print():
     for concept in concepts:
         print "Publisher " + concept.publisher + ": Cosine Sim within filter " + concept.name + " are: "
         for i in range(len(concepts)):
-            print "     " + concepts[i].publisher + ": " + concept.cosim[i]
+            print "     " + concepts[i].publisher + ": " + str(concept.cosim[i])
     print ""
     print "Details: "
     for c in concepts:
         print "Publisher " + c.publisher + ": "
         for i in range(len(concepts)):
-            print "     In Common: " + c.common
-            print "     Not in Common: " + c.uncommon
+            print "     In Common with " + concepts[i].publisher + ": "  + str(c.top_common[i])
+            print "     Not in Common with " + concepts[i].publisher + ": " + str(c.top_uncommon[i])
 
 
 def main():

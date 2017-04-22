@@ -1,8 +1,7 @@
 import sqlite3
 import json
-import numpy as np
 import csv
-import sys, os, operator
+import sys, os
 
 path = sys.argv[1]
 

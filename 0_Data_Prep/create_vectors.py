@@ -1,5 +1,4 @@
 import json
-#from pyLD import jsonld
 import numpy as np
 import csv
 import sys, os, operator

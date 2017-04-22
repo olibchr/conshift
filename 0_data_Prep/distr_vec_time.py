@@ -1,5 +1,5 @@
-import csv, operator
-import sys, time, string
+import csv
+import sys, time
 from datetime import datetime
 from itertools import chain
 

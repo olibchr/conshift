@@ -1,14 +1,9 @@
 import csv
 import sys
-from scipy.stats import entropy
 from sklearn.metrics import pairwise as pw
-import string
 import warnings
 import time
 import datetime
-import sqlite3
-from itertools import chain
-import ast
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 
