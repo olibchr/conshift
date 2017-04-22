@@ -93,7 +93,6 @@ def load_idf_weights():
 
 
 def load_distr():
-    all_d_content = []
     with open('../1_data/all_distributions_time.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         all_data = []
@@ -103,15 +102,8 @@ def load_distr():
         tups = []
         for i in range(0,len(item[1])-2,2):
             tups.append(item[1][i])
-        this_concept = Concept(item[0], filter_id_to_ctg[item[0]].split('/')[-1],tups)
-        all_d_content.append(this_concept)
-    return all_d_content
-
-
-def insert_concept():
-    for con in concepts:
         try:
-            c.execute("INSERT  INTO concepts VALUES (?,?,?)", (con.id, con.name, con.features))
+            c.execute("INSERT  INTO concepts VALUES (?,?,?)", (item[0], filter_id_to_ctg[item[0]].split('/')[-1],tups))
         except Exception as e:
             print 'Concept error'
 
@@ -140,7 +132,9 @@ c.execute('''DROP TABLE concepts''')
 c.execute('''CREATE TABLE concepts(
             id real, name text, features text
 )''')
+concepts = load_distr()
 print 'Weights...'
+
 c.execute('''DROP TABLE weights''')
 c.execute('''CREATE TABLE weights(
             id real, weight real
@@ -148,8 +142,6 @@ c.execute('''CREATE TABLE weights(
 filter_id_to_ctg, all_id_to_ctg = get_ctg()
 docid_to_date = load_docdate_map()
 weights = load_idf_weights()
-concepts = load_distr()
-insert_concept()
 insert_weights()
 
 c.close()

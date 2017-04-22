@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/1_data/articles.db" afterPath="$PROJECT_DIR$/1_data/articles.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_data_Prep/create_database.py" afterPath="$PROJECT_DIR$/0_data_Prep/create_database.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_data_Prep/distr_vec_time.py" afterPath="$PROJECT_DIR$/0_data_Prep/distr_vec_time.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publisher_analysis.py" afterPath="$PROJECT_DIR$/publisher_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/time_analysis.py" afterPath="$PROJECT_DIR$/time_analysis.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,34 +48,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_database.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="create_database.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.5198464">
+              <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#287#405#0" expanded="false" />
                 <element signature="e#632#845#0" expanded="false" />
                 <element signature="e#875#1586#0" expanded="false" />
                 <element signature="e#1608#1994#0" expanded="false" />
                 <element signature="e#2025#2292#0" expanded="false" />
                 <element signature="e#2323#2636#0" expanded="false" />
-                <element signature="e#2661#3222#0" expanded="false" />
-                <element signature="e#3251#3445#0" expanded="false" />
-                <element signature="e#3474#3648#0" expanded="false" />
-                <marker date="1492865353000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
-                <marker date="1492865353000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
-                <marker date="1492865353000" expanded="true" signature="3308:3344" placeholder="INSERT INTO concepts" />
-                <marker date="1492865353000" expanded="true" signature="3542:3575" placeholder="INSERT INTO weights" />
-                <marker date="1492865353000" expanded="true" signature="3760:3779" placeholder="DROP TABLE a... " />
-                <marker date="1492865353000" expanded="true" signature="3760:3794" placeholder="DROP TABLE a... " />
-                <marker date="1492865353000" expanded="true" signature="3797:3914" placeholder="CREATE TABLE... articles" />
-                <marker date="1492865353000" expanded="true" signature="3918:4429" placeholder="CREATE TABLE... concepts" />
-                <marker date="1492865353000" expanded="true" signature="4012:4031" placeholder="DROP TABLE c... " />
-                <marker date="1492865353000" expanded="true" signature="4049:4119" placeholder="CREATE TABLE... concepts" />
-                <marker date="1492865353000" expanded="true" signature="4156:4174" placeholder="DROP TABLE w... " />
-                <marker date="1492865353000" expanded="true" signature="4192:4248" placeholder="CREATE TABLE... weights" />
+                <element signature="e#3271#3445#0" expanded="false" />
+                <marker date="1492865589000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
+                <marker date="1492865589000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
+                <marker date="1492865589000" expanded="true" signature="3081:3117" placeholder="INSERT INTO concepts" />
+                <marker date="1492865589000" expanded="true" signature="3339:3372" placeholder="INSERT INTO weights" />
+                <marker date="1492865589000" expanded="true" signature="3557:3576" placeholder="DROP TABLE a... " />
+                <marker date="1492865589000" expanded="true" signature="3557:3591" placeholder="DROP TABLE a... " />
+                <marker date="1492865589000" expanded="true" signature="3594:3711" placeholder="CREATE TABLE... articles" />
+                <marker date="1492865589000" expanded="true" signature="3715:4210" placeholder="CREATE TABLE... concepts" />
+                <marker date="1492865589000" expanded="true" signature="3809:3828" placeholder="DROP TABLE c... " />
+                <marker date="1492865589000" expanded="true" signature="3846:3916" placeholder="CREATE TABLE... concepts" />
+                <marker date="1492865589000" expanded="true" signature="3978:3996" placeholder="DROP TABLE w... " />
+                <marker date="1492865589000" expanded="true" signature="4014:4070" placeholder="CREATE TABLE... weights" />
               </folding>
             </state>
           </provider>
@@ -121,12 +116,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_vectors.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="create_vectors.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/0_data_Prep/create_vectors.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.019206146">
-              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -187,9 +184,9 @@
         <option value="$PROJECT_DIR$/0_data_Prep/split_distributions.py" />
         <option value="$PROJECT_DIR$/publisher_analysis.py" />
         <option value="$PROJECT_DIR$/time_analysis.py" />
-        <option value="$PROJECT_DIR$/0_data_Prep/create_database.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/distr_vec_time.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/create_vectors.py" />
+        <option value="$PROJECT_DIR$/0_data_Prep/create_database.py" />
       </list>
     </option>
   </component>
@@ -675,27 +672,24 @@
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="47" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#287#405#0" expanded="false" />
             <element signature="e#632#845#0" expanded="false" />
             <element signature="e#875#1586#0" expanded="false" />
             <element signature="e#1608#1994#0" expanded="false" />
             <element signature="e#2025#2292#0" expanded="false" />
             <element signature="e#2323#2636#0" expanded="false" />
-            <element signature="e#2661#3222#0" expanded="false" />
-            <element signature="e#3251#3445#0" expanded="false" />
-            <element signature="e#3474#3648#0" expanded="false" />
-            <marker date="1492865353000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
-            <marker date="1492865353000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
-            <marker date="1492865353000" expanded="true" signature="3308:3344" placeholder="INSERT INTO concepts" />
-            <marker date="1492865353000" expanded="true" signature="3542:3575" placeholder="INSERT INTO weights" />
-            <marker date="1492865353000" expanded="true" signature="3760:3779" placeholder="DROP TABLE a... " />
-            <marker date="1492865353000" expanded="true" signature="3760:3794" placeholder="DROP TABLE a... " />
-            <marker date="1492865353000" expanded="true" signature="3797:3914" placeholder="CREATE TABLE... articles" />
-            <marker date="1492865353000" expanded="true" signature="3918:4429" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865353000" expanded="true" signature="4012:4031" placeholder="DROP TABLE c... " />
-            <marker date="1492865353000" expanded="true" signature="4049:4119" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865353000" expanded="true" signature="4156:4174" placeholder="DROP TABLE w... " />
-            <marker date="1492865353000" expanded="true" signature="4192:4248" placeholder="CREATE TABLE... weights" />
+            <element signature="e#3271#3445#0" expanded="false" />
+            <marker date="1492865589000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
+            <marker date="1492865589000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
+            <marker date="1492865589000" expanded="true" signature="3081:3117" placeholder="INSERT INTO concepts" />
+            <marker date="1492865589000" expanded="true" signature="3339:3372" placeholder="INSERT INTO weights" />
+            <marker date="1492865589000" expanded="true" signature="3557:3576" placeholder="DROP TABLE a... " />
+            <marker date="1492865589000" expanded="true" signature="3557:3591" placeholder="DROP TABLE a... " />
+            <marker date="1492865589000" expanded="true" signature="3594:3711" placeholder="CREATE TABLE... articles" />
+            <marker date="1492865589000" expanded="true" signature="3715:4210" placeholder="CREATE TABLE... concepts" />
+            <marker date="1492865589000" expanded="true" signature="3809:3828" placeholder="DROP TABLE c... " />
+            <marker date="1492865589000" expanded="true" signature="3846:3916" placeholder="CREATE TABLE... concepts" />
+            <marker date="1492865589000" expanded="true" signature="3978:3996" placeholder="DROP TABLE w... " />
+            <marker date="1492865589000" expanded="true" signature="4014:4070" placeholder="CREATE TABLE... weights" />
           </folding>
         </state>
       </provider>
@@ -704,7 +698,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -735,27 +731,24 @@
           <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#287#405#0" expanded="false" />
             <element signature="e#632#845#0" expanded="false" />
             <element signature="e#875#1586#0" expanded="false" />
             <element signature="e#1608#1994#0" expanded="false" />
             <element signature="e#2025#2292#0" expanded="false" />
             <element signature="e#2323#2636#0" expanded="false" />
-            <element signature="e#2661#3222#0" expanded="false" />
-            <element signature="e#3251#3445#0" expanded="false" />
-            <element signature="e#3474#3648#0" expanded="false" />
-            <marker date="1492865353000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
-            <marker date="1492865353000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
-            <marker date="1492865353000" expanded="true" signature="3308:3344" placeholder="INSERT INTO concepts" />
-            <marker date="1492865353000" expanded="true" signature="3542:3575" placeholder="INSERT INTO weights" />
-            <marker date="1492865353000" expanded="true" signature="3760:3779" placeholder="DROP TABLE a... " />
-            <marker date="1492865353000" expanded="true" signature="3760:3794" placeholder="DROP TABLE a... " />
-            <marker date="1492865353000" expanded="true" signature="3797:3914" placeholder="CREATE TABLE... articles" />
-            <marker date="1492865353000" expanded="true" signature="3918:4429" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865353000" expanded="true" signature="4012:4031" placeholder="DROP TABLE c... " />
-            <marker date="1492865353000" expanded="true" signature="4049:4119" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865353000" expanded="true" signature="4156:4174" placeholder="DROP TABLE w... " />
-            <marker date="1492865353000" expanded="true" signature="4192:4248" placeholder="CREATE TABLE... weights" />
+            <element signature="e#3271#3445#0" expanded="false" />
+            <marker date="1492865589000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
+            <marker date="1492865589000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
+            <marker date="1492865589000" expanded="true" signature="3081:3117" placeholder="INSERT INTO concepts" />
+            <marker date="1492865589000" expanded="true" signature="3339:3372" placeholder="INSERT INTO weights" />
+            <marker date="1492865589000" expanded="true" signature="3557:3576" placeholder="DROP TABLE a... " />
+            <marker date="1492865589000" expanded="true" signature="3557:3591" placeholder="DROP TABLE a... " />
+            <marker date="1492865589000" expanded="true" signature="3594:3711" placeholder="CREATE TABLE... articles" />
+            <marker date="1492865589000" expanded="true" signature="3715:4210" placeholder="CREATE TABLE... concepts" />
+            <marker date="1492865589000" expanded="true" signature="3809:3828" placeholder="DROP TABLE c... " />
+            <marker date="1492865589000" expanded="true" signature="3846:3916" placeholder="CREATE TABLE... concepts" />
+            <marker date="1492865589000" expanded="true" signature="3978:3996" placeholder="DROP TABLE w... " />
+            <marker date="1492865589000" expanded="true" signature="4014:4070" placeholder="CREATE TABLE... weights" />
           </folding>
         </state>
       </provider>
@@ -764,7 +757,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1012,37 +1007,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#287#405#0" expanded="false" />
-            <element signature="e#632#845#0" expanded="false" />
-            <element signature="e#875#1586#0" expanded="false" />
-            <element signature="e#1608#1994#0" expanded="false" />
-            <element signature="e#2025#2292#0" expanded="false" />
-            <element signature="e#2323#2636#0" expanded="false" />
-            <element signature="e#2661#3222#0" expanded="false" />
-            <element signature="e#3251#3445#0" expanded="false" />
-            <element signature="e#3474#3648#0" expanded="false" />
-            <marker date="1492865353000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
-            <marker date="1492865353000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
-            <marker date="1492865353000" expanded="true" signature="3308:3344" placeholder="INSERT INTO concepts" />
-            <marker date="1492865353000" expanded="true" signature="3542:3575" placeholder="INSERT INTO weights" />
-            <marker date="1492865353000" expanded="true" signature="3760:3779" placeholder="DROP TABLE a... " />
-            <marker date="1492865353000" expanded="true" signature="3760:3794" placeholder="DROP TABLE a... " />
-            <marker date="1492865353000" expanded="true" signature="3797:3914" placeholder="CREATE TABLE... articles" />
-            <marker date="1492865353000" expanded="true" signature="3918:4429" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865353000" expanded="true" signature="4012:4031" placeholder="DROP TABLE c... " />
-            <marker date="1492865353000" expanded="true" signature="4049:4119" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865353000" expanded="true" signature="4156:4174" placeholder="DROP TABLE w... " />
-            <marker date="1492865353000" expanded="true" signature="4192:4248" placeholder="CREATE TABLE... weights" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1098,9 +1062,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/0_data_Prep/create_vectors.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.019206146">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5198464">
+          <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#632#845#0" expanded="false" />
+            <element signature="e#875#1586#0" expanded="false" />
+            <element signature="e#1608#1994#0" expanded="false" />
+            <element signature="e#2025#2292#0" expanded="false" />
+            <element signature="e#2323#2636#0" expanded="false" />
+            <element signature="e#3271#3445#0" expanded="false" />
+            <marker date="1492865589000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
+            <marker date="1492865589000" expanded="true" signature="1391:1511" placeholder="INSERT INTO articles... " />
+            <marker date="1492865589000" expanded="true" signature="3081:3117" placeholder="INSERT INTO concepts" />
+            <marker date="1492865589000" expanded="true" signature="3339:3372" placeholder="INSERT INTO weights" />
+            <marker date="1492865589000" expanded="true" signature="3557:3576" placeholder="DROP TABLE a... " />
+            <marker date="1492865589000" expanded="true" signature="3557:3591" placeholder="DROP TABLE a... " />
+            <marker date="1492865589000" expanded="true" signature="3594:3711" placeholder="CREATE TABLE... articles" />
+            <marker date="1492865589000" expanded="true" signature="3715:4210" placeholder="CREATE TABLE... concepts" />
+            <marker date="1492865589000" expanded="true" signature="3809:3828" placeholder="DROP TABLE c... " />
+            <marker date="1492865589000" expanded="true" signature="3846:3916" placeholder="CREATE TABLE... concepts" />
+            <marker date="1492865589000" expanded="true" signature="3978:3996" placeholder="DROP TABLE w... " />
+            <marker date="1492865589000" expanded="true" signature="4014:4070" placeholder="CREATE TABLE... weights" />
+          </folding>
         </state>
       </provider>
     </entry>
