@@ -212,9 +212,6 @@ def main():
             writer.writerow([key.encode('utf-8'), value])
 
 
-
-
-
 if __name__ == "__main__":
     main()
 

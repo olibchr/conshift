@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/1_data/articles.db" afterPath="$PROJECT_DIR$/1_data/articles.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_data_Prep/create_database.py" afterPath="$PROJECT_DIR$/0_data_Prep/create_database.py" />
-    </list>
+    <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="" />
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -48,10 +45,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_database.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="create_database.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5198464">
+            <state vertical-scroll-proportion="0.0">
               <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -116,11 +113,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_vectors.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="create_vectors.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/0_data_Prep/create_vectors.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.7503201">
+              <caret line="211" column="57" selection-start-line="211" selection-start-column="57" selection-end-line="211" selection-end-column="57" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -185,8 +182,8 @@
         <option value="$PROJECT_DIR$/publisher_analysis.py" />
         <option value="$PROJECT_DIR$/time_analysis.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/distr_vec_time.py" />
-        <option value="$PROJECT_DIR$/0_data_Prep/create_vectors.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/create_database.py" />
+        <option value="$PROJECT_DIR$/0_data_Prep/create_vectors.py" />
       </list>
     </option>
   </component>
@@ -1046,33 +1043,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/publisher_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="42" selection-start-line="177" selection-start-column="42" selection-end-line="177" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1705#2134#0" expanded="false" />
-            <element signature="e#2161#2428#0" expanded="false" />
-            <element signature="e#2459#2772#0" expanded="false" />
-            <element signature="e#2804#7327#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/0_data_Prep/create_vectors.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5198464">
+        <state vertical-scroll-proportion="0.0">
           <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
@@ -1094,6 +1067,30 @@
             <marker date="1492865589000" expanded="true" signature="3846:3916" placeholder="CREATE TABLE... concepts" />
             <marker date="1492865589000" expanded="true" signature="3978:3996" placeholder="DROP TABLE w... " />
             <marker date="1492865589000" expanded="true" signature="4014:4070" placeholder="CREATE TABLE... weights" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/publisher_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="177" column="42" selection-start-line="177" selection-start-column="42" selection-end-line="177" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#1705#2134#0" expanded="false" />
+            <element signature="e#2161#2428#0" expanded="false" />
+            <element signature="e#2459#2772#0" expanded="false" />
+            <element signature="e#2804#7327#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/0_data_Prep/create_vectors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7503201">
+          <caret line="211" column="57" selection-start-line="211" selection-start-column="57" selection-end-line="211" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
