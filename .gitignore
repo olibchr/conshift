@@ -8,4 +8,4 @@ tests/*
 6_publisher_data/*
 1_data/*
 2_results/*
-
+*.db
