@@ -200,7 +200,7 @@ def main():
 
 
 
-    with open('annotation_vectors.csv', 'wb') as article_vec_out:
+    with open('all_annotation_vectors.csv', 'wb') as article_vec_out:
         writer = csv.writer(article_vec_out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for a_vec in article_vecs:
             if len(a_vec) <= 1:

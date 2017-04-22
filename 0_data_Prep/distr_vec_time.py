@@ -7,6 +7,7 @@ if len(sys.argv) < 2:
     print "Give dir path to annotion files!"
     exit()
 path = sys.argv[1]
+spec = sys.argv[2]
 
 """
 This program builds concept distributions vectors for a time analysis
@@ -15,7 +16,7 @@ This program builds concept distributions vectors for a time analysis
 def get_items():
     all_annotations_id = []
     all_annotations_doc = []
-    with open(path + 'annotation_vectors.csv') as annotation_vectors:
+    with open(path + spec + '_annotation_vectors.csv') as annotation_vectors:
         reader = csv.reader(annotation_vectors, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         last_id = 0
         this_id_list = []
@@ -58,7 +59,7 @@ def build_vectors(all_annotations_id, all_annotations_doc):
     all_d_vector = []
     doc_id_to_date = {}
     doc_match_list = {all_annotations_doc[i][0][0]: i for i in range(len(all_annotations_doc))}
-    outfile = open('all_distributions_time.csv', 'wb')
+    outfile = open(path + spec + '_distributions_time.csv', 'wb')
     writer = csv.writer(outfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     for ids in all_annotations_id:
         if i % 500 == 0:
@@ -90,19 +91,19 @@ def build_vectors(all_annotations_id, all_annotations_doc):
 def main():
     print "Loading Items"
     all_annotations_id, all_annotations_doc, doc_to_id = get_items()
-    #all_annotations_doc = doc_mapping(all_annotations_doc)
+    all_annotations_doc = doc_mapping(all_annotations_doc)
     print "Building Distributions"
-    #all_d_vecs_time, doc_id_to_date = build_vectors(all_annotations_id, all_annotations_doc)
-    #with open('all_distributions_time.csv', 'wb') as out_file:
-    #    writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    #    for line in all_d_vecs_time:
-    #        tmp = list(chain.from_iterable(line[1]))
-    #        #writer.writerow([line[0]] + tmp)
-
-    #with open('docid_to_date.csv', 'wb') as out_file:
-        #writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        #for k,v in doc_id_to_date.iteritems():
-            #writer.writerow([k,v.encode('utf-8')])
+    all_d_vecs_time, doc_id_to_date = build_vectors(all_annotations_id, all_annotations_doc)
+    """with open('all_distributions_time.csv', 'wb') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for line in all_d_vecs_time:
+            tmp = list(chain.from_iterable(line[1]))
+            writer.writerow([line[0]] + tmp)"""
+    if spec != 'ALL': exit()
+    with open('docid_to_date.csv', 'wb') as out_file:
+        writer = csv.writer(out_file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for k,v in doc_id_to_date.iteritems():
+            writer.writerow([k,v.encode('utf-8')])
     with open('doc_to_id.csv','wb') as out_file:
         writer = csv.writer(out_file, delimiter=',')
         for k,v in doc_to_id.iteritems():
