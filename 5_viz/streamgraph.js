@@ -8,7 +8,6 @@ var colorrange = [];
 
 
 function chart(csvpath, color) {
-
     if (color == "blue") {
         colorrange = ["#045A8D", "#2B8CBE", "#74A9CF", "#A6BDDB", "#D0D1E6", "#F1EEF6"];
     }
@@ -77,7 +76,6 @@ function chart(csvpath, color) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var graph = d3.csv(csvpath, function(data) {
-        console.log(data);
         data.forEach(function(d) {
             d.date = format.parse(d.date);
             d.value = +d.value;

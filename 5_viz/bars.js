@@ -29,7 +29,6 @@ function init_graph(data, tag) {
     for (i in headerNames) {
         colorMap[headerNames[i]] = gColors[i];
     }
-    console.log(colorMap);
     var dataset = d3.layout.stack()(headerNames.map(function(annotations) {
         return data.map(function(d) {
             return {x: d.Date, y: +d[annotations], z: annotations};
@@ -130,13 +129,6 @@ function init_graph(data, tag) {
         .attr("font-size", "12px")
         .attr("font-weight", "bold");
 }
-
-d3.csv("analysis_core_bars13291.csv", type, function(error, data) {
-    headerNames = d3.keys(data[0]).slice(1);
-    callbackError = error;
-    callbackData = data;
-    init_graph(callbackData, "#core");
-});
 
 d3.csv("analysis_adds13291.csv", type, function(error, data) {
     headerNames = d3.keys(data[0]).slice(1);
