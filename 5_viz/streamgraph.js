@@ -46,7 +46,7 @@ function chart(csvpath, color) {
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(d3.time.weeks);
+        .ticks(d3.time.weeks, 2);
 
     var yAxis = d3.svg.axis()
         .scale(y);
@@ -155,19 +155,27 @@ function chart(csvpath, color) {
             .style("z-index", "19")
             .style("width", "1px")
             .style("height", "380px")
-            .style("top", "10px")
+            .style("top",  getPos(document.getElementById("chart")) + 'px')
             .style("bottom", "30px")
             .style("left", "0px")
             .style("background", "#fff");
 
         d3.select(".chart")
             .on("mousemove", function(){
-                mousex = d3.mouse(this);
+                mousex = d3.mouse(document.body);
                 mousex = mousex[0] + 5;
                 vertical.style("left", mousex + "px" )})
             .on("mouseover", function(){
-                mousex = d3.mouse(this);
+                mousex = d3.mouse(document.body);
                 mousex = mousex[0] + 5;
                 vertical.style("left", mousex + "px")});
     });
+}
+
+function getPos(el) {
+    // yay readability
+    for (var lx=0, ly=0;
+         el != null;
+         lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+    return ly;
 }

@@ -4,13 +4,17 @@ from sklearn.metrics import pairwise as pw
 import warnings
 import time
 import datetime
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 
 # Parse arguments
 path = sys.argv[1]
-bucketsize = int(sys.argv[2])
-filters = map(int, sys.argv[3:])
+pref = sys.argv[2]
+bucketsize = int(sys.argv[3])
+filters = map(int, sys.argv[4:])
 
 # Init global vars
 concepts = []
@@ -22,16 +26,42 @@ class Concept():
         self.id = id
         self.name = name
         self.features = features
-        self.docID_frames = []
-        self.frames = []
-        self.vector = []
-        self.intervals = []
+        self.docID_fixFrames = []
+        self.fixFrames = []
+        self.fixVector = []
+        self.fixIntervals = []
+        self.docID_flexFrames = []
+        self.flexFrames = []
+        self.flexVector = []
+        self.flexIntervals = []
         self.cosim = []
         self.top_adds = []
         self.top_removals = []
         self.top_core = []
         self.core_set = set()
-    def into_timeframes(self):
+    def into_fixed_frames(self):
+        buckets = 12
+        tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
+        tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
+        start_time = tag_quad[0][2]
+        end_time = tag_quad[-1][2]
+        timedelta = end_time - start_time
+        self.fixIntervals = [start_time + (a * timedelta) for a in range(buckets)]
+        all_buckets = [dict() for x in range(buckets)]
+        all_tag_docs = [[]] * buckets
+        for tag in tag_quad:
+            i = 0
+            while(tag[2]>self.fixIntervals[i]):
+                i +=1
+            if tag[0] in all_buckets[i]:
+                all_buckets[i][tag[0]] = all_buckets[i][tag[0]] + tag[3]
+            else: all_buckets[i][tag[0]] = tag[3]
+            all_tag_docs[i].append(tag[1])
+        for this_bucket, last_add in zip(all_buckets, self.fixIntervals):
+            self.fixFrames.append([k, v] for k, v in this_bucket.iteritems())
+        self.docID_fixFrames = all_tag_docs
+        assert len(self.fixIntervals) == len(self.fixFrames) == len(self.docID_fixFrames), "Different amount of fix vector elements!"
+    def into_flex_timeframes(self):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
         tag_len = len(set([tag[1] for tag in tag_quad]))
@@ -44,7 +74,7 @@ class Concept():
         t = 0
         this_bucket = all_buckets[0]
         last_tag_doc = tag_quad[0][1]
-        all_tag_docs = []
+        all_tag_docs = [[]] * buckets
         for tag in tag_quad:
             tag_id = tag[0]
             tag_doc = tag[1]
@@ -62,21 +92,41 @@ class Concept():
                 this_bucket[tag_id] = this_bucket[tag_id] + tag_cnt
             else:
                 this_bucket[tag_id] = tag_cnt
-            all_tag_docs.append(tag_doc)
+            all_tag_docs[t].append(tag_doc)
         for this_bucket, last_add in zip(all_buckets, all_last_adds):
-            self.docID_frames.append(all_tag_docs)
-            self.frames.append([k,v] for k,v in this_bucket.iteritems())
-            self.intervals.append(str(last_add)[:10])
-        self.intervals = list(set(self.intervals))
-    def rebuild_dist(self):
+            self.flexFrames.append([k, v] for k, v in this_bucket.iteritems())
+            self.flexIntervals.append(str(last_add)[:10])
+        self.docID_flexFrames = all_tag_docs
+        assert len(self.flexIntervals) == len(self.flexFrames) == len(self.docID_flexFrames), "Different amount of flex vector elements!"
+    def rebuild_flex_dist(self):
         vlen = len(all_id_to_ctg)
-        for d_vec in self.frames:
+        for d_vec in self.flexFrames:
             d_vector = [0.00001] * vlen
             for keyval in d_vec:
                 d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
-            self.vector.append(d_vector)
+            self.flexVector.append(d_vector)
+    def rebuild_fix_dist(self):
+        vlen = len(all_id_to_ctg)
+        for d_vec in self.fixFrames:
+            d_vector = [0.00001] * vlen
+            for keyval in d_vec:
+                d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
+            self.fixVector.append(d_vector)
     def get_cosim(self):
-        distr = self.vector
+        distr = self.fixVector
+        emptbucks = 0
+        for i in range(0,len(distr)-1):
+            this_distr = distr[i]
+            next_distr = distr[i+1]
+            if sum(this_distr) < 1 or sum(next_distr) < 1:
+                emptbucks +=1
+                self.cosim.append("NaN")
+                continue
+            this_entropy = pw.cosine_similarity(this_distr, next_distr)
+            self.cosim.append(this_entropy)
+        assert len(self.cosim) == len(self.fixIntervals) - 1, "Every window should have one value!"
+    def get_core(self):
+        distr = self.flexVector
         emptbucks = 0
         for i in range(0,len(distr)-1):
             this_distr = distr[i]
@@ -93,11 +143,10 @@ class Concept():
             top_adds = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(additions, reverse=True)[:5]]
             top_rem = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(removals, reverse=True)[:5]]
             top_core = [[all_id_to_ctg[idx][38:],a] for a, idx in sorted(core, reverse=True)[:5]]
-            this_entropy = pw.cosine_similarity(this_distr, next_distr)
-            self.cosim.append(this_entropy)
             self.top_adds.append(top_adds)
             self.top_removals.append(top_rem)
             self.top_core.append(top_core)
+        assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.flexIntervals) - 1, "Every window should have one value!"
 
 
 def get_ctg():
@@ -132,7 +181,7 @@ def load_idf_weights():
 
 def load_distr(filters):
     all_d_content = []
-    with open(path + 'all_distributions_time.csv') as distr_vec:
+    with open(path + pref + '_distributions_time.csv') as distr_vec:
         reader = csv.reader(distr_vec, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         all_data = []
         for row in reader:
@@ -158,8 +207,9 @@ def pretty_print():
         print "Cosine Sim within filter " + concept.name + " are: "
         for i in range(len(concept.intervals)-1):
             if concept.cosim[i] =="NaN": continue
-            print "     Window " + concept.intervals[i] + " to " + concept.intervals[i+1] + ": " + str(concept.cosim[i]) \
-                  + "  /// Top adds: " + str(concept.top_adds[i])  + "  /// Top rems: " + str(concept.top_removals[i])  \
+            print "     Window " + concept.intervals[i] + " to " + concept.fixIntervals[i+1] + ": " + str(concept.cosim[i])
+        for i in range(len(concept.intervals)-1):
+            print "     Window " + concept.intervals[i] + " to " + concept.flexIntervals[i+1] + ": Top adds: " + str(concept.top_adds[i])  + "  /// Top rems: " + str(concept.top_removals[i])  \
                   + "  /// Top core: " + str(concept.top_core[i])
 
 
@@ -203,7 +253,7 @@ def save_core_bars():
             printlist = {t:[] for t in con.intervals}
             core_no_key = []
             con.core_set = set()
-            for i in range(len(con.intervals)):
+            for i in range(len(con.top_core)):
                 core_no_key.append([t[0] for t in con.top_core[i]])
                 for j in range(len(con.top_core[0])):
                     if len(con.top_core[i][j][0]) == 0: continue
@@ -214,6 +264,7 @@ def save_core_bars():
                         printlist[con.intervals[j]].append({core_item: con.top_core[j][core_no_key[j].index(core_item)][1]})
                     else:
                         printlist[con.intervals[j]].append({core_item: 0})
+            assert len(con.core_set) != 0, "No data for con  " + con.name
             writer.writerow(["Date"] + list(con.core_set))
 
             f = []
@@ -221,6 +272,7 @@ def save_core_bars():
                 tmp = [k]
                 for v in p:
                     tmp.append(v.values()[0])
+                assert len(tmp)>1, "No data to write into bar output file for date " + str(k)
                 f.append(tmp)
             f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
             writer.writerows(f)
@@ -233,9 +285,8 @@ def save_adds():
             printlist = {t:[] for t in con.intervals}
             add_no_key = []
             con.core_set = set()
-            for i in range(len(con.intervals)):
+            for i in range(len(con.top_adds)):
                 add_no_key.append([t[0] for t in con.top_adds[i]])
-
                 for j in range(len(con.top_adds[0])):
                     if len(con.top_adds[i][j][0]) == 0: continue
                     con.core_set.add(con.top_adds[i][j][0])
@@ -264,7 +315,7 @@ def save_rems():
             printlist = {t:[] for t in con.intervals}
             rem_no_key = []
             con.core_set = set()
-            for i in range(len(con.intervals)):
+            for i in range(len(con.top_removals)):
                 rem_no_key.append([t[0] for t in con.top_removals[i]])
                 for j in range(len(con.top_removals[0])):
                     if len(con.top_removals[i][j][0]) == 0: continue
@@ -295,16 +346,19 @@ def main():
     weights = load_idf_weights()
     concepts = load_distr(filters)
     print "Building Concepts"
-    for concept in concepts:
-        concept.into_timeframes()
-        concept.rebuild_dist()
-        concept.get_cosim()
-    #pretty_print()
+    for con in concepts:
+        con.into_fixed_timeframes()
+        con.into_flex_timeframes()
+        con.rebuild_flex_dist()
+        con.rebuild_fix_dist()
+        con.get_cosim()
+        con.get_core()
+    pretty_print()
     #save_state()
     #save_core()
-    save_core_bars()
-    save_adds()
-    save_rems()
+    #save_core_bars()
+    #save_adds()
+    #save_rems()
 
 
 if __name__ == "__main__":

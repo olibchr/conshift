@@ -3,6 +3,8 @@ import sys
 from sklearn.metrics import pairwise as pw
 import warnings
 import datetime
+import matplotlib.pyplot as plt
+import numpy as np
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 
@@ -202,6 +204,14 @@ def pretty_print():
             print "     In Common with " + concepts[i].publisher + ": "  + str(c.top_common[i])
             print "     Not in Common with " + concepts[i].publisher + ": " + str(c.top_uncommon[i])
 
+def mat_plot(concepts):
+    """Make a matrix with all zeros and increasing elements on the diagonal"""
+    aa = np.zeros((len(concepts),len(concepts)))
+    for i in range(len(concepts)):
+        for j in range(len(concepts[i].cosim)):
+            aa[i, j] = concepts[i].cosim[j]
+    return aa
+
 
 def main():
     print "Setting filters.. "
@@ -216,6 +226,13 @@ def main():
         concept.rebuild_dist()
     get_similarities()
     pretty_print()
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(mat_plot(concepts))
+    fig.colorbar(cax)
+    ax.set_xticklabels(['']+[c.publisher for c in concepts])
+    ax.set_yticklabels(['']+[c.publisher for c in concepts])
+    plt.show()
 
 
 if __name__ == "__main__":
