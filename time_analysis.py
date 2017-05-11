@@ -19,6 +19,9 @@ filters = map(int, sys.argv[4:])
 # Init global vars
 concepts = []
 filter_id_to_ctg, all_id_to_ctg, docid_to_date, weights = {}, {}, {}, {}
+DATEONE = datetime.datetime.strptime("2014-08-14", "%Y-%m-%d")
+DATELAST = datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")
+
 
 
 class Concept():
@@ -39,14 +42,12 @@ class Concept():
         self.top_removals = []
         self.top_core = []
         self.core_set = set()
-    def into_fixed_frames(self):
+    def into_fixed_timeframes(self):
         buckets = 12
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
-        start_time = tag_quad[0][2]
-        end_time = tag_quad[-1][2]
-        timedelta = end_time - start_time
-        self.fixIntervals = [start_time + (a * timedelta) for a in range(buckets)]
+        timedelta = DATELAST - DATEONE
+        self.fixIntervals = [(DATEONE + (a * timedelta/buckets)) for a in range(1,buckets+1)]
         all_buckets = [dict() for x in range(buckets)]
         all_tag_docs = [[]] * buckets
         for tag in tag_quad:
@@ -113,7 +114,7 @@ class Concept():
                 d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
             self.fixVector.append(d_vector)
     def get_cosim(self):
-        distr = self.fixVector
+        distr = self.flexVector
         emptbucks = 0
         for i in range(0,len(distr)-1):
             this_distr = distr[i]
@@ -124,29 +125,44 @@ class Concept():
                 continue
             this_entropy = pw.cosine_similarity(this_distr, next_distr)
             self.cosim.append(this_entropy)
-        assert len(self.cosim) == len(self.fixIntervals) - 1, "Every window should have one value!"
+        assert len(self.cosim) == len(self.flexFrames) - 1, "Every window should have one value!"
     def get_core(self):
-        distr = self.flexVector
+        distr = self.fixVector
         emptbucks = 0
         for i in range(0,len(distr)-1):
             this_distr = distr[i]
             next_distr = distr[i+1]
             if sum(this_distr) < 1 or sum(next_distr) < 1:
                 emptbucks +=1
-                self.cosim.append("NaN")
-                continue
-            this_cnt = [int(i) if i > 0.1 else 0 for i in this_distr]
-            next_cnt = [int(i) if i > 0.1 else 0 for i in next_distr]
-            additions = [[a[1], idx] if not bool(a[0]) and bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-            removals = [[a[0], idx] if bool(a[0]) and not bool(a[1]) else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-            core = [[a[1],idx] if (bool(a[0]) and bool(a[1])) and idx != self.id else 0 for idx, a in enumerate(zip(this_cnt, next_cnt))]
-            top_adds = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(additions, reverse=True)[:5]]
-            top_rem = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(removals, reverse=True)[:5]]
-            top_core = [[all_id_to_ctg[idx][38:],a] for a, idx in sorted(core, reverse=True)[:5]]
+                print "Critical amount of articles per bucket"
+            this_cnt = [int(i) if i > 0.0001 else 0 for i in this_distr]
+            next_cnt = [int(i) if i > 0.0001 else 0 for i in next_distr]
+            additions = []
+            for idx, a in enumerate(zip(this_cnt, next_cnt)):
+                if not bool(a[0]) and bool(a[1]):
+                    additions.append([a[1], idx])
+            removals = []
+            rsum = 0
+            for idx, a in enumerate(zip(this_cnt, next_cnt)):
+                if bool(a[0]) and not bool(a[1]):
+                    rsum += a[0]
+                    removals.append([a[0], idx])
+            print rsum
+            core = []
+            for idx, a in enumerate(zip(this_cnt, next_cnt)):
+                if bool(a[0]) and bool(a[1]):
+                    core.append([a[1], idx])
+            top_adds = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(additions, reverse=True)]
+            if len(top_adds) >= 5: top_adds = top_adds[:5]
+            top_rem = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(removals, reverse=True)]
+            if len(top_rem) >= 5:
+                top_rem= top_rem[:5]
+            top_core = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(core, reverse=True)]
+            if len(top_core) >= 5: top_core= top_core[:5]
             self.top_adds.append(top_adds)
             self.top_removals.append(top_rem)
             self.top_core.append(top_core)
-        assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.flexIntervals) - 1, "Every window should have one value!"
+        assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.fixVector)-1, "Every window should have one value!"
 
 
 def get_ctg():
@@ -205,19 +221,21 @@ def load_distr(filters):
 def pretty_print():
     for concept in concepts:
         print "Cosine Sim within filter " + concept.name + " are: "
-        for i in range(len(concept.intervals)-1):
+        for i in range(len(concept.flexIntervals)-1):
             if concept.cosim[i] =="NaN": continue
-            print "     Window " + concept.intervals[i] + " to " + concept.fixIntervals[i+1] + ": " + str(concept.cosim[i])
-        for i in range(len(concept.intervals)-1):
-            print "     Window " + concept.intervals[i] + " to " + concept.flexIntervals[i+1] + ": Top adds: " + str(concept.top_adds[i])  + "  /// Top rems: " + str(concept.top_removals[i])  \
-                  + "  /// Top core: " + str(concept.top_core[i])
+            print "     Window " + str(concept.flexIntervals[i]) + " to " + str(concept.flexIntervals[i+1]) + ": " + str(concept.cosim[i])
+        print "Core + Changes on a monthly basis: "
+        for i in range(len(concept.fixIntervals)-1):
+            print "     Window " + str(concept.fixIntervals[i]) + " to " + str(concept.fixIntervals[i+1]) + ":"
+            print "         Top adds: " + str(concept.top_adds[i])  + " \n         Top rems: " + str(concept.top_removals[i])  \
+                  + "\n         Top core: " + str(concept.top_core[i])
 
 
 def save_state():
     with open('2_results/analysis_results_' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for con in concepts:
-            for i in range(len(con.intervals)-1):
+            for i in range(len(con.fixIntervals)-1):
                 flat_topcore = [val for sublist in con.top_core[i] for val in sublist]
                 flat_topadds = [val for sublist in con.top_adds[i] for val in sublist]
                 flat_toprems = [val for sublist in con.top_adds[i] for val in sublist]
@@ -230,8 +248,9 @@ def save_core():
         writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         printlist = []
         for con in concepts:
+            con.top_core = norm_cont(con.top_core)
             core_no_key = []
-            for i in range(len(con.intervals)):
+            for i in range(len(con.top_core)):
                 core_no_key.append([t[0] for t in con.top_core[i]])
                 for j in range(len(con.top_core[0])):
                     if len(con.top_core[i][j][0]) == 0: continue
@@ -239,9 +258,10 @@ def save_core():
             for core_item in con.core_set:
                 for j in range(len(con.top_core)):
                     if core_item in core_no_key[j]:
-                        printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.intervals[j]])
+                        printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.fixIntervals[j].date()])
                     else:
-                        printlist.append([core_item, 1, con.intervals[j]])
+                        printlist.append([core_item, 1, con.fixIntervals[j].date()])
+        writer.writerow(['key','value','date'])
         for core in printlist:
             writer.writerow(core)
 
@@ -249,8 +269,8 @@ def save_core():
 def save_core_bars():
     with open('2_results/analysis_core_bars' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
-            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            printlist = {t:[] for t in con.intervals}
+            writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            printlist = {t:[] for t in con.fixIntervals}
             core_no_key = []
             con.core_set = set()
             for i in range(len(con.top_core)):
@@ -261,9 +281,9 @@ def save_core_bars():
             for core_item in con.core_set:
                 for j in range(len(con.top_adds)):
                     if core_item in core_no_key[j]:
-                        printlist[con.intervals[j]].append({core_item: con.top_core[j][core_no_key[j].index(core_item)][1]})
+                        printlist[con.fixIntervals[j]].append({core_item: con.top_core[j][core_no_key[j].index(core_item)][1]})
                     else:
-                        printlist[con.intervals[j]].append({core_item: 0})
+                        printlist[con.fixIntervals[j]].append({core_item: 0})
             assert len(con.core_set) != 0, "No data for con  " + con.name
             writer.writerow(["Date"] + list(con.core_set))
 
@@ -282,9 +302,10 @@ def save_adds():
     with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            printlist = {t:[] for t in con.intervals}
+            printlist = {t:[] for t in con.fixIntervals}
             add_no_key = []
             con.core_set = set()
+            con.top_adds = norm_cont(con.top_adds)
             for i in range(len(con.top_adds)):
                 add_no_key.append([t[0] for t in con.top_adds[i]])
                 for j in range(len(con.top_adds[0])):
@@ -293,18 +314,18 @@ def save_adds():
             for core_item in con.core_set:
                 for j in range(len(con.top_adds)):
                     if core_item in add_no_key[j]:
-                        printlist[con.intervals[j]].append({core_item: con.top_adds[j][add_no_key[j].index(core_item)][1]})
+                        printlist[con.fixIntervals[j]].append({core_item: con.top_adds[j][add_no_key[j].index(core_item)][1]})
                     else:
-                        printlist[con.intervals[j]].append({core_item: 0})
+                        printlist[con.fixIntervals[j]].append({core_item: 0})
             writer.writerow(["Date"] + list(con.core_set))
 
             f = []
             for k,p in printlist.iteritems():
-                tmp = [k]
+                tmp = [k.date()]
                 for v in p:
                     tmp.append(v.values()[0])
                 f.append(tmp)
-            f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
+            f = sorted(f, key=lambda k:k[0])
             writer.writerows(f)
 
 
@@ -312,9 +333,10 @@ def save_rems():
     with open('2_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            printlist = {t:[] for t in con.intervals}
+            printlist = {t:[] for t in con.fixIntervals}
             rem_no_key = []
             con.core_set = set()
+            con.top_removals = norm_cont(con.top_removals)
             for i in range(len(con.top_removals)):
                 rem_no_key.append([t[0] for t in con.top_removals[i]])
                 for j in range(len(con.top_removals[0])):
@@ -323,20 +345,27 @@ def save_rems():
             for core_item in con.core_set:
                 for j in range(len(con.top_removals)):
                     if core_item in rem_no_key[j]:
-                        printlist[con.intervals[j]].append({core_item: con.top_removals[j][rem_no_key[j].index(core_item)][1]})
+                        printlist[con.fixIntervals[j]].append({core_item: con.top_removals[j][rem_no_key[j].index(core_item)][1]})
                     else:
-                        printlist[con.intervals[j]].append({core_item: 0})
+                        printlist[con.fixIntervals[j]].append({core_item: 0})
             writer.writerow(["Date"] + list(con.core_set))
 
             f = []
             for k,p in printlist.iteritems():
-                tmp = [k]
+                tmp = [k.date()]
                 for v in p:
                     tmp.append(v.values()[0])
                 f.append(tmp)
-            f = sorted(f, key=lambda d:time.strptime(d[0], "%Y-%m-%d"))
+            f = sorted(f, key=lambda d:d[0])
             writer.writerows(f)
 
+
+def norm_cont(context):
+    for i in range(len(context)):
+        total = float(sum(t[1] for t in context[i]))
+        for j in range(len(context[i])):
+            context[i][j][1] = float("{0:.2f}".format((context[i][j][1]/total)*100))
+    return context
 
 def main():
     print "Setting filters.. "
@@ -355,10 +384,10 @@ def main():
         con.get_core()
     pretty_print()
     #save_state()
-    #save_core()
+    save_core()
     #save_core_bars()
-    #save_adds()
-    #save_rems()
+    save_adds()
+    save_rems()
 
 
 if __name__ == "__main__":

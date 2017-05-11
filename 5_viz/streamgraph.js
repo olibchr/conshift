@@ -1,22 +1,14 @@
 /**
  * Created by oliverbecher on 13/04/2017.
  */
-chart("data.csv", "orange");
+chart("analysis_core13291.csv");
 
 var datearray = [];
 var colorrange = [];
 
 
-function chart(csvpath, color) {
-    if (color == "blue") {
-        colorrange = ["#045A8D", "#2B8CBE", "#74A9CF", "#A6BDDB", "#D0D1E6", "#F1EEF6"];
-    }
-    else if (color == "pink") {
-        colorrange = ["#980043", "#DD1C77", "#DF65B0", "#C994C7", "#D4B9DA", "#F1EEF6"];
-    }
-    else if (color == "orange") {
-        colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
-    }
+function chart(csvpath) {
+    colorrange = ['#fdfdfd', '#1d1d1d', '#ebce2b', '#702c8c', '#db6917', '#96cde6', '#ba1c30', '#c0bd7f', '#7f7e80', '#5fa641', '#d485b2', '#4277b6', '#df8461', '#463397', '#e1a11a', '#91218c', '#e8e948', '#7e1510', '#92ae31', '#6f340d', '#d32b1e', '#2b3514'];
     strokecolor = colorrange[0];
 
     var format = d3.time.format("%Y-%m-%d");
@@ -46,7 +38,8 @@ function chart(csvpath, color) {
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(d3.time.weeks, 2);
+        .ticks(d3.time.weeks, 4)
+        .tickFormat(d3.time.format("%b-%y"));
 
     var yAxis = d3.svg.axis()
         .scale(y);
