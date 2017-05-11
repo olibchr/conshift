@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/analysis_service.py" afterPath="$PROJECT_DIR$/analysis_service.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/analysis_service.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/streamgraph.js" afterPath="$PROJECT_DIR$/5_viz/streamgraph.js" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,25 +29,32 @@
         <entry file="file://$PROJECT_DIR$/time_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="366" column="14" selection-start-line="366" selection-start-column="14" selection-end-line="366" selection-end-column="14" />
-              <folding />
+              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+              <folding>
+                <element signature="e#1189#2335#0" expanded="false" />
+                <element signature="e#2380#4140#0" expanded="false" />
+                <element signature="e#4182#4432#0" expanded="false" />
+                <element signature="e#4473#4721#0" expanded="false" />
+                <element signature="e#4755#5279#0" expanded="false" />
+                <element signature="e#5312#7150#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="analysis_service.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/analysis_service.py">
+        <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3649168">
-              <caret line="160" column="37" selection-start-line="160" selection-start-column="37" selection-end-line="160" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.69398206">
+              <caret line="171" column="9" selection-start-line="171" selection-start-column="9" selection-end-line="171" selection-end-column="9" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#8839#9591#0" expanded="false" />
-                <element signature="e#9616#10315#0" expanded="false" />
-                <element signature="e#10339#11447#0" expanded="false" />
-                <element signature="e#11476#13009#0" expanded="false" />
-                <element signature="e#13033#14421#0" expanded="false" />
-                <element signature="e#14445#15869#0" expanded="false" />
+                <element signature="e#1147#2293#0" expanded="false" />
+                <element signature="e#2350#4110#0" expanded="false" />
+                <element signature="e#4152#4402#0" expanded="false" />
+                <element signature="e#4443#4691#0" expanded="false" />
+                <element signature="e#4725#5249#0" expanded="false" />
+                <element signature="e#5290#7113#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -120,6 +128,7 @@
         <option value="$PROJECT_DIR$/5_viz/streamgraph.js" />
         <option value="$PROJECT_DIR$/5_viz/bars.js" />
         <option value="$PROJECT_DIR$/analysis_service.py" />
+        <option value="$PROJECT_DIR$/6_web_service/analysis_service.py" />
       </list>
     </option>
   </component>
@@ -175,6 +184,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="6_web_service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -277,7 +300,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
+      <module name="0_conshift" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
@@ -388,7 +411,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26812000" />
+    <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="38" y="22" width="1402" height="878" extended-state="6" />
@@ -396,7 +419,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17902996" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39881393" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802226" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -433,7 +456,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="35" />
+      <option name="time" value="37" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -790,23 +813,30 @@
     <entry file="file://$PROJECT_DIR$/time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="366" column="14" selection-start-line="366" selection-start-column="14" selection-end-line="366" selection-end-column="14" />
-          <folding />
+          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+          <folding>
+            <element signature="e#1189#2335#0" expanded="false" />
+            <element signature="e#2380#4140#0" expanded="false" />
+            <element signature="e#4182#4432#0" expanded="false" />
+            <element signature="e#4473#4721#0" expanded="false" />
+            <element signature="e#4755#5279#0" expanded="false" />
+            <element signature="e#5312#7150#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/analysis_service.py">
+    <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3649168">
-          <caret line="160" column="37" selection-start-line="160" selection-start-column="37" selection-end-line="160" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.69398206">
+          <caret line="171" column="9" selection-start-line="171" selection-start-column="9" selection-end-line="171" selection-end-column="9" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#8839#9591#0" expanded="false" />
-            <element signature="e#9616#10315#0" expanded="false" />
-            <element signature="e#10339#11447#0" expanded="false" />
-            <element signature="e#11476#13009#0" expanded="false" />
-            <element signature="e#13033#14421#0" expanded="false" />
-            <element signature="e#14445#15869#0" expanded="false" />
+            <element signature="e#1147#2293#0" expanded="false" />
+            <element signature="e#2350#4110#0" expanded="false" />
+            <element signature="e#4152#4402#0" expanded="false" />
+            <element signature="e#4443#4691#0" expanded="false" />
+            <element signature="e#4725#5249#0" expanded="false" />
+            <element signature="e#5290#7113#0" expanded="false" />
           </folding>
         </state>
       </provider>

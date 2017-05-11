@@ -69,6 +69,7 @@ function chart(csvpath) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var graph = d3.csv(csvpath, function(data) {
+        console.log(data);
         data.forEach(function(d) {
             d.date = format.parse(d.date);
             d.value = +d.value;

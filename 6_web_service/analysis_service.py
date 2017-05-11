@@ -4,10 +4,7 @@ from sklearn.metrics import pairwise as pw
 import warnings
 import time
 import datetime
-from flask import Flask, jsonify, render_template, request,
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+from flask import Flask, jsonify, render_template, request
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 
@@ -44,6 +41,7 @@ class Concept():
         self.top_removals = []
         self.top_core = []
         self.core_set = set()
+        self.serialized = ''
     def into_fixed_timeframes(self):
         buckets = 12
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
@@ -163,6 +161,15 @@ class Concept():
             self.top_removals.append(top_rem)
             self.top_core.append(top_core)
         assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.fixVector)-1, "Every window should have one value!"
+    def serialize(self):
+        self.serialized = {
+            'id': self.id,
+            'name': self.name,
+            'cosines': [{'date':self.flexIntervals[t], 'cosine': self.cosim[t]} for t in range(len(self.cosim))],
+            'top_core': [{'date':self.fixIntervals[t], 'key':self.top_core[t][0], 'value':self.top_core[t][0]} for t in range(len(self.top_core))],
+            'top_adds': [{'date':self.fixIntervals[t], 'key':self.top_adds[t][0], 'value':self.top_adds[t][0]} for t in range(len(self.top_adds))],
+            'top_rems': [{'date':self.fixIntervals[t], 'key':self.top_removals[t][0], 'value':self.top_removals[t][0]} for t in range(len(self.top_removals))]
+        }
 
 
 def get_ctg():
@@ -200,6 +207,7 @@ def load_distr():
         all_data = []
         for row in reader:
             all_data.append([int(row[0]),row[1:]])
+            if len(all_data)>13500: break
     for item in all_data:
         tups = []
         for i in range(0,len(item[1])-2,2):
@@ -209,156 +217,101 @@ def load_distr():
     return all_d_content
 
 
-def pretty_print():
-    for concept in concepts:
-        print "Cosine Sim within filter " + concept.name + " are: "
-        for i in range(len(concept.flexIntervals)-1):
-            if concept.cosim[i] =="NaN": continue
-            print "     Window " + str(concept.flexIntervals[i]) + " to " + str(concept.flexIntervals[i+1]) + ": " + str(concept.cosim[i])
-        print "Core + Changes on a monthly basis: "
-        for i in range(len(concept.fixIntervals)-1):
-            print "     Window " + str(concept.fixIntervals[i]) + " to " + str(concept.fixIntervals[i+1]) + ":"
-            print "         Top adds: " + str(concept.top_adds[i])  + " \n         Top rems: " + str(concept.top_removals[i])  \
-                  + "\n         Top core: " + str(concept.top_core[i])
+def pretty_print(concept):
+    print "Cosine Sim within filter " + concept.name + " are: "
+    for i in range(len(concept.flexIntervals)-1):
+        if concept.cosim[i] =="NaN": continue
+        print "     Window " + str(concept.flexIntervals[i]) + " to " + str(concept.flexIntervals[i+1]) + ": " + str(concept.cosim[i])
+    print "Core + Changes on a monthly basis: "
+    for i in range(len(concept.fixIntervals)-1):
+        print "     Window " + str(concept.fixIntervals[i]) + " to " + str(concept.fixIntervals[i+1]) + ":"
+        print "         Top adds: " + str(concept.top_adds[i])  + " \n         Top rems: " + str(concept.top_removals[i])  \
+              + "\n         Top core: " + str(concept.top_core[i])
 
 
-def save_state():
-    with open('2_results/analysis_results_' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        for con in concepts:
-            for i in range(len(con.fixIntervals)-1):
-                flat_topcore = [val for sublist in con.top_core[i] for val in sublist]
-                flat_topadds = [val for sublist in con.top_adds[i] for val in sublist]
-                flat_toprems = [val for sublist in con.top_adds[i] for val in sublist]
-                print_list = [con.id, con.name, con.intervals[i], con.cosim[i][0][0]] + flat_topcore + flat_topadds + flat_toprems
-                writer.writerow(print_list)
+def format_core(con):
+    printlist = []
+    con.top_core = normalize_context(con.top_core)
+    core_no_key = []
+    for i in range(len(con.top_core)):
+        core_no_key.append([t[0] for t in con.top_core[i]])
+        for j in range(len(con.top_core[0])):
+            if len(con.top_core[i][j][0]) == 0: continue
+            con.core_set.add(con.top_core[i][j][0])
+    for core_item in con.core_set:
+        for j in range(len(con.top_core)):
+            if core_item in core_no_key[j]:
+                printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.fixIntervals[j].date()])
+            else:
+                printlist.append([core_item, 1, con.fixIntervals[j].date()])
+    #writer.writerow(['key','value','date'])
+    #for core in printlist:
+    #    writer.writerow(core)
 
 
-def save_core():
-    with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        printlist = []
-        for con in concepts:
-            con.top_core = norm_cont(con.top_core)
-            core_no_key = []
-            for i in range(len(con.top_core)):
-                core_no_key.append([t[0] for t in con.top_core[i]])
-                for j in range(len(con.top_core[0])):
-                    if len(con.top_core[i][j][0]) == 0: continue
-                    con.core_set.add(con.top_core[i][j][0])
-            for core_item in con.core_set:
-                for j in range(len(con.top_core)):
-                    if core_item in core_no_key[j]:
-                        printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.fixIntervals[j].date()])
-                    else:
-                        printlist.append([core_item, 1, con.fixIntervals[j].date()])
-        writer.writerow(['key','value','date'])
-        for core in printlist:
-            writer.writerow(core)
+def format_adds(con):
+    printlist = {t:[] for t in con.fixIntervals}
+    add_no_key = []
+    con.core_set = set()
+    con.top_adds = normalize_context(con.top_adds)
+    for i in range(len(con.top_adds)):
+        add_no_key.append([t[0] for t in con.top_adds[i]])
+        for j in range(len(con.top_adds[0])):
+            if len(con.top_adds[i][j][0]) == 0: continue
+            con.core_set.add(con.top_adds[i][j][0])
+    for core_item in con.core_set:
+        for j in range(len(con.top_adds)):
+            if core_item in add_no_key[j]:
+                printlist[con.fixIntervals[j]].append({core_item: con.top_adds[j][add_no_key[j].index(core_item)][1]})
+            else:
+                printlist[con.fixIntervals[j]].append({core_item: 0})
+    #writer.writerow(["Date"] + list(con.core_set))
+    f = []
+    for k,p in printlist.iteritems():
+        tmp = [k.date()]
+        for v in p:
+            tmp.append(v.values()[0])
+        f.append(tmp)
+    f = sorted(f, key=lambda k:k[0])
+    #writer.writerows(f)
 
 
-def save_core_bars():
-    with open('2_results/analysis_core_bars' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        for con in concepts:
-            writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            printlist = {t:[] for t in con.fixIntervals}
-            core_no_key = []
-            con.core_set = set()
-            for i in range(len(con.top_core)):
-                core_no_key.append([t[0] for t in con.top_core[i]])
-                for j in range(len(con.top_core[0])):
-                    if len(con.top_core[i][j][0]) == 0: continue
-                    con.core_set.add(con.top_core[i][j][0])
-            for core_item in con.core_set:
-                for j in range(len(con.top_adds)):
-                    if core_item in core_no_key[j]:
-                        printlist[con.fixIntervals[j]].append({core_item: con.top_core[j][core_no_key[j].index(core_item)][1]})
-                    else:
-                        printlist[con.fixIntervals[j]].append({core_item: 0})
-            assert len(con.core_set) != 0, "No data for con  " + con.name
-            writer.writerow(["Date"] + list(con.core_set))
-
-            f = []
-            for k,p in printlist.iteritems():
-                tmp = [k]
-                for v in p:
-                    tmp.append(v.values()[0])
-                assert len(tmp)>1, "No data to write into bar output file for date " + str(k)
-                f.append(tmp)
-            f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
-            writer.writerows(f)
+def format_rems(con):
+    printlist = {t:[] for t in con.fixIntervals}
+    rem_no_key = []
+    con.core_set = set()
+    con.top_removals = normalize_context(con.top_removals)
+    for i in range(len(con.top_removals)):
+        rem_no_key.append([t[0] for t in con.top_removals[i]])
+        for j in range(len(con.top_removals[0])):
+            if len(con.top_removals[i][j][0]) == 0: continue
+            con.core_set.add(con.top_removals[i][j][0])
+    for core_item in con.core_set:
+        for j in range(len(con.top_removals)):
+            if core_item in rem_no_key[j]:
+                printlist[con.fixIntervals[j]].append({core_item: con.top_removals[j][rem_no_key[j].index(core_item)][1]})
+            else:
+                printlist[con.fixIntervals[j]].append({core_item: 0})
+    #writer.writerow(["Date"] + list(con.core_set))
+    f = []
+    for k,p in printlist.iteritems():
+        tmp = [k.date()]
+        for v in p:
+            tmp.append(v.values()[0])
+        f.append(tmp)
+    f = sorted(f, key=lambda d:d[0])
+    #writer.writerows(f)
 
 
-def save_adds():
-    with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        for con in concepts:
-            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            printlist = {t:[] for t in con.fixIntervals}
-            add_no_key = []
-            con.core_set = set()
-            con.top_adds = norm_cont(con.top_adds)
-            for i in range(len(con.top_adds)):
-                add_no_key.append([t[0] for t in con.top_adds[i]])
-                for j in range(len(con.top_adds[0])):
-                    if len(con.top_adds[i][j][0]) == 0: continue
-                    con.core_set.add(con.top_adds[i][j][0])
-            for core_item in con.core_set:
-                for j in range(len(con.top_adds)):
-                    if core_item in add_no_key[j]:
-                        printlist[con.fixIntervals[j]].append({core_item: con.top_adds[j][add_no_key[j].index(core_item)][1]})
-                    else:
-                        printlist[con.fixIntervals[j]].append({core_item: 0})
-            writer.writerow(["Date"] + list(con.core_set))
-
-            f = []
-            for k,p in printlist.iteritems():
-                tmp = [k.date()]
-                for v in p:
-                    tmp.append(v.values()[0])
-                f.append(tmp)
-            f = sorted(f, key=lambda k:k[0])
-            writer.writerows(f)
-
-
-def save_rems():
-    with open('2_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
-        for con in concepts:
-            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            printlist = {t:[] for t in con.fixIntervals}
-            rem_no_key = []
-            con.core_set = set()
-            con.top_removals = norm_cont(con.top_removals)
-            for i in range(len(con.top_removals)):
-                rem_no_key.append([t[0] for t in con.top_removals[i]])
-                for j in range(len(con.top_removals[0])):
-                    if len(con.top_removals[i][j][0]) == 0: continue
-                    con.core_set.add(con.top_removals[i][j][0])
-            for core_item in con.core_set:
-                for j in range(len(con.top_removals)):
-                    if core_item in rem_no_key[j]:
-                        printlist[con.fixIntervals[j]].append({core_item: con.top_removals[j][rem_no_key[j].index(core_item)][1]})
-                    else:
-                        printlist[con.fixIntervals[j]].append({core_item: 0})
-            writer.writerow(["Date"] + list(con.core_set))
-
-            f = []
-            for k,p in printlist.iteritems():
-                tmp = [k.date()]
-                for v in p:
-                    tmp.append(v.values()[0])
-                f.append(tmp)
-            f = sorted(f, key=lambda d:d[0])
-            writer.writerows(f)
-
-
-def norm_cont(context):
+def normalize_context(context):
     for i in range(len(context)):
         total = float(sum(t[1] for t in context[i]))
         for j in range(len(context[i])):
             context[i][j][1] = float("{0:.2f}".format((context[i][j][1]/total)*100))
     return context
 
-def main():
+
+def preload():
     print "Preloading data"
     global filter_id_to_ctg, all_id_to_ctg, concepts, docid_to_date, weights, all_concepts
     filter_id_to_ctg, all_id_to_ctg = get_ctg()
@@ -376,30 +329,39 @@ def filter_concept(filter_id, bucketsize, top_x):
     con.get_cosim()
     con.get_core(top_x)
 
+    format_core(con)
+    format_adds(con)
+    format_rems(con)
+
+    con.serialize()
+    return con.serialized
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/_filter')
-def main_process():
+
+@app.route('/_filter', methods=['GET'])
+def filter_request():
     filter_id = int(request.args.get('filter_id',0,type=str))
     bucketsize = int(request.args.get('bucketsize',0,type=str))
     top_x = int(request.args.get('top_x',0,type=str))
-    filter_concept(filter_id, bucketsize, top_x)
-    return True
+    result = filter_concept(filter_id, bucketsize, top_x)
+    return jsonify(result)
 
-@app.route('test_filter')
+
+@app.route('/test_filter')
 def test_filter():
     filter_id = 13291
     bucketsize = 50
     top_x = 5
-    filter_concept(filter_id, bucketsize, top_x)
-    return True
-
+    result = filter_concept(filter_id, bucketsize, top_x)
+    return jsonify(result)
 
 
 if __name__ == "__main__":
-    main()
+    preload()
     app.run(host='0.0.0.0', port=8080, debug=True)
 
 
