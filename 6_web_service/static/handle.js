@@ -1,20 +1,34 @@
 /**
  * Created by oliverbecher on 16/05/2017.
  */
-handler = function() {
+conceptHandler = function() {
 
+    function draw(data) {
+        // some shaping
+        streamgraph.draw(data);
+        bars.draw(data);
+    }
 
-}
-$(function() {
-    $('a#get_concept').bind('click', function() {
-        $.getJSON($SCRIPT_ROOT + '/_filter', {
+    function getData() {
+        let params = {
             filter_id: $('input[name="filter_id"]').val(),
             bucketsize: $('input[name="bucketsize"]').val(),
             top_x: $('input[name="top_x"]').val()
-        }, function(data) {
-            console.log(data);
-            $("#result").text(data.result);
-        });
-        return false;
+        };
+        $.ajax({
+            url: $SCRIPT_ROOT + '/_filter',
+            data: params,
+            success: d => {
+                handler.draw(d);
+            }
     });
-});
+    }
+
+
+    return {
+        getData: getData,
+        draw: draw
+    }
+
+
+}

@@ -1,81 +1,87 @@
 /**
  * Created by oliverbecher on 13/04/2017.
  */
-chart("analysis_core13291.csv");
+let coreGraph = (function() {
 
-var datearray = [];
-var colorrange = [];
+    function init(callback) {
+    }
+    function draw(data) {
+        function getPos(el) {
+            // yay readability
+            for (var lx=0, ly=0;
+                 el != null;
+                 lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+            return ly;
+        }
+        var datearray = [];
+        var colorrange = ['#fdfdfd', '#1d1d1d', '#ebce2b', '#702c8c', '#db6917', '#96cde6', '#ba1c30', '#c0bd7f', '#7f7e80', '#5fa641', '#d485b2', '#4277b6', '#df8461', '#463397', '#e1a11a', '#91218c', '#e8e948', '#7e1510', '#92ae31', '#6f340d', '#d32b1e', '#2b3514'];
+        strokecolor = colorrange[0];
+
+        var format = d3.time.format("%Y-%m-%d");
+
+        var margin = {top: 20, right: 40, bottom: 30, left: 30};
+        var width = 960 - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+        var tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "remove")
+            .style("position", "absolute")
+            .style("z-index", "20")
+            .style("visibility", "hidden")
+            .style("top", "30px")
+            .style("left", "55px");
+
+        var x = d3.time.scale()
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .range([height-10, 0]);
+
+        var z = d3.scale.ordinal()
+            .range(colorrange);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            .ticks(d3.time.weeks, 4)
+            .tickFormat(d3.time.format("%b-%y"));
+
+        var yAxis = d3.svg.axis()
+            .scale(y);
+
+        var yAxisr = d3.svg.axis()
+            .scale(y);
+
+        var stack = d3.layout.stack()
+            .offset("silhouette")
+            .values(function(d) { return d.values; })
+            .x(function(d) { return d.date; })
+            .y(function(d) { return d.value; });
+
+        var nest = d3.nest()
+            .key(function(d) { return d.key; });
+
+        var area = d3.svg.area()
+            .interpolate("cardinal")
+            .x(function(d) { return x(d.date); })
+            .y0(function(d) { return y(d.y0); })
+            .y1(function(d) { return y(d.y0 + d.y); });
+
+        var svg = d3.select(".chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-function chart(csvpath) {
-    colorrange = ['#fdfdfd', '#1d1d1d', '#ebce2b', '#702c8c', '#db6917', '#96cde6', '#ba1c30', '#c0bd7f', '#7f7e80', '#5fa641', '#d485b2', '#4277b6', '#df8461', '#463397', '#e1a11a', '#91218c', '#e8e948', '#7e1510', '#92ae31', '#6f340d', '#d32b1e', '#2b3514'];
-    strokecolor = colorrange[0];
+        var layers = stack(nest.entries(data));
 
-    var format = d3.time.format("%Y-%m-%d");
 
-    var margin = {top: 20, right: 40, bottom: 30, left: 30};
-    var width = 960 - margin.left - margin.right;
-    var height = 400 - margin.top - margin.bottom;
-
-    var tooltip = d3.select("body")
-        .append("div")
-        .attr("class", "remove")
-        .style("position", "absolute")
-        .style("z-index", "20")
-        .style("visibility", "hidden")
-        .style("top", "30px")
-        .style("left", "55px");
-
-    var x = d3.time.scale()
-        .range([0, width]);
-
-    var y = d3.scale.linear()
-        .range([height-10, 0]);
-
-    var z = d3.scale.ordinal()
-        .range(colorrange);
-
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .ticks(d3.time.weeks, 4)
-        .tickFormat(d3.time.format("%b-%y"));
-
-    var yAxis = d3.svg.axis()
-        .scale(y);
-
-    var yAxisr = d3.svg.axis()
-        .scale(y);
-
-    var stack = d3.layout.stack()
-        .offset("silhouette")
-        .values(function(d) { return d.values; })
-        .x(function(d) { return d.date; })
-        .y(function(d) { return d.value; });
-
-    var nest = d3.nest()
-        .key(function(d) { return d.key; });
-
-    var area = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return x(d.date); })
-        .y0(function(d) { return y(d.y0); })
-        .y1(function(d) { return y(d.y0 + d.y); });
-
-    var svg = d3.select(".chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var graph = d3.csv(csvpath, function(data) {
-        console.log(data);
         data.forEach(function(d) {
             d.date = format.parse(d.date);
             d.value = +d.value;
         });
-
-        var layers = stack(nest.entries(data));
 
         x.domain(d3.extent(data, function(d) { return d.date; }));
         y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
@@ -163,13 +169,16 @@ function chart(csvpath) {
                 mousex = d3.mouse(document.body);
                 mousex = mousex[0] + 5;
                 vertical.style("left", mousex + "px")});
-    });
-}
+    }
 
-function getPos(el) {
-    // yay readability
-    for (var lx=0, ly=0;
-         el != null;
-         lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
-    return ly;
-}
+    return {
+        init: init,
+        draw: draw
+    };
+});
+
+
+
+
+
+

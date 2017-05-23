@@ -167,9 +167,9 @@ class Concept():
             'id': self.id,
             'name': self.name,
             'cosines': [{'date':self.flexIntervals[t], 'cosine': self.cosim[t][0][0]} for t in range(len(self.cosim))],
-            'top_core': [{'date':str(self.fixIntervals[t]), 'key':self.top_core[t][k][0], 'value':self.top_core[t][k][1]} for t,k in itertools.product(range(len(self.top_core)), range(min([len(t) for t in self.top_core])))],
-            'top_adds': [{'date':str(self.fixIntervals[t]), 'key':self.top_adds[t][k][0], 'value':self.top_adds[t][k][1]} for t,k in itertools.product(range(len(self.top_adds)), range(min([len(t) for t in self.top_adds])))],
-            'top_rems': [{'date':str(self.fixIntervals[t]), 'key':self.top_removals[t][k][0], 'value':self.top_removals[t][k][1]} for t,k in itertools.product(range(len(self.top_removals)), range(min([len(t) for t in self.top_removals])))]
+            'top_core': [{'date':str(self.fixIntervals[t])[:10], 'key':self.top_core[t][k][0], 'value':self.top_core[t][k][1]} for t,k in itertools.product(range(len(self.top_core)), range(min([len(t) for t in self.top_core])))],
+            'top_adds': [{'date':str(self.fixIntervals[t])[:10], 'key':self.top_adds[t][k][0], 'value':self.top_adds[t][k][1]} for t,k in itertools.product(range(len(self.top_adds)), range(min([len(t) for t in self.top_adds])))],
+            'top_rems': [{'date':str(self.fixIntervals[t])[:10], 'key':self.top_removals[t][k][0], 'value':self.top_removals[t][k][1]} for t,k in itertools.product(range(len(self.top_removals)), range(min([len(t) for t in self.top_removals])))]
         }
         self.fixFrames = []
         self.fixVector = []
