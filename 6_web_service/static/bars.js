@@ -1,14 +1,14 @@
 /**
  * Created by oliverbecher on 13/04/2017.
  */
-let barChart = function (){
-
+let barChart = (function (){
+    var focus = 0;
     function init(){
 
     }
 
-    function draw(data){
-        var contrastC = ['#fdfdfd', '#1d1d1d', '#ebce2b', '#702c8c', '#db6917', '#96cde6', '#ba1c30', '#c0bd7f', '#7f7e80', '#5fa641', '#d485b2', '#4277b6', '#df8461', '#463397', '#e1a11a', '#91218c', '#e8e948', '#7e1510', '#92ae31', '#6f340d', '#d32b1e', '#2b3514'];
+    function draw(data, tag){
+        var colorrange = ['#fdfdfd', '#1d1d1d', '#ebce2b', '#702c8c', '#db6917', '#96cde6', '#ba1c30', '#c0bd7f', '#7f7e80', '#5fa641', '#d485b2', '#4277b6', '#df8461', '#463397', '#e1a11a', '#91218c', '#e8e948', '#7e1510', '#92ae31', '#6f340d', '#d32b1e', '#2b3514'];
         var format = d3.time.format("%Y-%m-%d");
 
         data.forEach(function(d) {
@@ -28,18 +28,10 @@ let barChart = function (){
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-        colorMap = new Object();
-        for (i in data) {
-            colorMap[data[i].key] = contrastC[i%contrastC.length];
-        }
-        var dataset = d3.layout.stack()(headerNames.map(function(annotations) {
-            return data.map(function(d) {
-                return {x: d.Date, y: +d[annotations], z: annotations};
-            });
+        var dataset = d3.layout.stack()(data.map(function(d) {
+                return {x: d.Date, y: +d.value, z: d.key};
         }));
-        for (d in data){
-            dataset[d].annot = dataset[d][0].z;
-        }
+
         var x = d3.scale.ordinal()
             .domain(dataset[0].map(function(d) { return d.x; }))
             .rangeRoundBands([10, width-10], 0.02);
@@ -48,6 +40,8 @@ let barChart = function (){
             .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
             .range([height, 0]);
 
+        var z = d3.scale.ordinal()
+            .range(colorrange);
 
         // Define and draw axes
         var yAxis = d3.svg.axis()
@@ -71,18 +65,12 @@ let barChart = function (){
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
-
         // Create groups for each series, rects for each segment
         var groups = svg.selectAll("g.cost")
             .data(dataset)
             .enter().append("g")
             .attr("class", "cost")
-            .style("fill", function(d, i) {
-                if (d.annot) {
-                    return colorMap[d.annot]; }
-                else {
-                    return '#000000';}
-            });
+            .style("fill", function(d, i) { return z(i); });
 
         var rect = groups.selectAll("rect")
             .data(function(d) { return d; })
@@ -132,32 +120,11 @@ let barChart = function (){
             .attr("font-size", "12px")
             .attr("font-weight", "bold");
     }
-    }
 
-}
-var callbackError;
-var callbackData;
-var headerNames;
-var colorMap;
-var focus = 0;
-
-
-function init_graph(data, tag) {
-
-
-
-d3.csv("analysis_adds13291.csv", type, function(error, data) {
-    headerNames = d3.keys(data[0]).slice(1);
-    callbackError = error;
-    callbackData = data;
-    init_graph(callbackData, "#adds");
-});
-
-d3.csv("analysis_rems13291.csv", type, function(error, data) {
-    headerNames = d3.keys(data[0]).slice(1);
-    callbackError = error;
-    callbackData = data;
-    init_graph(callbackData, "#rems");
+    return {
+        init: init,
+        draw: draw
+    };
 });
 
 

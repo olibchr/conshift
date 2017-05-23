@@ -2,11 +2,13 @@
  * Created by oliverbecher on 16/05/2017.
  */
 conceptHandler = function() {
+    let streamgraph = coreGraph(this);
+    let bars = barChart(this);
 
     function draw(data) {
-        // some shaping
-        streamgraph.draw(data);
-        bars.draw(data);
+        streamgraph.draw(data['top_core']);
+        //bars.draw(data['top_adds'], '#adds');
+        //bars.draw(data['top_rems'], '#rems');
     }
 
     function getData() {
@@ -24,6 +26,8 @@ conceptHandler = function() {
     });
     }
 
+    getData();
+    document.getElementById("get_concept").onclick = function() {getData()};
 
     return {
         getData: getData,

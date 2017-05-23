@@ -42,6 +42,7 @@ class Concept():
         self.top_core = []
         self.core_set = set()
         self.serialized = ''
+        self.testTopCore = set()
     def into_fixed_timeframes(self):
         buckets = 12
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
@@ -156,18 +157,22 @@ class Concept():
             top_rem = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(removals, reverse=True)]
             if len(top_rem) >= top_x: top_rem= top_rem[:top_x]
             top_core = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(core, reverse=True)]
+            texttc = [idx for a, idx in sorted(core, reverse=True)][:top_x]
             if len(top_core) >= top_x: top_core= top_core[:top_x]
+            for tc in texttc: self.testTopCore.add(tc)
             self.top_adds.append(top_adds)
             self.top_removals.append(top_rem)
             self.top_core.append(top_core)
         assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.fixVector)-1, "Every window should have one value!"
     def serialize(self):
-        print self.top_adds
+        #print self.top_core
+        self.testTopCore = list(self.testTopCore)
+        print self.testTopCore
         self.serialized = {
             'id': self.id,
             'name': self.name,
             'cosines': [{'date':self.flexIntervals[t], 'cosine': self.cosim[t][0][0]} for t in range(len(self.cosim))],
-            'top_core': [{'date':str(self.fixIntervals[t])[:10], 'key':self.top_core[t][k][0], 'value':self.top_core[t][k][1]} for t,k in itertools.product(range(len(self.top_core)), range(min([len(t) for t in self.top_core])))],
+            'top_core': [{'date':str(self.fixIntervals[t])[:10], 'key':all_id_to_ctg[self.testTopCore[k]][28:], 'value':self.fixVector[t+1][self.testTopCore[k]]} for t,k in itertools.product(range(len(self.top_core)), range(len(self.testTopCore)))],
             'top_adds': [{'date':str(self.fixIntervals[t])[:10], 'key':self.top_adds[t][k][0], 'value':self.top_adds[t][k][1]} for t,k in itertools.product(range(len(self.top_adds)), range(min([len(t) for t in self.top_adds])))],
             'top_rems': [{'date':str(self.fixIntervals[t])[:10], 'key':self.top_removals[t][k][0], 'value':self.top_removals[t][k][1]} for t,k in itertools.product(range(len(self.top_removals)), range(min([len(t) for t in self.top_removals])))]
         }
@@ -183,6 +188,7 @@ class Concept():
         self.top_removals = []
         self.top_core = []
         self.core_set = set()
+        self.testTopCore = set()
 
 
 

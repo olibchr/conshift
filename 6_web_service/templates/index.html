@@ -9,6 +9,8 @@
     <script type=text/javascript>
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
+    <script type=text/javascript src="{{ url_for('static', filename='bars.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='streamgraph.js') }}"></script>
     <script type=text/javascript src="{{ url_for('static', filename='handle.js') }}"></script>
     <script type='text/javascript'>
         $(document).ready(function () {
@@ -45,15 +47,9 @@
 </div>
 </body>
 <script>
-    let handler;
-    handler = conceptHandler();
-
-
+    let handler = conceptHandler();
 </script>
-<!--
-<script type=text/javascript src="{{
-  url_for('static', filename='bars.js') }}"></script>
-<script type=text/javascript src="{{
-  url_for('static', filename='streamgraph.js') }}"></script>
-  -->
+
+
+
 </html>

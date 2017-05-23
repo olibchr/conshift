@@ -13,7 +13,6 @@ var focus = 0;
 
 
 function init_graph(data, tag) {
-
     var margin = {top: 20, right: 30, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -38,6 +37,7 @@ function init_graph(data, tag) {
     for (d in dataset){
         dataset[d].annot = dataset[d][0].z;
     }
+    console.log(dataset);
     var x = d3.scale.ordinal()
         .domain(dataset[0].map(function(d) { return d.x; }))
         .rangeRoundBands([10, width-10], 0.02);
