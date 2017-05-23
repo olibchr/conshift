@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/analysis_service.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/streamgraph.js" afterPath="$PROJECT_DIR$/5_viz/streamgraph.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/.idea/workspace.xml" afterPath="$PROJECT_DIR$/5_viz/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/analysis_service.py" afterPath="$PROJECT_DIR$/6_web_service/analysis_service.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/time_analysis.py" afterPath="$PROJECT_DIR$/time_analysis.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,36 +27,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="time_analysis.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/time_analysis.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-              <folding>
-                <element signature="e#1189#2335#0" expanded="false" />
-                <element signature="e#2380#4140#0" expanded="false" />
-                <element signature="e#4182#4432#0" expanded="false" />
-                <element signature="e#4473#4721#0" expanded="false" />
-                <element signature="e#4755#5279#0" expanded="false" />
-                <element signature="e#5312#7150#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="analysis_service.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69398206">
-              <caret line="171" column="9" selection-start-line="171" selection-start-column="9" selection-end-line="171" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.27626136">
+              <caret line="322" column="40" selection-start-line="322" selection-start-column="40" selection-end-line="322" selection-end-column="40" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#1147#2293#0" expanded="false" />
-                <element signature="e#2350#4110#0" expanded="false" />
-                <element signature="e#4152#4402#0" expanded="false" />
-                <element signature="e#4443#4691#0" expanded="false" />
-                <element signature="e#4725#5249#0" expanded="false" />
-                <element signature="e#5290#7113#0" expanded="false" />
+                <element signature="e#0#21#0" expanded="true" />
+                <element signature="e#1164#2311#0" expanded="false" />
+                <element signature="e#2368#4129#0" expanded="false" />
+                <element signature="e#4171#4421#0" expanded="false" />
+                <element signature="e#4462#4710#0" expanded="false" />
+                <element signature="e#4744#5269#0" expanded="false" />
+                <element signature="e#5310#7133#0" expanded="false" />
+                <element signature="e#8466#8769#0" expanded="false" />
+                <element signature="e#8796#9060#0" expanded="false" />
+                <element signature="e#9091#9401#0" expanded="false" />
+                <element signature="e#9490#10097#0" expanded="false" />
+                <element signature="e#10131#10818#0" expanded="false" />
+                <element signature="e#10847#11635#0" expanded="false" />
+                <element signature="e#11664#12676#0" expanded="false" />
+                <element signature="e#12705#13730#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -123,11 +116,11 @@
         <option value="$PROJECT_DIR$/5_viz/test.html" />
         <option value="$PROJECT_DIR$/5_viz/streamtest.js" />
         <option value="$PROJECT_DIR$/5_viz/streamgraph.html" />
-        <option value="$PROJECT_DIR$/time_analysis.py" />
         <option value="$PROJECT_DIR$/5_viz/index2.html" />
         <option value="$PROJECT_DIR$/5_viz/streamgraph.js" />
         <option value="$PROJECT_DIR$/5_viz/bars.js" />
         <option value="$PROJECT_DIR$/analysis_service.py" />
+        <option value="$PROJECT_DIR$/time_analysis.py" />
         <option value="$PROJECT_DIR$/6_web_service/analysis_service.py" />
       </list>
     </option>
@@ -138,10 +131,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="38" />
-    <option name="y" value="22" />
-    <option name="width" value="1402" />
-    <option name="height" value="878" />
+    <option name="x" value="-1286" />
+    <option name="y" value="-152" />
+    <option name="width" value="1965" />
+    <option name="height" value="1306" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -168,7 +161,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -218,6 +210,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -414,10 +407,10 @@
     <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="38" y="22" width="1402" height="878" extended-state="6" />
+    <frame x="-1286" y="-152" width="1965" height="1306" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17902996" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12773538" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802226" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -456,7 +449,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="37" />
+      <option name="time" value="38" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -465,7 +458,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -473,7 +465,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -782,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21796565">
           <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -790,7 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.06869221">
           <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -798,7 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.019206146">
           <caret line="17" column="50" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -806,37 +794,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.019206146">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state vertical-scroll-proportion="-23.925926">
+          <caret line="263" column="43" selection-start-line="263" selection-start-column="43" selection-end-line="263" selection-end-column="43" />
           <folding>
-            <element signature="e#1189#2335#0" expanded="false" />
-            <element signature="e#2380#4140#0" expanded="false" />
-            <element signature="e#4182#4432#0" expanded="false" />
-            <element signature="e#4473#4721#0" expanded="false" />
-            <element signature="e#4755#5279#0" expanded="false" />
-            <element signature="e#5312#7150#0" expanded="false" />
+            <element signature="e#1208#2354#0" expanded="false" />
+            <element signature="e#2399#4159#0" expanded="false" />
+            <element signature="e#4201#4451#0" expanded="false" />
+            <element signature="e#4774#5298#0" expanded="false" />
+            <element signature="e#12071#13604#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69398206">
-          <caret line="171" column="9" selection-start-line="171" selection-start-column="9" selection-end-line="171" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.27626136">
+          <caret line="322" column="40" selection-start-line="322" selection-start-column="40" selection-end-line="322" selection-end-column="40" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1147#2293#0" expanded="false" />
-            <element signature="e#2350#4110#0" expanded="false" />
-            <element signature="e#4152#4402#0" expanded="false" />
-            <element signature="e#4443#4691#0" expanded="false" />
-            <element signature="e#4725#5249#0" expanded="false" />
-            <element signature="e#5290#7113#0" expanded="false" />
+            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#1164#2311#0" expanded="false" />
+            <element signature="e#2368#4129#0" expanded="false" />
+            <element signature="e#4171#4421#0" expanded="false" />
+            <element signature="e#4462#4710#0" expanded="false" />
+            <element signature="e#4744#5269#0" expanded="false" />
+            <element signature="e#5310#7133#0" expanded="false" />
+            <element signature="e#8466#8769#0" expanded="false" />
+            <element signature="e#8796#9060#0" expanded="false" />
+            <element signature="e#9091#9401#0" expanded="false" />
+            <element signature="e#9490#10097#0" expanded="false" />
+            <element signature="e#10131#10818#0" expanded="false" />
+            <element signature="e#10847#11635#0" expanded="false" />
+            <element signature="e#11664#12676#0" expanded="false" />
+            <element signature="e#12705#13730#0" expanded="false" />
           </folding>
         </state>
       </provider>

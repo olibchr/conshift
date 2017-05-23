@@ -1,9 +1,9 @@
-import csv
+import csv, itertools
 import sys
 from sklearn.metrics import pairwise as pw
 import warnings
 import time
-import datetime
+import datetime, json
 from flask import Flask, jsonify, render_template, request
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
@@ -61,7 +61,7 @@ class Concept():
         for this_bucket, last_add in zip(all_buckets, self.fixIntervals):
             self.fixFrames.append([k, v] for k, v in this_bucket.iteritems())
         self.docID_fixFrames = all_tag_docs
-        assert len(self.fixIntervals) == len(self.fixFrames) == len(self.docID_fixFrames), "Different amount of fix vector elements!"
+        #assert len(self.fixIntervals) == len(self.fixFrames) == len(self.docID_fixFrames), "Different amount of fix vector elements!"
     def into_flex_timeframes(self, bucketsize):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
@@ -98,7 +98,7 @@ class Concept():
             self.flexFrames.append([k, v] for k, v in this_bucket.iteritems())
             self.flexIntervals.append(str(last_add)[:10])
         self.docID_flexFrames = all_tag_docs
-        assert len(self.flexIntervals) == len(self.flexFrames) == len(self.docID_flexFrames), "Different amount of flex vector elements!"
+        #assert len(self.flexIntervals) == len(self.flexFrames) == len(self.docID_flexFrames), "Different amount of flex vector elements!"
     def rebuild_flex_dist(self):
         vlen = len(all_id_to_ctg)
         for d_vec in self.flexFrames:
@@ -125,7 +125,7 @@ class Concept():
                 continue
             this_entropy = pw.cosine_similarity(this_distr, next_distr)
             self.cosim.append(this_entropy)
-        assert len(self.cosim) == len(self.flexFrames) - 1, "Every window should have one value!"
+        #assert len(self.cosim) == len(self.flexFrames) - 1, "Every window should have one value!"
     def get_top_x(self, top_x):
         distr = self.fixVector
         emptbucks = 0
@@ -162,24 +162,37 @@ class Concept():
             self.top_core.append(top_core)
         assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.fixVector)-1, "Every window should have one value!"
     def serialize(self):
+        print self.top_adds
         self.serialized = {
             'id': self.id,
             'name': self.name,
-            'cosines': [{'date':self.flexIntervals[t], 'cosine': self.cosim[t]} for t in range(len(self.cosim))],
-            'top_core': [{'date':self.fixIntervals[t], 'key':self.top_core[t][0], 'value':self.top_core[t][0]} for t in range(len(self.top_core))],
-            'top_adds': [{'date':self.fixIntervals[t], 'key':self.top_adds[t][0], 'value':self.top_adds[t][0]} for t in range(len(self.top_adds))],
-            'top_rems': [{'date':self.fixIntervals[t], 'key':self.top_removals[t][0], 'value':self.top_removals[t][0]} for t in range(len(self.top_removals))]
+            'cosines': [{'date':self.flexIntervals[t], 'cosine': self.cosim[t][0][0]} for t in range(len(self.cosim))],
+            'top_core': [{'date':str(self.fixIntervals[t]), 'key':self.top_core[t][k][0], 'value':self.top_core[t][k][1]} for t,k in itertools.product(range(len(self.top_core)), range(min([len(t) for t in self.top_core])))],
+            'top_adds': [{'date':str(self.fixIntervals[t]), 'key':self.top_adds[t][k][0], 'value':self.top_adds[t][k][1]} for t,k in itertools.product(range(len(self.top_adds)), range(min([len(t) for t in self.top_adds])))],
+            'top_rems': [{'date':str(self.fixIntervals[t]), 'key':self.top_removals[t][k][0], 'value':self.top_removals[t][k][1]} for t,k in itertools.product(range(len(self.top_removals)), range(min([len(t) for t in self.top_removals])))]
         }
+        self.fixFrames = []
+        self.fixVector = []
+        self.fixIntervals = []
+        self.docID_flexFrames = []
+        self.flexFrames = []
+        self.flexVector = []
+        self.flexIntervals = []
+        self.cosim = []
+        self.top_adds = []
+        self.top_removals = []
+        self.top_core = []
+        self.core_set = set()
+
 
 
 def get_ctg():
-    filter_id_to_ctg = {}
     all_id_to_ctg = {}
     with open(path + 'annotation_to_index.csv') as annotation_dict:
         reader = csv.reader(annotation_dict, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             all_id_to_ctg[int(row[1])] = row[0]
-    return filter_id_to_ctg, all_id_to_ctg
+    return all_id_to_ctg, all_id_to_ctg
 
 
 def load_doc_map():
@@ -207,7 +220,7 @@ def load_distr():
         all_data = []
         for row in reader:
             all_data.append([int(row[0]),row[1:]])
-            if len(all_data)>13500: break
+            if len(all_data)>135: break
     for item in all_data:
         tups = []
         for i in range(0,len(item[1])-2,2):
@@ -254,9 +267,10 @@ def format_adds(con):
     add_no_key = []
     con.core_set = set()
     con.top_adds = normalize_context(con.top_adds)
+    print con.top_adds
     for i in range(len(con.top_adds)):
         add_no_key.append([t[0] for t in con.top_adds[i]])
-        for j in range(len(con.top_adds[0])):
+        for j in range(len(con.top_adds[i])):
             if len(con.top_adds[i][j][0]) == 0: continue
             con.core_set.add(con.top_adds[i][j][0])
     for core_item in con.core_set:
@@ -283,7 +297,7 @@ def format_rems(con):
     con.top_removals = normalize_context(con.top_removals)
     for i in range(len(con.top_removals)):
         rem_no_key.append([t[0] for t in con.top_removals[i]])
-        for j in range(len(con.top_removals[0])):
+        for j in range(len(con.top_removals[i])):
             if len(con.top_removals[i][j][0]) == 0: continue
             con.core_set.add(con.top_removals[i][j][0])
     for core_item in con.core_set:
@@ -327,11 +341,11 @@ def filter_concept(filter_id, bucketsize, top_x):
     con.rebuild_flex_dist()
     con.rebuild_fix_dist()
     con.get_cosim()
-    con.get_core(top_x)
+    con.get_top_x(top_x)
 
-    format_core(con)
-    format_adds(con)
-    format_rems(con)
+    #format_core(con)
+    #format_adds(con)
+    #format_rems(con)
 
     con.serialize()
     return con.serialized
@@ -353,11 +367,12 @@ def filter_request():
 
 @app.route('/test_filter')
 def test_filter():
-    filter_id = 13291
-    bucketsize = 50
-    top_x = 5
+    filter_id = 37
+    bucketsize = 5
+    top_x = 2
     result = filter_concept(filter_id, bucketsize, top_x)
-    return jsonify(result)
+    print result
+    return json.dumps(result)
 
 
 if __name__ == "__main__":

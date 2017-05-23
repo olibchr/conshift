@@ -18,7 +18,7 @@ filters = map(int, sys.argv[4:])
 
 # Init global vars
 concepts = []
-filter_id_to_ctg, all_id_to_ctg, docid_to_date, weights = {}, {}, {}, {}
+filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, docid_to_date, weights = {}, {}, {}, {}, {}
 DATEONE = datetime.datetime.strptime("2014-08-14", "%Y-%m-%d")
 DATELAST = datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")
 
@@ -157,7 +157,7 @@ class Concept():
             top_rem = [[all_id_to_ctg[idx][28:], a] for a, idx in sorted(removals, reverse=True)]
             if len(top_rem) >= 5:
                 top_rem= top_rem[:5]
-            top_core = [[all_id_to_ctg[idx][28:],a] for a, idx in sorted(core, reverse=True)]
+            top_core = [[all_id_to_ctg[idx],a] for a, idx in sorted(core, reverse=True)]
             if len(top_core) >= 5: top_core= top_core[:5]
             self.top_adds.append(top_adds)
             self.top_removals.append(top_rem)
@@ -248,7 +248,7 @@ def save_core():
         writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         printlist = []
         for con in concepts:
-            con.top_core = norm_cont(con.top_core)
+            #con.top_core = norm_cont(con.top_core)
             core_no_key = []
             for i in range(len(con.top_core)):
                 core_no_key.append([t[0] for t in con.top_core[i]])
@@ -260,7 +260,9 @@ def save_core():
                     if core_item in core_no_key[j]:
                         printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.fixIntervals[j].date()])
                     else:
-                        printlist.append([core_item, 1, con.fixIntervals[j].date()])
+                        vval = all_ctg_to_id[core_item]
+                        val = con.fixVector[j][vval]
+                        printlist.append([core_item, val, con.fixIntervals[j].date()])
         writer.writerow(['key','value','date'])
         for core in printlist:
             writer.writerow(core)
@@ -369,8 +371,9 @@ def norm_cont(context):
 
 def main():
     print "Setting filters.. "
-    global filter_id_to_ctg, all_id_to_ctg, concepts, docid_to_date, weights
+    global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg()
+    all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
     docid_to_date = load_doc_map()
     weights = load_idf_weights()
     concepts = load_distr(filters)
