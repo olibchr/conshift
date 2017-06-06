@@ -37,7 +37,7 @@ function init_graph(data, tag) {
     for (d in dataset){
         dataset[d].annot = dataset[d][0].z;
     }
-    console.log(dataset);
+    //console.log(dataset);
     var x = d3.scale.ordinal()
         .domain(dataset[0].map(function(d) { return d.x; }))
         .rangeRoundBands([10, width-10], 0.02);

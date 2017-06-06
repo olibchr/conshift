@@ -163,7 +163,7 @@ class Concept():
             self.top_adds.append(top_adds)
             self.top_removals.append(top_rem)
             self.top_core.append(top_core)
-        assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.fixVector)-1, "Every window should have one value!"
+        assert len(self.top_adds) == len(self.top_core) == len(self.top_removals) == len(self.fixVector)-1, "Every window should have one value!" + str(len(self.top_adds)) + str(len(self.top_core)) + str(len(self.top_removals)) + str(len(self.fixVector)-1)
     def serialize(self):
         #print self.top_core
         self.testTopCore = list(self.testTopCore)
