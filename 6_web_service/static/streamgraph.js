@@ -82,7 +82,7 @@ let coreGraph = (function() {
             d.date = format.parse(d.date);
             d.value = +d.value;
         });
-        var layers = stack(nest.entries(data));
+        let layers = stack(nest.entries(data));
 
         console.log(layers);
 
@@ -93,8 +93,7 @@ let coreGraph = (function() {
             .data(layers)
             .enter().append("path")
             .attr("class", "layer")
-            .attr("d", function(d) {
-                return area(d.values); })
+            .attr("d", function(d) { return area(d.values); })
             .style("fill", function(d, i) { return z(i); });
 
 

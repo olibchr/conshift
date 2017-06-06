@@ -9,3 +9,4 @@ tests/*
 1_data/*
 2_results/*
 *.db
+*.xml

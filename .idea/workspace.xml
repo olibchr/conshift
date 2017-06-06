@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/.idea/workspace.xml" afterPath="$PROJECT_DIR$/5_viz/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/bars.js" afterPath="$PROJECT_DIR$/5_viz/bars.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/streamgraph.js" afterPath="$PROJECT_DIR$/5_viz/streamgraph.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/.idea/workspace.xml" afterPath="$PROJECT_DIR$/6_web_service/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/analysis_service.py" afterPath="$PROJECT_DIR$/6_web_service/analysis_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/static/bars.js" afterPath="$PROJECT_DIR$/6_web_service/static/bars.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/static/handle.js" afterPath="$PROJECT_DIR$/6_web_service/static/handle.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/static/streamgraph.js" afterPath="$PROJECT_DIR$/6_web_service/static/streamgraph.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/templates/index.html" afterPath="$PROJECT_DIR$/6_web_service/templates/index.html" />
     </list>
@@ -35,20 +32,20 @@
       <file leaf-file-name="analysis_service.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49131513">
-              <caret line="169" column="30" selection-start-line="169" selection-start-column="30" selection-end-line="169" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.37387964">
+              <caret line="250" column="21" selection-start-line="250" selection-start-column="21" selection-end-line="250" selection-end-column="21" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
                 <element signature="e#4204#4454#0" expanded="false" />
-                <element signature="e#4495#4743#0" expanded="false" />
-                <element signature="e#4777#5302#0" expanded="false" />
-                <element signature="e#8780#9083#0" expanded="false" />
-                <element signature="e#9110#9374#0" expanded="false" />
-                <element signature="e#9405#9715#0" expanded="false" />
-                <element signature="e#9804#10411#0" expanded="false" />
-                <element signature="e#10445#11132#0" expanded="false" />
-                <element signature="e#11978#12990#0" expanded="false" />
-                <element signature="e#13019#14044#0" expanded="false" />
+                <element signature="e#4773#5298#0" expanded="false" />
+                <element signature="e#5339#7293#0" expanded="false" />
+                <element signature="e#8776#9079#0" expanded="false" />
+                <element signature="e#9106#9370#0" expanded="false" />
+                <element signature="e#9401#9711#0" expanded="false" />
+                <element signature="e#9800#10407#0" expanded="false" />
+                <element signature="e#10441#11128#0" expanded="false" />
+                <element signature="e#12014#13026#0" expanded="false" />
+                <element signature="e#13055#14080#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -132,10 +129,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2372" />
-    <option name="y" value="-205" />
-    <option name="width" value="1965" />
-    <option name="height" value="1306" />
+    <option name="x" value="38" />
+    <option name="y" value="22" />
+    <option name="width" value="1402" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -163,7 +160,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -212,6 +208,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -408,10 +405,10 @@
     <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2372" y="-205" width="1965" height="1306" extended-state="0" />
+    <frame x="38" y="22" width="1402" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12773538" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19186875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802226" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -807,20 +804,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49131513">
-          <caret line="169" column="30" selection-start-line="169" selection-start-column="30" selection-end-line="169" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.37387964">
+          <caret line="250" column="21" selection-start-line="250" selection-start-column="21" selection-end-line="250" selection-end-column="21" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
             <element signature="e#4204#4454#0" expanded="false" />
-            <element signature="e#4495#4743#0" expanded="false" />
-            <element signature="e#4777#5302#0" expanded="false" />
-            <element signature="e#8780#9083#0" expanded="false" />
-            <element signature="e#9110#9374#0" expanded="false" />
-            <element signature="e#9405#9715#0" expanded="false" />
-            <element signature="e#9804#10411#0" expanded="false" />
-            <element signature="e#10445#11132#0" expanded="false" />
-            <element signature="e#11978#12990#0" expanded="false" />
-            <element signature="e#13019#14044#0" expanded="false" />
+            <element signature="e#4773#5298#0" expanded="false" />
+            <element signature="e#5339#7293#0" expanded="false" />
+            <element signature="e#8776#9079#0" expanded="false" />
+            <element signature="e#9106#9370#0" expanded="false" />
+            <element signature="e#9401#9711#0" expanded="false" />
+            <element signature="e#9800#10407#0" expanded="false" />
+            <element signature="e#10441#11128#0" expanded="false" />
+            <element signature="e#12014#13026#0" expanded="false" />
+            <element signature="e#13055#14080#0" expanded="false" />
           </folding>
         </state>
       </provider>

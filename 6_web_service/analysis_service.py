@@ -110,7 +110,7 @@ class Concept():
     def rebuild_fix_dist(self):
         vlen = len(all_id_to_ctg)
         for d_vec in self.fixFrames:
-            d_vector = [0.00001] * vlen
+            d_vector = [0.1] * vlen
             for keyval in d_vec:
                 d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
             self.fixVector.append(d_vector)
@@ -263,6 +263,8 @@ def format_core(con):
                 printlist.append([core_item, con.top_core[j][core_no_key[j].index(core_item)][1], con.fixIntervals[j].date()])
             else:
                 printlist.append([core_item, 1, con.fixIntervals[j].date()])
+    for l in printlist:
+        print l
     #writer.writerow(['key','value','date'])
     #for core in printlist:
     #    writer.writerow(core)
@@ -349,7 +351,7 @@ def filter_concept(filter_id, bucketsize, top_x):
     con.get_cosim()
     con.get_top_x(top_x)
 
-    #format_core(con)
+    format_core(con)
     #format_adds(con)
     #format_rems(con)
 
