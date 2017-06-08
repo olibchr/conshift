@@ -48,20 +48,21 @@ def experiment_1():
     wikiedits = []
     results = dict()
     now = str(datetime.datetime.now().date())
-    with open('8_experiments/results_exp1_' + now + '.csv', 'a') as out:
-        writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for con in concepts:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
-            wikiedits.append(wkedit)
-            wkedit.parse(con.name)
-            wkedit.split_revisions(con.fixIntervals)
-            if len(wkedit.rev_tf_sums) == 0: continue
-            match = comparator(con.cosim, wkedit.rev_tf_sums)
-            results[con.name] = match
-            print "     " + str(match) + " cosine match of concept " + con.name
-            writer.writerow([con.name, con.id, results[con.name]])
-            del wkedit
-            del con
+    for con in concepts:
+        f = open('8_experiments/results_exp1' + now + '.csv', 'a')
+        writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
+        wikiedits.append(wkedit)
+        wkedit.parse(con.name)
+        wkedit.split_revisions(con.fixIntervals)
+        if len(wkedit.rev_tf_sums) == 0: continue
+        match = comparator(con.cosim, wkedit.rev_tf_sums)
+        results[con.name] = match
+        print "     " + str(match) + " cosine match of concept " + con.name
+        writer.writerow([con.name, con.id, results[con.name]])
+        f.close()
+        del wkedit
+        del con
         #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
 experiment_1()
 
@@ -83,7 +84,6 @@ def experiment_2():
     print "Building Concepts"
     for con in concepts:
         #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
-        con.into_fixed_timeframes(docid_to_date)
         con.into_flex_timeframes(weights, all_id_to_ctg)
         con.get_cosim()
         #con.print_cosim()
@@ -91,16 +91,20 @@ def experiment_2():
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
     results = dict()
-    with open('8_experiments/results_exp1.csv', 'ab') as out:
-        writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for con in concepts:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
-            wikiedits.append(wkedit)
-            wkedit.parse(con.name)
-            wkedit.split_revisions(con.fixIntervals)
-            if len(wkedit.rev_tf_sums) == 0: continue
-            match = comparator(con.cosim, wkedit.rev_tf_sums)
-            results[con.name] = match
-            print "     " + str(match) + " cosine match"
-            writer.writerow([con.name, con.id, results[con.name]])
-        writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
+    now = str(datetime.datetime.now().date())
+    for con in concepts:
+        f = open('8_experiments/results_exp2' + now + '.csv', 'a')
+        writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
+        wikiedits.append(wkedit)
+        wkedit.parse(con.name)
+        wkedit.split_revisions(con.fixIntervals)
+        if len(wkedit.rev_tf_sums) == 0: continue
+        match = comparator(con.cosim, wkedit.rev_tf_sums)
+        results[con.name] = match
+        print "     " + str(match) + " cosine match of concept " + con.name
+        writer.writerow([con.name, con.id, results[con.name]])
+        f.close()
+        del wkedit
+        del con
+        #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
