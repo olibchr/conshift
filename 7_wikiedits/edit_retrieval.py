@@ -74,7 +74,7 @@ class WikiEdits:
         soup = BeautifulSoup(txt, 'lxml-xml')
         print 'Finding revisions ...'
         revisions = soup.find_all('revision')
-        
+
         for i, rev in enumerate(revisions):
             row = {
                 'id':rev.id.get_text(),
