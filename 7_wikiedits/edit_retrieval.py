@@ -22,17 +22,18 @@ def file_exists(fname):
 def write_text(data, f_path):
         with open(f_path, 'w') as outfile:
             outfile.write(data)
-        #print('{} written.').format(f_path)
+        print('{} written.').format(f_path)
 
 def read_text(f_path):
     with open (f_path, "r") as infile:
         txt=infile.read()
-    #print('Read {}.'.format(f_path))
+    print('Read {}.'.format(f_path))
     return txt
 
 def get_resource(url):
         print('Fetching: {}'.format(url))
         r = requests.get(url)
+        print "Resource obtained"
         if r.status_code != 200:
             print('Error: {}.'.format(r.status_code))
         return r
@@ -69,9 +70,11 @@ class WikiEdits:
             self.get_history(title)
         txt = read_text(srcfile)
         os.remove(srcfile)
+        print 'Parsing ...'
         soup = BeautifulSoup(txt, 'lxml-xml')
+        print 'Finding revisions ...'
         revisions = soup.find_all('revision')
-
+        
         for i, rev in enumerate(revisions):
             row = {
                 'id':rev.id.get_text(),
