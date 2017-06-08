@@ -47,7 +47,8 @@ def experiment_1():
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
     results = dict()
-    with open('8_experiments/results_exp1.csv', 'ab') as out:
+    now = str(datetime.datetime.now().date())
+    with open('8_experiments/results_exp1_' + now + '.csv', 'ab') as out:
         writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for con in concepts:
             wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
@@ -57,9 +58,9 @@ def experiment_1():
             if len(wkedit.rev_tf_sums) == 0: continue
             match = comparator(con.cosim, wkedit.rev_tf_sums)
             results[con.name] = match
-            print "     " + str(match) + " match in " + con.name
+            print "     " + str(match) + " cosine match"
             writer.writerow([con.name, con.id, results[con.name]])
-        writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
+        #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
 
 experiment_1()
 
@@ -99,6 +100,6 @@ def experiment_2():
             if len(wkedit.rev_tf_sums) == 0: continue
             match = comparator(con.cosim, wkedit.rev_tf_sums)
             results[con.name] = match
-            print "     " + str(match) + " match in " + con.name
+            print "     " + str(match) + " cosine match"
             writer.writerow([con.name, con.id, results[con.name]])
         writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
