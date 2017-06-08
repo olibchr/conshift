@@ -5,6 +5,7 @@ import datetime
 import random
 from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise as pw
+import math
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 sys.path.append('7_wikiedits/')
@@ -28,7 +29,7 @@ def experiment_1():
     #path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
     pref = 'all'
     bucketsize = 0
-    filters = random.sample(xrange(71564), 10)
+    filters = random.sample(xrange(71564), 50)
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
@@ -49,7 +50,7 @@ def experiment_1():
     results = dict()
     now = str(datetime.datetime.now().date())
     for con in concepts:
-        f = open('8_experiments/results_exp1' + now + '.csv', 'a')
+        f = open('8_experiments/results_exp1_' + now + '.csv', 'a')
         writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
         wikiedits.append(wkedit)
@@ -84,7 +85,7 @@ def experiment_2():
     print "Building Concepts"
     for con in concepts:
         #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
-        con.into_flex_timeframes(weights, bucketsize)
+        con.into_flex_timeframes(weights, math.floor(len(set(item.split('_')[1] for item in con.features))/2.0))
         con.get_cosim()
         #con.print_cosim()
         print "     " + con.name + " built successfully"
