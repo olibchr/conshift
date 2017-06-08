@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" afterPath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki_comparison.py" afterPath="$PROJECT_DIR$/wiki_comparison.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -61,8 +60,8 @@
       <file leaf-file-name="wiki_comparison.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5761844">
-              <caret line="30" column="46" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.40332907">
+              <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
               <folding>
                 <element signature="e#0#94#0" expanded="true" />
               </folding>
@@ -153,8 +152,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1619" />
-    <option name="y" value="-44" />
+    <option name="x" value="38" />
+    <option name="y" value="22" />
     <option name="width" value="1402" />
     <option name="height" value="878" />
   </component>
@@ -587,7 +586,7 @@
     <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1619" y="-44" width="1402" height="878" extended-state="0" />
+    <frame x="38" y="22" width="1402" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19614837" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1041,8 +1040,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5761844">
-          <caret line="30" column="46" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.40332907">
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
           <folding>
             <element signature="e#0#94#0" expanded="true" />
           </folding>
