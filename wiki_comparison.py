@@ -84,7 +84,7 @@ def experiment_2():
     print "Building Concepts"
     for con in concepts:
         #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
-        con.into_flex_timeframes(weights, all_id_to_ctg)
+        con.into_flex_timeframes(weights, bucketsize)
         con.get_cosim()
         #con.print_cosim()
         print "     " + con.name + " built successfully"

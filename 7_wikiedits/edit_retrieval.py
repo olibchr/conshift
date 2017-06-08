@@ -44,10 +44,9 @@ class WikiEdits:
         self.data_dir = data_dir
         print self.data_dir
     def get_history(self, title):
-        dstfile = '{}/{}.xml'.format(self.data_dir, title.lower())
         url = '{}{}?history'.format(self.base_url, title)
         r = get_resource(url)
-        write_text(r.content, dstfile)
+        return r.content
 
     def extract_article_text(self, s, title):
         title = title.lower()
@@ -66,10 +65,8 @@ class WikiEdits:
     def parse(self, title, refresh=False):
         self.revisions = []
         srcfile = '{}/{}.xml'.format(self.data_dir, title.lower())
-        if not file_exists(srcfile) or refresh:
-            self.get_history(title)
-        txt = read_text(srcfile)
-        os.remove(srcfile)
+        txt = self.get_history(title)
+        #txt = read_text(srcfile)
         print 'Parsing ...'
         soup = BeautifulSoup(txt, 'lxml-xml')
         print 'Finding revisions ...'
