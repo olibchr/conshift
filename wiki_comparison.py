@@ -22,13 +22,13 @@ def comparator(concepts_cosines, wikiedit_counts):
     return pw.cosine_similarity(concepts_cosines, wkedits)[0][0]
 
 # Experiment 1 - Test fix vector size
-path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
-pref = 'all'
-bucketsize = 0
-filters = random.sample(xrange(71564), 10)
-
 def experiment_1():
-    print "Setting filters.. "
+    print "Experiment 1"
+    path = '/export/scratch1/home/becher/data/'
+    #path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+    pref = 'all'
+    bucketsize = 0
+    filters = random.sample(xrange(71564), 10)
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
@@ -60,9 +60,45 @@ def experiment_1():
             print "     " + str(match) + " match in " + con.name
             writer.writerow([con.name, con.id, results[con.name]])
         writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
-   # with open('8_experiments/results_exp1.csv', 'wb') as out:
-   #     writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-   #     for con in concepts:
-   #         writer.writerow([con.name, con.id, results[con.name]])
-   #     writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
+
 experiment_1()
+
+
+# Experiment 2 - Test flexible vector size
+def experiment_2():
+    print "Experiment 2"
+    path = '~/data/'
+    pref = 'all'
+    bucketsize = 0
+    filters = random.sample(xrange(71564), 10)
+    global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
+    filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
+    print filters
+    all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
+    docid_to_date = load_doc_map(path)
+    weights = load_idf_weights(path)
+    concepts = load_distr(path, pref, filters, filter_id_to_ctg)
+    print "Building Concepts"
+    for con in concepts:
+        #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
+        con.into_fixed_timeframes(docid_to_date)
+        con.into_flex_timeframes(weights, all_id_to_ctg)
+        con.get_cosim()
+        #con.print_cosim()
+        print "     " + con.name + " built successfully"
+    print "Getting edits of " + str(len(concepts)) + " concepts"
+    wikiedits = []
+    results = dict()
+    with open('8_experiments/results_exp1.csv', 'ab') as out:
+        writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for con in concepts:
+            wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
+            wikiedits.append(wkedit)
+            wkedit.parse(con.name)
+            wkedit.split_revisions(con.fixIntervals)
+            if len(wkedit.rev_tf_sums) == 0: continue
+            match = comparator(con.cosim, wkedit.rev_tf_sums)
+            results[con.name] = match
+            print "     " + str(match) + " match in " + con.name
+            writer.writerow([con.name, con.id, results[con.name]])
+        writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])

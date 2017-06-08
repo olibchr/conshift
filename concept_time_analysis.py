@@ -51,7 +51,7 @@ class Concept():
             self.fixFrames.append([k, v] for k, v in this_bucket.iteritems())
         self.docID_fixFrames = all_tag_docs
         assert len(self.fixIntervals) == len(self.fixFrames) == len(self.docID_fixFrames), "Different amount of fix vector elements!"
-    def into_flex_timeframes(self, bucketsize):
+    def into_flex_timeframes(self, docid_to_date, bucketsize):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
         tag_len = len(set([tag[1] for tag in tag_quad]))
@@ -383,8 +383,8 @@ def main():
     concepts = load_distr(path, pref, filters, filter_id_to_ctg)
     print "Building Concepts"
     for con in concepts:
-        con.into_fixed_timeframes()
-        con.into_flex_timeframes(bucketsize)
+        con.into_fixed_timeframes(docid_to_date)
+        con.into_flex_timeframes(docid_to_date, bucketsize)
         con.rebuild_flex_dist(weights, all_id_to_ctg)
         con.rebuild_fix_dist(weights, all_id_to_ctg)
         con.get_cosim()
