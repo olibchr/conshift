@@ -28,7 +28,7 @@ def experiment_1():
     #path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
     pref = 'all'
     bucketsize = 0
-    filters = random.sample(xrange(71564), 100)
+    filters = random.sample(xrange(71564), 10)
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
@@ -63,7 +63,6 @@ def experiment_1():
             del wkedit
             del con
         #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
-
 experiment_1()
 
 
