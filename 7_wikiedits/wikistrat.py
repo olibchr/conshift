@@ -19,7 +19,7 @@ END_YEAR = 2018
 RAW_DATA_DIR = 'wikixml'
 IMAGE_DIR = 'img'
 if len(sys.argv) > 1: CONCEPT = sys.argv[1]
-else: CONCEPT = 'Death_of_Eric_Garner'
+else: CONCEPT = 'Uber_(company)'
 
 seq_colours = ["#242a42", "#252e46", "#26324b", "#27364f", "#283a53", "#293f58", "#2a435c", "#2b4760", "#2c4c64", "#2d5068", "#2e546c", "#30596f", "#315d73", "#336276", "#35667a", "#376b7d", "#396f80", "#3b7483", "#3e7986", "#417d89", "#45828c", "#48868e", "#4c8b91", "#508f93", "#559496", "#599898", "#5e9d9a", "#63a29c", "#68a69e", "#6eaba0", "#74afa2", "#7ab4a4", "#80b8a6", "#86bca7", "#8cc1a9", "#93c5ab", "#9acaad", "#a1ceaf", "#a8d2b1", "#afd6b3", "#b6dbb5", "#bedfb7", "#c5e3b9", "#cde7bb", "#d5ebbe", "#ddefc0", "#e5f3c3", "#edf7c6", "#f5fbc9", "#fdffcc"]
 qual_colours = ["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"]
@@ -109,8 +109,8 @@ class WikiStrat:
                 'revision_num':revision_num,
                 'line_num':None
             }
-            if row['dt'] < self.min_dt_val: continue
-            if row['dt'] > self.max_dt_val: continue
+            #if row['dt'] < self.min_dt_val: continue
+            #if row['dt'] > self.max_dt_val: continue
             try:
                 row['user_name'] = rev.contributor.ip.get_text()
             except AttributeError:

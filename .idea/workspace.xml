@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/7_wikiedits/edit_compare.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_a.png" afterPath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_a.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wiki_comparison.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/edit_compare.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/time_analysis.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_p.png" afterPath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_p.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_r.png" afterPath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_r.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_a.png" afterPath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_a.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_p.png" afterPath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_p.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_r.png" afterPath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_r.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/.idea/workspace.xml" afterPath="$PROJECT_DIR$/5_viz/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/bars.js" afterPath="$PROJECT_DIR$/5_viz/bars.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5_viz/streamgraph.js" afterPath="$PROJECT_DIR$/5_viz/streamgraph.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/.idea/workspace.xml" afterPath="$PROJECT_DIR$/6_web_service/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/analysis_service.py" afterPath="$PROJECT_DIR$/6_web_service/analysis_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/6_web_service/static/streamgraph.js" afterPath="$PROJECT_DIR$/6_web_service/static/streamgraph.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/wikistrat.py" afterPath="$PROJECT_DIR$/7_wikiedits/wikistrat.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -35,48 +35,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="analysis_service.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
+      <file leaf-file-name="edit_retrieval.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0362791">
-              <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.61459666">
+              <caret line="32" column="16" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="16" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
-                <element signature="e#4204#4454#0" expanded="false" />
-                <element signature="e#4773#5298#0" expanded="false" />
-                <element signature="e#7438#8864#0" expanded="false" />
-                <element signature="e#8887#9190#0" expanded="false" />
-                <element signature="e#9217#9481#0" expanded="false" />
-                <element signature="e#9512#9822#0" expanded="false" />
-                <element signature="e#9911#10518#0" expanded="false" />
-                <element signature="e#10552#11239#0" expanded="false" />
-                <element signature="e#11268#12096#0" expanded="false" />
-                <element signature="e#12125#13137#0" expanded="false" />
-                <element signature="e#13166#14191#0" expanded="false" />
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edit_compare.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_compare.py">
+      <file leaf-file-name="concept_time_analysis.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+              <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#4030#4280#0" expanded="false" />
+                <element signature="e#5357#7190#0" expanded="false" />
+                <element signature="e#9811#10563#0" expanded="false" />
+                <element signature="e#10588#11287#0" expanded="false" />
+                <element signature="e#11311#12531#0" expanded="false" />
+                <element signature="e#12560#14093#0" expanded="false" />
+                <element signature="e#14117#15505#0" expanded="false" />
+                <element signature="e#15529#16953#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wikistrat.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/7_wikiedits/wikistrat.py">
+      <file leaf-file-name="wiki_comparison.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="111" column="53" selection-start-line="111" selection-start-column="53" selection-end-line="111" selection-end-column="53" />
+              <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
               <folding>
-                <element signature="e#1#16#0" expanded="true" />
+                <element signature="e#0#94#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,10 +146,13 @@
         <option value="$PROJECT_DIR$/5_viz/streamgraph.js" />
         <option value="$PROJECT_DIR$/5_viz/bars.js" />
         <option value="$PROJECT_DIR$/analysis_service.py" />
-        <option value="$PROJECT_DIR$/time_analysis.py" />
         <option value="$PROJECT_DIR$/7_wikiedits/wikistrat.py" />
-        <option value="$PROJECT_DIR$/7_wikiedits/edit_compare.py" />
         <option value="$PROJECT_DIR$/6_web_service/analysis_service.py" />
+        <option value="$PROJECT_DIR$/7_wikiedits/edit_compare.py" />
+        <option value="$PROJECT_DIR$/time_analysis.py" />
+        <option value="$PROJECT_DIR$/concept_time_analysis.py" />
+        <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
+        <option value="$PROJECT_DIR$/wiki_comparison.py" />
       </list>
     </option>
   </component>
@@ -162,10 +162,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2368" />
-    <option name="y" value="-139" />
-    <option name="width" value="1848" />
-    <option name="height" value="1172" />
+    <option name="x" value="-1619" />
+    <option name="y" value="-44" />
+    <option name="width" value="1402" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -192,8 +192,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -222,40 +220,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="_old" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="7_wikiedits" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="0_conshift" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="0_conshift" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="6_web_service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="0_conshift" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="0_conshift" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="0_data_Prep" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -610,15 +596,15 @@
     <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2368" y="-139" width="1848" height="1172" extended-state="0" />
+    <frame x="-1619" y="-44" width="1402" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14935064" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19614837" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802226" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275649" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -632,6 +618,26 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39925373" sideWeight="0.49714693" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802226" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275649" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35475895" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19652778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987398" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39925373" sideWeight="0.49714693" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -652,15 +658,54 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="39" />
+      <option name="time" value="43" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
+    <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+          <caret line="99" column="36" selection-start-line="99" selection-start-column="36" selection-end-line="99" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#4030#4280#0" expanded="false" />
+            <element signature="e#5357#7190#0" expanded="false" />
+            <element signature="e#9811#10563#0" expanded="false" />
+            <element signature="e#10588#11287#0" expanded="false" />
+            <element signature="e#11311#12531#0" expanded="false" />
+            <element signature="e#12560#14093#0" expanded="false" />
+            <element signature="e#14117#15505#0" expanded="false" />
+            <element signature="e#15529#16953#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7_wikiedits/wikistrat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="62" selection-start-line="85" selection-start-column="52" selection-end-line="85" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="30" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -678,13 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/0_data_Prep/create_database.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -696,13 +734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -734,13 +765,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="150" column="28" selection-start-line="150" selection-start-column="25" selection-end-line="150" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/0_data_Prep/distr_vec_time.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -752,13 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -986,50 +1003,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/time_analysis.py">
+    <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.925926">
-          <caret line="263" column="43" selection-start-line="263" selection-start-column="43" selection-end-line="263" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/7_wikiedits/wikistrat.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="53" selection-start-line="111" selection-start-column="53" selection-end-line="111" selection-end-column="53" />
-          <folding>
-            <element signature="e#1#16#0" expanded="true" />
-          </folding>
+          <caret line="85" column="62" selection-start-line="85" selection-start-column="52" selection-end-line="85" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_compare.py">
+    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#94#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/6_web_service/analysis_service.py">
+    <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0362791">
-          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#4204#4454#0" expanded="false" />
-            <element signature="e#4773#5298#0" expanded="false" />
-            <element signature="e#7438#8864#0" expanded="false" />
-            <element signature="e#8887#9190#0" expanded="false" />
-            <element signature="e#9217#9481#0" expanded="false" />
-            <element signature="e#9512#9822#0" expanded="false" />
-            <element signature="e#9911#10518#0" expanded="false" />
-            <element signature="e#10552#11239#0" expanded="false" />
-            <element signature="e#11268#12096#0" expanded="false" />
-            <element signature="e#12125#13137#0" expanded="false" />
-            <element signature="e#13166#14191#0" expanded="false" />
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#4030#4280#0" expanded="false" />
+            <element signature="e#5357#7190#0" expanded="false" />
+            <element signature="e#9811#10563#0" expanded="false" />
+            <element signature="e#10588#11287#0" expanded="false" />
+            <element signature="e#11311#12531#0" expanded="false" />
+            <element signature="e#12560#14093#0" expanded="false" />
+            <element signature="e#14117#15505#0" expanded="false" />
+            <element signature="e#15529#16953#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61459666">
+          <caret line="32" column="16" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
