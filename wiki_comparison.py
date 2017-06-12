@@ -74,7 +74,7 @@ def experiment_2():
     path = '/export/scratch1/home/becher/data/'
     pref = 'all'
     bucketsize = 0
-    filters = random.sample(xrange(71564), 100)
+    filters = random.sample(xrange(71564), 10)
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
@@ -85,7 +85,8 @@ def experiment_2():
     print "Building Concepts"
     for con in concepts:
         #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
-        con.into_flex_timeframes(weights, math.floor(len(set(item.split('_')[1] for item in con.features))/2.0))
+        con.into_flex_timeframes(docid_to_date, math.floor(len(set(item.split('_')[1] for item in con.features))/2.0))
+        con.rebuild_flex_dist(weights, all_id_to_ctg)
         con.get_cosim()
         #con.print_cosim()
         print "     " + con.name + " built successfully"

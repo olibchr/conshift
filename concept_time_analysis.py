@@ -88,7 +88,7 @@ class Concept():
             self.flexIntervals.append(str(last_add)[:10])
         self.docID_flexFrames = all_tag_docs
         assert len(self.flexIntervals) == len(self.flexFrames) == len(self.docID_flexFrames), "Different amount of flex vector elements!"
-    def rebuild_flex_dist(self, weights):
+    def rebuild_flex_dist(self, weights, all_id_to_ctg):
         vlen = len(all_id_to_ctg)
         for d_vec in self.flexFrames:
             d_vector = [0.00001] * vlen
