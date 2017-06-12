@@ -71,7 +71,7 @@ def experiment_1():
 # Experiment 2 - Test flexible vector size
 def experiment_2():
     print "Experiment 2"
-    path = '~/data/'
+    path = '/export/scratch1/home/becher/data/'
     pref = 'all'
     bucketsize = 0
     filters = random.sample(xrange(71564), 100)
