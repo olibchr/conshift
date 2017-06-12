@@ -104,8 +104,9 @@ class Concept():
             self.fixVector.append(d_vector)
     def get_cosim(self):
         # for experiment nr 1 (use fix vectors [monthly]), we changed this from distr = self.flexVector to distr = self.fixVector
-        #distr = self.flexVector
-        distr = self.fixVector
+        #distr = self.fixVector
+        # for experiment nr 2 we use flexVectors
+        distr = self.flexVector
         emptbucks = 0
         for i in range(0,len(distr)-1):
             this_distr = distr[i]

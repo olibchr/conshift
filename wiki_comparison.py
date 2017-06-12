@@ -65,7 +65,7 @@ def experiment_1():
         del wkedit
         del con
         #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
-experiment_1()
+#experiment_1()
 
 
 # Experiment 2 - Test flexible vector size
@@ -109,3 +109,4 @@ def experiment_2():
         del wkedit
         del con
         #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
+experiment_2()
