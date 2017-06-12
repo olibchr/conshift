@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" afterPath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/concept_time_analysis.py" afterPath="$PROJECT_DIR$/concept_time_analysis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki_comparison.py" afterPath="$PROJECT_DIR$/wiki_comparison.py" />
     </list>
     <ignored path="0_conshift.iws" />
@@ -24,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="edit_retrieval.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="edit_retrieval.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="88" column="32" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.67391306">
+              <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#1390#1751#0" expanded="false" />
@@ -41,28 +43,28 @@
         <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="90" column="25" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="25" />
+              <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#500#955#0" expanded="false" />
                 <element signature="e#1016#2162#0" expanded="false" />
-                <element signature="e#5436#7269#0" expanded="false" />
-                <element signature="e#9890#10642#0" expanded="false" />
-                <element signature="e#10667#11366#0" expanded="false" />
-                <element signature="e#11390#12610#0" expanded="false" />
-                <element signature="e#12639#14172#0" expanded="false" />
-                <element signature="e#14196#15584#0" expanded="false" />
-                <element signature="e#15608#17032#0" expanded="false" />
+                <element signature="e#5362#7195#0" expanded="false" />
+                <element signature="e#9816#10568#0" expanded="false" />
+                <element signature="e#10593#11292#0" expanded="false" />
+                <element signature="e#11316#12536#0" expanded="false" />
+                <element signature="e#12565#14098#0" expanded="false" />
+                <element signature="e#14122#15510#0" expanded="false" />
+                <element signature="e#15534#16958#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wiki_comparison.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wiki_comparison.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77424747">
-              <caret line="101" column="58" selection-start-line="101" selection-start-column="58" selection-end-line="101" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
               <folding>
                 <element signature="e#0#94#0" expanded="true" />
               </folding>
@@ -141,9 +143,9 @@
         <option value="$PROJECT_DIR$/6_web_service/analysis_service.py" />
         <option value="$PROJECT_DIR$/7_wikiedits/edit_compare.py" />
         <option value="$PROJECT_DIR$/time_analysis.py" />
-        <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
         <option value="$PROJECT_DIR$/concept_time_analysis.py" />
         <option value="$PROJECT_DIR$/wiki_comparison.py" />
+        <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
       </list>
     </option>
   </component>
@@ -662,13 +664,13 @@
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#500#955#0" expanded="false" />
             <element signature="e#1016#2162#0" expanded="false" />
-            <element signature="e#5436#7269#0" expanded="false" />
-            <element signature="e#9890#10642#0" expanded="false" />
-            <element signature="e#10667#11366#0" expanded="false" />
-            <element signature="e#11390#12610#0" expanded="false" />
-            <element signature="e#12639#14172#0" expanded="false" />
-            <element signature="e#14196#15584#0" expanded="false" />
-            <element signature="e#15608#17032#0" expanded="false" />
+            <element signature="e#5362#7195#0" expanded="false" />
+            <element signature="e#9816#10568#0" expanded="false" />
+            <element signature="e#10593#11292#0" expanded="false" />
+            <element signature="e#11316#12536#0" expanded="false" />
+            <element signature="e#12565#14098#0" expanded="false" />
+            <element signature="e#14122#15510#0" expanded="false" />
+            <element signature="e#15534#16958#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1011,42 +1013,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="90" column="25" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="25" />
+          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#500#955#0" expanded="false" />
             <element signature="e#1016#2162#0" expanded="false" />
-            <element signature="e#5436#7269#0" expanded="false" />
-            <element signature="e#9890#10642#0" expanded="false" />
-            <element signature="e#10667#11366#0" expanded="false" />
-            <element signature="e#11390#12610#0" expanded="false" />
-            <element signature="e#12639#14172#0" expanded="false" />
-            <element signature="e#14196#15584#0" expanded="false" />
-            <element signature="e#15608#17032#0" expanded="false" />
+            <element signature="e#5362#7195#0" expanded="false" />
+            <element signature="e#9816#10568#0" expanded="false" />
+            <element signature="e#10593#11292#0" expanded="false" />
+            <element signature="e#11316#12536#0" expanded="false" />
+            <element signature="e#12565#14098#0" expanded="false" />
+            <element signature="e#14122#15510#0" expanded="false" />
+            <element signature="e#15534#16958#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="32" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.67391306">
+          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#1390#1751#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77424747">
-          <caret line="101" column="58" selection-start-line="101" selection-start-column="58" selection-end-line="101" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#94#0" expanded="true" />
           </folding>
         </state>
       </provider>

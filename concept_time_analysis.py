@@ -102,11 +102,10 @@ class Concept():
             for keyval in d_vec:
                 d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
             self.fixVector.append(d_vector)
-    def get_cosim(self):
-        # for experiment nr 1 (use fix vectors [monthly]), we changed this from distr = self.flexVector to distr = self.fixVector
-        #distr = self.fixVector
-        # for experiment nr 2 we use flexVectors
-        distr = self.flexVector
+    def get_cosim(self, vector = "flex"):
+        if vector == "flex": distr = self.flexVector
+        elif vector == "fix": distr = self.fixVector
+        else: print " wrong vector selection"
         emptbucks = 0
         for i in range(0,len(distr)-1):
             this_distr = distr[i]

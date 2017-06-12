@@ -42,7 +42,7 @@ def experiment_1():
         #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
         con.into_fixed_timeframes(docid_to_date)
         con.rebuild_fix_dist(weights, all_id_to_ctg)
-        con.get_cosim()
+        con.get_cosim(vector="fix")
         #con.print_cosim()
         print "     " + con.name + " built successfully"
     print "Getting edits of " + str(len(concepts)) + " concepts"
