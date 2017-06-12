@@ -85,10 +85,12 @@ def experiment_2():
     print "Building Concepts"
     for con in concepts:
         #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
+        print "splitting in intervals"
+        print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/2.0)
         con.into_flex_timeframes(docid_to_date, math.floor(len(set(item.split('_')[1] for item in con.features))/2.0))
         con.rebuild_flex_dist(weights, all_id_to_ctg)
         con.get_cosim()
-        #con.print_cosim()
+        con.print_cosim()
         print "     " + con.name + " built successfully"
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
