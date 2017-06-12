@@ -102,7 +102,7 @@ def experiment_2():
         wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
         wikiedits.append(wkedit)
         wkedit.parse(con.name)
-        wkedit.split_revisions(con.fixIntervals)
+        wkedit.split_revisions(con.flexIntervals)
         if len(wkedit.rev_tf_sums) == 0: continue
         match = comparator(con.cosim, wkedit.rev_tf_sums)
         results[con.name] = match
