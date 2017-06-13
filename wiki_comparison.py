@@ -78,27 +78,27 @@ def experiment_1(filters):
     now = str(datetime.datetime.now().date())
     out_results = []
     for con in concepts:
-        #try:
-        wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
-        wikiedits.append(wkedit)
-        wkedit.parse(con.name)
-        wkedit.split_revisions(con.fixIntervals)
-        if len(wkedit.rev_tf_sums) == 0: continue
-        spear, p_val = comparator(con.cosim, wkedit.rev_tf_sums)
-        result = {
-            'concept': con.name,
-            'id': con.id,
-            'intervals': [str(dt.date()) for dt in con.fixIntervals],
-            'cosines': con.cosim,
-            'wkedits': wkedit.rev_tf_sums,
-            'spearman': spear,
-            'p': p_val
-        }
-        out_results.append(result)
-        print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
-        del wkedit
-        #except Exception:
-            #print 'Fatal error with wiki edits'
+        try:
+            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wikiedits.append(wkedit)
+            wkedit.parse(con.name)
+            wkedit.split_revisions(con.fixIntervals)
+            if len(wkedit.rev_tf_sums) == 0: continue
+            spear, p_val = comparator(con.cosim, wkedit.rev_tf_sums)
+            result = {
+                'concept': con.name,
+                'id': con.id,
+                'intervals': [str(dt.date()) for dt in con.fixIntervals],
+                'cosines': con.cosim,
+                'wkedits': wkedit.rev_tf_sums,
+                'spearman': spear,
+                'p': p_val
+            }
+            out_results.append(result)
+            print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
+            del wkedit
+        except Exception:
+            print 'Fatal error with wiki edits'
         del con
     with io.open('8_experiments/results_exp1_' + now + '.json', 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
