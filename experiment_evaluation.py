@@ -11,7 +11,7 @@ def read_exp_results(exp_name):
     exp_results = []
     with open(exp_name) as in_file:
         for line in in_file:
-            exp_results.append(json.load(line))
+            exp_results.append(json.load(in_file.readline()))
     exp_formatted = []
     for rv in exp_results:
         result = {
