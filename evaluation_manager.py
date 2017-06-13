@@ -13,7 +13,7 @@ num_concepts = int(sys.argv[1])
 
 def get_ind_cnt():
     all_ind = []
-    with open('index_cnt.csv') as ind_cnt:
+    with open(path + 'index_cnt.csv') as ind_cnt:
         reader = csv.reader(ind_cnt, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             all_ind.append([row[0], int(row[1]), int(row[2])])
