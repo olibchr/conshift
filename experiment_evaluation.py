@@ -13,6 +13,7 @@ def read_exp_results(exp_name):
         for line in in_file:
             exp_results.append(json.loads(line))
     exp_formatted = []
+    err_exp = []
     for nest_exp in exp_results:
         for rv in nest_exp:
             result = {
@@ -24,14 +25,17 @@ def read_exp_results(exp_name):
                     'spearman': rv['spearman'],
                     'p': rv['p']
                 }
-            exp_formatted.append(result)
-    return exp_formatted
+            if type(result['spearman']) != 'int':
+                err_exp.append(result)
+            else: exp_formatted.append(result)
+    return exp_formatted, err_exp
 
 
-def extract_averages(experiment):
+def extract_averages(experiment, err_exp):
     avg_spearman = sum([abs(exp['spearman']) for exp in experiment])/len(experiment)
     avg_p = sum([exp['p']for exp in experiment])
     print('Average spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
+    print('Invalid experiments: {}').format(len(err_exp))
 
-exp_results = read_exp_results(exp_file)
-extract_averages(exp_results)
+exp_results, err_exp = read_exp_results(exp_file)
+extract_averages(exp_results, err_exp)
