@@ -1,4 +1,4 @@
-import json, csv, scipy, sys
+import json, csv, scipy, sys, math
 from dateutil import parser as dtparser
 
 path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
@@ -25,8 +25,7 @@ def read_exp_results(exp_name):
                     'spearman': rv['spearman'],
                     'p': rv['p']
                 }
-            if type(result['spearman']) != float or result['spearman'] == 'nan':
-                print type(result['spearman'])
+            if type(result['spearman']) != float or math.isnan(result['spearman']):
                 err_exp.append(result)
             else: exp_formatted.append(result)
     return exp_formatted, err_exp
