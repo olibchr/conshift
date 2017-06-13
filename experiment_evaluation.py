@@ -37,6 +37,7 @@ def extract_averages(experiment, err_exp):
     print('Invalid experiments: {}').format(len(err_exp))
     avg_spearman = sum([abs(exp['spearman']) for exp in experiment])/len(experiment)
     avg_p = sum([exp['p']for exp in experiment])
+    print([abs(exp['spearman']) for exp in experiment])
     print('Average spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
 
 exp_results, err_exp = read_exp_results(exp_file)
