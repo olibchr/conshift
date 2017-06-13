@@ -6,7 +6,7 @@ import multiprocessing
 
 #path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
 path = '/export/scratch1/home/becher/data/'
-conceptsPerRequest = 6
+conceptsPerRequest = 45
 
 num_concepts = int(sys.argv[1])
 
@@ -49,7 +49,6 @@ filter_indeces = get_indeces(offset1, offset2)
 filters = [all_ind_cnt[i][1] for i in filter_indeces]
 
 filter_badges = [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), conceptsPerRequest)]
-filter_badges = [[9049, 5757, 7376, 32497, 51516, 43265], [35681, 302, 54741, 2145, 9994, 42294], [42539, 9675, 49158, 55821, 25044, 67258], [55067, 59753, 22943, 34672, 70882, 31734], [60552, 63371, 62288, 62357, 54745, 21506], [34404, 58329, 54569, 15801, 55172, 717]]
 print filter_badges
 
 num_cores = multiprocessing.cpu_count()
