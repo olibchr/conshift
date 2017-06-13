@@ -13,17 +13,18 @@ def read_exp_results(exp_name):
         for line in in_file:
             exp_results.append(json.loads(line))
     exp_formatted = []
-    for rv in exp_results:
-        result = {
-                'concept': rv['concept'],
-                'id': rv['id'],
-                'intervals': [dtparser.parse(dt) for dt in rv['intervals']],
-                'cosines': rv['cosines'],
-                'wkedits': rv['wkedits'],
-                'spearman': rv['spearman'],
-                'p': rv['p']
-            }
-        exp_formatted.append(result)
+    for nest_exp in exp_results:
+        for rv in nest_exp:
+            result = {
+                    'concept': rv['concept'],
+                    'id': rv['id'],
+                    'intervals': [dtparser.parse(dt) for dt in rv['intervals']],
+                    'cosines': rv['cosines'],
+                    'wkedits': rv['wkedits'],
+                    'spearman': rv['spearman'],
+                    'p': rv['p']
+                }
+            exp_formatted.append(result)
     return exp_formatted
 
 
