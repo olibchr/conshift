@@ -65,45 +65,43 @@ def experiment_1(filters):
     print "Building Concepts"
     for con in concepts:
         try:
-            #if len(set(item.split('_')[1] for item in con.features)) < 12: concepts.pop(concepts.index(con)); continue
             con.into_fixed_timeframes(docid_to_date)
             con.rebuild_fix_dist(weights, all_id_to_ctg)
             con.get_cosim(vector="fix")
             #con.print_cosim()
             print "     " + con.name + " built successfully"
         except Exception:
+            print "Fatal error with concept"
             concepts.pop(concepts.index(con))
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
     now = str(datetime.datetime.now().date())
     out_results = []
     for con in concepts:
-        try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
-            wikiedits.append(wkedit)
-            wkedit.parse(con.name)
-            wkedit.split_revisions(con.fixIntervals)
-            if len(wkedit.rev_tf_sums) == 0: continue
-            spear, p_val = comparator(con.cosim, wkedit.rev_tf_sums)
-            result = {
-                'concept': con.name,
-                'id': con.id,
-                'intervals': [str(dt) for dt in con.fixIntervals],
-                'cosines': con.cosim,
-                'wkedits': wkedit.rev_tf_sums,
-                'spearman': spear,
-                'p': p_val
-            }
-            out_results.append(result)
-            print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
-            del wkedit
-        except Exception:
-            print 'Fatal error with wiki edits'
+        #try:
+        wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+        wikiedits.append(wkedit)
+        wkedit.parse(con.name)
+        wkedit.split_revisions(con.fixIntervals)
+        if len(wkedit.rev_tf_sums) == 0: continue
+        spear, p_val = comparator(con.cosim, wkedit.rev_tf_sums)
+        result = {
+            'concept': con.name,
+            'id': con.id,
+            'intervals': [str(dt.date()) for dt in con.fixIntervals],
+            'cosines': con.cosim,
+            'wkedits': wkedit.rev_tf_sums,
+            'spearman': spear,
+            'p': p_val
+        }
+        out_results.append(result)
+        print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
+        del wkedit
+        #except Exception:
+            #print 'Fatal error with wiki edits'
         del con
-        #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
-    with io.open('8_experiments/results_exp2' + now + '.json', 'a', encoding='utf-8') as f:
-        f.write('\n')
-        f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)))
+    with io.open('8_experiments/results_exp1_' + now + '.json', 'a', encoding='utf-8') as f:
+        f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 
 # Experiment 2 - Test flexible vector size
@@ -137,9 +135,9 @@ def experiment_2():
     results = dict()
     now = str(datetime.datetime.now().date())
     for con in concepts:
-        f = open('8_experiments/results_exp2' + now + '.csv', 'a')
+        f = open('8_experiments/results_exp2_' + now + '.csv', 'a')
         writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        wkedit = WikiEdits(data_dir='7_wikiedits/wikixml')
+        wkedit = WikiEdits()
         wikiedits.append(wkedit)
         wkedit.parse(con.name)
         wkedit.split_revisions(con.flexIntervals)

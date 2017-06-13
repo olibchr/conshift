@@ -6,7 +6,7 @@ import multiprocessing
 
 path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
 #path = '/export/scratch1/home/becher/data/'
-conceptsPerRequest = 6
+conceptsPerRequest = 3
 
 num_concepts = int(sys.argv[1])
 
@@ -52,5 +52,6 @@ filter_badges = [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), 
 print filter_badges
 
 num_cores = multiprocessing.cpu_count()
-Parallel(n_jobs=2)(delayed(wiki_comparison.experiment_1)(badge) for badge in filter_badges)
+
+Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_1)(badge) for badge in filter_badges)
 
