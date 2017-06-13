@@ -25,7 +25,7 @@ def read_exp_results(exp_name):
                     'spearman': rv['spearman'],
                     'p': rv['p']
                 }
-            if type(result['spearman']) != float:
+            if type(result['spearman']) != float or result['spearman'] == 'nan':
                 print type(result['spearman'])
                 err_exp.append(result)
             else: exp_formatted.append(result)
