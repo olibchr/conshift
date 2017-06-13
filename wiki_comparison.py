@@ -52,8 +52,8 @@ def comparator(concepts_cosines, wikiedit_counts):
 # Experiment 1 - Test fix vector size
 def experiment_1(filters):
     print "Experiment 1"
-    #path = '/export/scratch1/home/becher/data/'
-    path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+    path = '/export/scratch1/home/becher/data/'
+    #path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
     pref = 'all'
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)

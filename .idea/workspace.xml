@@ -2,35 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/.keep" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/barack_obama_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/barack_obama_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/barack_obama_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/black_lives_matter_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/black_lives_matter_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/black_lives_matter_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/category:wine_regions_of_italy_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/category:wine_regions_of_italy_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/category:wine_regions_of_italy_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/death_of_eric_garner_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/health_insurance_in_the_united_states_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/health_insurance_in_the_united_states_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/health_insurance_in_the_united_states_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/patient_protection_and_affordable_care_act_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/patient_protection_and_affordable_care_act_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/patient_protection_and_affordable_care_act_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/python_(programming_language)_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/python_(programming_language)_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/python_(programming_language)_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_p.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/img/uber_(company)_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/7_wikiedits/tirau_example.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/offset_communicator" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" afterPath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/8_experiments/results_exp22017-06-13.json" afterPath="$PROJECT_DIR$/8_experiments/results_exp22017-06-13.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/evaluation_manager.py" afterPath="$PROJECT_DIR$/evaluation_manager.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki_comparison.py" afterPath="$PROJECT_DIR$/wiki_comparison.py" />
     </list>
@@ -101,7 +72,7 @@
         <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
+              <caret line="54" column="47" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
               <folding>
                 <element signature="e#0#94#0" expanded="true" />
                 <element signature="e#6571#8755#0" expanded="false" />
@@ -114,8 +85,8 @@
       <file leaf-file-name="evaluation_manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56408286">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.09209517">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -197,8 +168,8 @@
         <option value="$PROJECT_DIR$/3_sleeping/index_analysis.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/index_counter.py" />
         <option value="$PROJECT_DIR$/index_analysis.py" />
-        <option value="$PROJECT_DIR$/wiki_comparison.py" />
         <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
+        <option value="$PROJECT_DIR$/wiki_comparison.py" />
         <option value="$PROJECT_DIR$/evaluation_manager.py" />
       </list>
     </option>
@@ -1035,18 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#94#0" expanded="true" />
-            <element signature="e#6571#8755#0" expanded="false" />
-            <element signature="e#8841#17868#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1086,10 +1045,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="47" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#94#0" expanded="true" />
+            <element signature="e#6571#8755#0" expanded="false" />
+            <element signature="e#8841#17868#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56408286">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.09209517">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
