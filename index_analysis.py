@@ -30,7 +30,7 @@ def get_ctg():
 def get_ind_cnt():
     all_ind = []
     with open('index_cnt.csv') as ind_cnt:
-        reader = csv.reader(ind_cnt, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        reader = csv.reader(ind_cnt, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in reader:
             all_ind.append([row[0], int(row[1]), int(row[2])])
     return all_ind
@@ -50,14 +50,16 @@ def print_top_cnts():
 
 def update_ind_cnt():
     new_cnt = []
+    err_list = []
     for ind in all_ind:
         if ind[0] in all_ctg_to_id:
             new_cnt.append([ind[0],all_ctg_to_id[ind[0]],ind[2]])
+        else: err_list.append(ind[0])
     return sorted(new_cnt, reverse=True, key= lambda cnt:cnt[2])
 
 
 def save_ind_cnt(out):
-    with open('index_cnt_update','w') as outfile:
+    with open('index_cnt_update.csv','w') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for o in out:
             writer.writerow(o)

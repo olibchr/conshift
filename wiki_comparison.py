@@ -102,6 +102,7 @@ def experiment_1(filters):
         del con
         #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
     with io.open('8_experiments/results_exp2' + now + '.json', 'a', encoding='utf-8') as f:
+        f.write('\n')
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)))
 
 
@@ -380,4 +381,4 @@ def experiment_4():
         #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
 
 if __name__ == "__main__":
-    experiment_1(filter_selector(5))
+    experiment_1(random.sample(xrange(71564), 6))
