@@ -83,7 +83,6 @@ class WikiEdits:
             self.revisions.append(dict(row))
 
     def split_revisions(self, intervals):
-        print intervals
         self.revisions = sorted(self.revisions, key=lambda rev: rev['dt'])
         self.rev_in_timeframe = [[] for i in range(len(intervals))]
         self.rev_tf_sums = [0] * (len(intervals))

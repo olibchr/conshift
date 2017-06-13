@@ -59,7 +59,7 @@ class Concept():
         else: buckets = int(round(tag_len/(1.0 * bucketsize)))
         tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
         all_buckets = [dict() for x in range(buckets)]
-        all_last_adds = buckets * [time.strptime("2015-08-14", "%Y-%m-%d")]
+        all_last_adds = buckets * [datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")]
         i = 0
         t = 0
         this_bucket = all_buckets[0]
@@ -85,15 +85,19 @@ class Concept():
             all_tag_docs[t].append(tag_doc)
         for this_bucket, last_add in zip(all_buckets, all_last_adds):
             self.flexFrames.append([k, v] for k, v in this_bucket.iteritems())
-            self.flexIntervals.append(str(last_add)[:10])
+            self.flexIntervals.append(last_add)
         self.docID_flexFrames = all_tag_docs
+        self.flexIntervals[-1] = datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")  # very last add must be last date, otherwise thatll clash with wikipedia edits
         assert len(self.flexIntervals) == len(self.flexFrames) == len(self.docID_flexFrames), "Different amount of flex vector elements!"
-    def rebuild_flex_dist(self, weights, all_id_to_ctg):
+    def rebuild_flex_dist(self, weights, all_id_to_ctg, weightsON= True):
         vlen = len(all_id_to_ctg)
         for d_vec in self.flexFrames:
             d_vector = [0.00001] * vlen
             for keyval in d_vec:
-                d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
+                if weightsON == True:
+                    d_vector[keyval[0]] = keyval[1] * weights[keyval[0]]
+                else:
+                    d_vector[keyval[0]] = keyval[1]
             self.flexVector.append(d_vector)
     def rebuild_fix_dist(self, weights, all_id_to_ctg):
         vlen = len(all_id_to_ctg)
@@ -301,7 +305,7 @@ def save_core_bars():
 def save_adds():
     with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
-            writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             printlist = {t:[] for t in con.fixIntervals}
             add_no_key = []
             con.core_set = set()
