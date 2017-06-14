@@ -66,7 +66,7 @@ print filter_badges
 num_cores = multiprocessing.cpu_count()
 
 # Experiment 1
-#Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_1)(badge) for badge in filter_badges)
+#Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_1)(badge, path) for badge in filter_badges)
 #Experiment 2
-Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge) for badge in filter_badges)
+Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path) for badge in filter_badges)
 
