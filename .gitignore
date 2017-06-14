@@ -1,6 +1,7 @@
 IONData2016/*
 IONData/dataset*
 *.jsonld
+*.json
 *.tgz
 *.csv
 tests/*

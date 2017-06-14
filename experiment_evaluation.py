@@ -9,7 +9,7 @@ exp_file = sys.argv[1]
 def read_exp_results(exp_name):
     print('Reading from disc: {}'.format(exp_name))
     exp_results = []
-    with open(exp_name) as in_file:
+    with open(path + exp_name) as in_file:
         for line in in_file:
             exp_results.append(json.loads(line))
     exp_formatted = []
@@ -35,8 +35,7 @@ def extract_averages(experiment, err_exp):
     print('Correct experiments: {}').format(len(experiment))
     print('Invalid experiments: {}').format(len(err_exp))
     avg_spearman = sum([abs(exp['spearman']) for exp in experiment])/len(experiment)
-    avg_p = sum([exp['p']for exp in experiment])
-    print([abs(exp['spearman']) for exp in experiment])
+    avg_p = sum([exp['p']for exp in experiment])/len(experiment)
     print('Average spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
 
 exp_results, err_exp = read_exp_results(exp_file)

@@ -98,20 +98,20 @@ def experiment_1(filters):
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
             del wkedit
         except Exception:
-            print 'Fatal error with wiki edits'
+            print 'Fatal Error with wiki edits'
         del con
-    with io.open('8_experiments/results_exp1_' + now + '.json', 'a', encoding='utf-8') as f:
+    outfile = '8_experiments/results_exp1_' + now + '.json'
+    print('Writing results to {}').format(outfile)
+    with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 
 # Experiment 2 - Test flexible vector size
-def experiment_2():
+def experiment_2(filters):
     print "Experiment 2"
     path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
     #path = '/export/scratch1/home/becher/data/'
     pref = 'all'
-    bucketsize = 0
-    filters = random.sample(xrange(71564), 100)
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
@@ -121,36 +121,50 @@ def experiment_2():
     concepts = load_distr(path, pref, filters, filter_id_to_ctg)
     print "Building Concepts"
     for con in concepts:
-        if len(set(item.split('_')[1] for item in con.features)) < 4: concepts.pop(concepts.index(con)); print "too few articles in " + con.name; continue
-        print "splitting in intervals"
-        print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/4.0)
-        bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/4.0)
-        con.into_flex_timeframes(docid_to_date, math.floor(len(set(item.split('_')[1] for item in con.features))/4.0))
-        con.rebuild_flex_dist(weights, all_id_to_ctg)
-        con.get_cosim()
-        con.print_cosim()
-        print "     " + con.name + " built successfully"
+        try:
+            #if len(set(item.split('_')[1] for item in con.features)) < 4: concepts.pop(concepts.index(con)); print "too few articles in " + con.name; continue
+            print "splitting in intervals"
+            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            con.into_flex_timeframes(docid_to_date, bucketsize)
+            con.rebuild_flex_dist(weights, all_id_to_ctg)
+            con.get_cosim()
+            #con.print_cosim()
+            print "     " + con.name + " built successfully"
+        except Exception:
+            print "Fatal error with concept"
+            concepts.pop(concepts.index(con))
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
-    results = dict()
     now = str(datetime.datetime.now().date())
+    out_results = []
     for con in concepts:
-        f = open('8_experiments/results_exp2_' + now + '.csv', 'a')
-        writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        wkedit = WikiEdits()
-        wikiedits.append(wkedit)
-        wkedit.parse(con.name)
-        wkedit.split_revisions(con.flexIntervals)
-        if len(wkedit.rev_tf_sums) == 0: continue
-        match = comparator(con.cosim, wkedit.rev_tf_sums)
-        results[con.name] = match
-        print "     " + str(match) + " cosine match of concept " + con.name
-        writer.writerow([con.name, con.id, results[con.name]])
-        f.close()
-        del wkedit
+        try:
+            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wikiedits.append(wkedit)
+            wkedit.parse(con.name)
+            wkedit.split_revisions(con.flexIntervals)
+            if len(wkedit.rev_tf_sums) == 0: continue
+            spear, p_val = comparator(con.cosim, wkedit.rev_tf_sums)
+            result = {
+                'concept': con.name,
+                'id': con.id,
+                'intervals': [str(dt.date()) for dt in con.flexIntervals],
+                'cosines': con.cosim,
+                'wkedits': wkedit.rev_tf_sums,
+                'spearman': spear,
+                'p': p_val
+            }
+            out_results.append(result)
+            print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
+            del wkedit
+        except Exception:
+            print 'Fatal Error with wiki edits'
         del con
-        #writer.writerow(['Average Cosine', sum([k for k in results.itervalues()])/len(results)])
-#experiment_2()
+    outfile = '8_experiments/results_exp2_' + now + '.json'
+    print('Writing results to {}').format(outfile)
+    with io.open(outfile, 'a', encoding='utf-8') as f:
+        f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 
 # Experiment 3 - Test no idf weighting
