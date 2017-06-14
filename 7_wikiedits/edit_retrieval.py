@@ -27,6 +27,7 @@ def save_revs(srcfile, revisions):
     with io.open(srcfile, 'w', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_format, encoding='utf8', ensure_ascii=False)))
 
+
 def read_revisions(srcfile):
     print('Reading from disc: {}'.format(srcfile))
     with open(srcfile) as json_data:
@@ -60,21 +61,6 @@ class WikiEdits:
         url = '{}{}?history'.format(self.base_url, title)
         r = get_resource(url)
         return r.content
-
-    def extract_article_text(self, s, title):
-        title = title.lower()
-        title = title.replace('_', ' ')
-        s = s.lower()
-        parts = s.split(title)
-        s = title.join(parts[1:-1])
-        s = title + s
-        lines = s.splitlines()
-        result = []
-        for line in lines:
-            line = line.strip()
-            if line:
-                result.append(line)
-        return result
     def parse(self, title, refresh=False):
         self.revisions = []
         srcfile = '{}/{}.json'.format(self.data_dir, title.lower())
@@ -97,8 +83,6 @@ class WikiEdits:
                 if row['dt'] < STARTDATE: continue
                 self.revisions.append(dict(row))
             save_revs(srcfile, self.revisions)
-
-
     def split_revisions(self, intervals):
         self.revisions = sorted(self.revisions, key=lambda rev: rev['dt'])
         self.rev_in_timeframe = [[] for i in range(len(intervals))]
@@ -111,7 +95,6 @@ class WikiEdits:
             self.rev_in_timeframe[i].append(rev)
             self.rev_tf_sums[i] += 1
         self.rev_tf_sums = [self.rev_tf_sums[e] + self.rev_tf_sums[e+1] for e in range(len(self.rev_tf_sums)-1)]
-
     def save_revisions(self):
         with open('revisions/' + CONCEPT + '.csv', 'wb') as out:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
