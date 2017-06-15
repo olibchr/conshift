@@ -77,7 +77,7 @@ class WikiEdits:
                 row = {
                     'id':rev.id.get_text(),
                     'dt':dtparser.parse(rev.timestamp.get_text()),
-                    'change': abs(len(rev.text)-len(revisions[i-1].text))
+                    'change': abs(len(rev.text))
                 }
                 if row['dt'] > ENDDATE: continue
                 if row['dt'] < STARTDATE: continue
