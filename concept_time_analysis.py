@@ -4,6 +4,7 @@ from sklearn.metrics import pairwise as pw
 import warnings
 import time
 import datetime
+import scipy.stats as sstats
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 
@@ -110,17 +111,21 @@ class Concept():
         if vector == "flex": distr = self.flexVector
         elif vector == "fix": distr = self.fixVector
         else: print " wrong vector selection"
-        emptbucks = 0
         for i in range(0,len(distr)-1):
             this_distr = distr[i]
             next_distr = distr[i+1]
-            #if sum(this_distr) < 1 or sum(next_distr) < 1:
-            #    emptbucks +=1
-            #    self.cosim.append("NaN")
-            #    continue
             this_entropy = pw.cosine_similarity(this_distr, next_distr)
             self.cosim.append(this_entropy[0][0])
-        #assert len(self.cosim) == len(self.flexFrames) - 1, "Every window should have one value!"
+    def get_kl_div(self, vector='flex'):
+        if vector == 'flex': distr = self.flexVector
+        elif vector == 'fix': distr = self.fixVector
+        else: print "Error: Bad vector selection"
+        self.kl_div = []
+        for i in range(0,len(distr)-1):
+            this_distr = distr[i]
+            next_distr = distr[i+1]
+            this_divergence = sstats.entropy(this_distr, next_distr)
+            self.kl_div.append(this_divergence)
     def get_core(self):
         distr = self.fixVector
         emptbucks = 0
