@@ -1,8 +1,9 @@
 import json, csv, scipy, sys, math
 from dateutil import parser as dtparser
 
-path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+#path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
 #path = '/export/scratch1/home/becher/data/'
+path = './'
 
 exp_file = sys.argv[1]
 
