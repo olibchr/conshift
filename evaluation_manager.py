@@ -4,9 +4,9 @@ from joblib import Parallel, delayed
 import multiprocessing
 
 
-#path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
-path = '/export/scratch1/home/becher/data/'
-conceptsPerRequest = 45
+path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+#path = '/export/scratch1/home/becher/data/'
+conceptsPerRequest = 3
 
 num_concepts = int(sys.argv[1])
 
@@ -69,7 +69,7 @@ num_cores = multiprocessing.cpu_count()
 #Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_1)(badge, path) for badge in filter_badges)
 
 # Experiment 2
-#Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path) for badge in filter_badges)
+Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path) for badge in filter_badges)
 
 # Experiment 3
-Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_3)(badge, path) for badge in filter_badges)
+#Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_3)(badge, path) for badge in filter_badges)

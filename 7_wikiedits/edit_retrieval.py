@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil import parser as dtparser
 import pytz, io, json
+import urllib2, re
 
 START_YEAR = 2000
 END_YEAR = 2018
@@ -23,7 +24,8 @@ def file_exists(fname):
 def save_revs(srcfile, revisions):
     out_format = []
     for rv in revisions:
-        out_format.append({'id': rv['id'],'dt':str(rv['dt']),'change':rv['change']})
+        print rv
+        out_format.append({'id': rv['id'],'dt':str(rv['dt']),'comment':rv['comment']})
     with io.open(srcfile, 'w', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_format, encoding='utf8', ensure_ascii=False)))
 
@@ -37,7 +39,7 @@ def read_revisions(srcfile):
         row = {
             'id': rv['id'],
             'dt': dtparser.parse(rv['dt']),
-            'change': rv['change']
+            'comment': rv['comment']
         }
         revisions_formatted.append(dict(row))
     return revisions_formatted
@@ -51,6 +53,19 @@ def get_resource(url):
             print('Error: {}.'.format(r.status_code))
         return r
 
+def GetRevisions(pageTitle):
+    url = "https://en.wikipedia.org/w/api.php?action=query&format=xml&prop=revisions&rvlimit=500&titles=" + pageTitle
+    revisions = []                                        #list of all accumulated revisions
+    next = ''                                             #information for the next request
+    while True:
+        response = urllib2.urlopen(url + next).read()     #web request
+        revisions += re.findall('<rev [^>]*>', response)  #adds all revisions from the current request to the list
+        cont = re.search('<continue rvcontinue="([^"]+)"', response)
+        if not cont:                                      #break the loop if 'continue' element missing
+            break
+        next = "&rvcontinue=" + cont.group(1)             #gets the revision Id from which to start the next requst
+    return revisions
+
 
 class WikiEdits:
     def __init__(self, data_dir='wikijson'):
@@ -58,9 +73,12 @@ class WikiEdits:
         self.data_dir = data_dir
         print self.data_dir
     def get_history(self, title):
-        url = '{}{}?history'.format(self.base_url, title)
-        r = get_resource(url)
-        return r.content
+        #url = '{}{}?history'.format(self.base_url, title)
+        #r = get_resource(url)
+        #return r.content
+        r = '<revisions>' + ''.join(GetRevisions(title)) + '</revisions'
+        return r
+
     def parse(self, title, refresh=False):
         self.revisions = []
         srcfile = '{}/{}.json'.format(self.data_dir, title.lower())
@@ -71,13 +89,14 @@ class WikiEdits:
             print 'Parsing ...'
             soup = BeautifulSoup(txt, 'lxml-xml')
             print 'Finding revisions ...'
-            revisions = soup.find_all('revision')
+            #revisions = soup.find_all('revision')
+            revisions = soup.find_all('rev')
 
             for i, rev in enumerate(revisions):
                 row = {
-                    'id':rev.id.get_text(),
-                    'dt':dtparser.parse(rev.timestamp.get_text()),
-                    'change': abs(len(rev.text))
+                    'id':rev['revid'],
+                    'dt':dtparser.parse(rev['timestamp']),
+                    'comment': abs(len(rev['comment']))
                 }
                 if row['dt'] > ENDDATE: continue
                 if row['dt'] < STARTDATE: continue
@@ -99,11 +118,11 @@ class WikiEdits:
         with open('revisions/' + CONCEPT + '.csv', 'wb') as out:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for rev in self.revisions:
-                writer.writerow([rev['id'], rev['dt'], rev['change']])
+                writer.writerow([rev['id'], rev['dt'], rev['comment']])
 
 def main():
     wikiedits = WikiEdits(data_dir=RAW_DATA_DIR)
-    wikiedits.parse(CONCEPT)
+    wikiedits.parse(CONCEPT, refresh=True)
     wikiedits.save_revisions()
 
 if __name__ == '__main__':
