@@ -197,8 +197,65 @@ def experiment_3(filters, path):
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 
-# Experiment 4 - Test one publisher at a time vs wikipedia
+# Experiment 4 - Test using kl divergence instead for cosine
 def experiment_4(filters, path):
+    print "Experiment 4"
+    pref = 'all'
+    global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
+    filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
+    print filters
+    all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
+    docid_to_date = load_doc_map(path)
+    weights = load_idf_weights(path)
+    concepts = load_distr(path, pref, filters, filter_id_to_ctg)
+    print "Building Concepts"
+    for con in concepts:
+        try:
+            print "Splitting in intervals"
+            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            con.into_flex_timeframes(docid_to_date, bucketsize)
+            con.rebuild_flex_dist(weights, all_id_to_ctg)
+            con.get_kl_div()
+            print "     " + con.name + " built successfully"
+        except Exception:
+            print "Fatal error with concept"
+            concepts.pop(concepts.index(con))
+    print "Getting edits of " + str(len(concepts)) + " concepts"
+    wikiedits = []
+    now = str(datetime.datetime.now().date())
+    out_results = []
+    for con in concepts:
+        try:
+            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wikiedits.append(wkedit)
+            wkedit.parse(con.name)
+            wkedit.split_revisions(con.flexIntervals)
+            if len(wkedit.rev_tf_sums) == 0: continue
+            spear, p_val = comparator(con.kl_div, wkedit.rev_tf_sums)
+            result = {
+                'concept': con.name,
+                'id': con.id,
+                'intervals': [str(dt.date()) for dt in con.flexIntervals],
+                'kl_div': con.kl_div,
+                'wkedits': wkedit.rev_tf_sums,
+                'spearman': spear,
+                'p': p_val
+            }
+            out_results.append(result)
+            print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
+            del wkedit
+        except Exception:
+            print 'Fatal Error with wiki edits'
+        del con
+    outfile = '8_experiments/results_exp4_' + now + '.json'
+    print('Writing results to {}').format(outfile)
+    with io.open(outfile, 'a', encoding='utf-8') as f:
+        f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
+
+
+# Experiment 5 - Test one publisher at a time vs wikipedia
+def experiment_5(filters, path):
     print "Experiment 4"
     prefs = ['DM', 'IND', 'WP', 'NYT', 'HP']
     for pref in prefs:
@@ -251,67 +308,11 @@ def experiment_4(filters, path):
             except Exception:
                 print 'Fatal Error with wiki edits'
             del con
-        outfile = '8_experiments/results_exp2_' + now + '.json'
+        outfile = '8_experiments/results_exp5_' + now + '.json'
         print('Writing results to {}').format(outfile)
         with io.open(outfile, 'a', encoding='utf-8') as f:
             f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
-
-# Experiment 5 - Test using kl divergence instead for cosine
-def experiment_5(filters, path):
-    print "Experiment 5"
-    pref = 'all'
-    global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
-    filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
-    print filters
-    all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
-    docid_to_date = load_doc_map(path)
-    weights = load_idf_weights(path)
-    concepts = load_distr(path, pref, filters, filter_id_to_ctg)
-    print "Building Concepts"
-    for con in concepts:
-        try:
-            print "Splitting in intervals"
-            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
-            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
-            con.into_flex_timeframes(docid_to_date, bucketsize)
-            con.rebuild_flex_dist(weights, all_id_to_ctg)
-            con.get_kl_div()
-            print "     " + con.name + " built successfully"
-        except Exception:
-            print "Fatal error with concept"
-            concepts.pop(concepts.index(con))
-    print "Getting edits of " + str(len(concepts)) + " concepts"
-    wikiedits = []
-    now = str(datetime.datetime.now().date())
-    out_results = []
-    for con in concepts:
-        try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
-            wikiedits.append(wkedit)
-            wkedit.parse(con.name)
-            wkedit.split_revisions(con.flexIntervals)
-            if len(wkedit.rev_tf_sums) == 0: continue
-            spear, p_val = comparator(con.kl_div, wkedit.rev_tf_sums)
-            result = {
-                'concept': con.name,
-                'id': con.id,
-                'intervals': [str(dt.date()) for dt in con.flexIntervals],
-                'kl_div': con.kl_div,
-                'wkedits': wkedit.rev_tf_sums,
-                'spearman': spear,
-                'p': p_val
-            }
-            out_results.append(result)
-            print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
-            del wkedit
-        except Exception:
-            print 'Fatal Error with wiki edits'
-        del con
-    outfile = '8_experiments/results_exp5_' + now + '.json'
-    print('Writing results to {}').format(outfile)
-    with io.open(outfile, 'a', encoding='utf-8') as f:
-        f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 if __name__ == "__main__":
     experiment_1(random.sample(xrange(71564), 6))
