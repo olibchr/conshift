@@ -24,7 +24,6 @@ def file_exists(fname):
 def save_revs(srcfile, revisions):
     out_format = []
     for rv in revisions:
-        print rv
         out_format.append({'id': rv['id'],'dt':str(rv['dt']),'comment':rv['comment']})
     with io.open(srcfile, 'w', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_format, encoding='utf8', ensure_ascii=False)))
