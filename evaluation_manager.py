@@ -89,6 +89,17 @@ def exp4():
     print filter_badges
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_4)(badge, path) for badge in filter_badges)
 
+
+def exp5():
+    all_ind_cnt = get_ind_cnt()
+    offset1, offset2, offset3 = get_ranges(all_ind_cnt)
+    filter_indeces = stratefied_sample(offset1, offset2, offset3)
+    filters = [all_ind_cnt[i][1] for i in filter_indeces]
+    filter_badges = [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), conceptsPerRequest)]
+    print 'Experiment 5'
+    print filter_badges
+    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_5)(badge, path) for badge in filter_badges)
+
 if sys.argv[1] == '1':
     exp1()
 if sys.argv[1] == '2':
