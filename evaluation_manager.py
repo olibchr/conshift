@@ -52,6 +52,8 @@ def exp1():
     filter_indeces = stratefied_sample(offset1, offset2, offset3)
     filters = [all_ind_cnt[i][1] for i in filter_indeces]
     filter_badges = [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), conceptsPerRequest)]
+    print 'Experiment 1'
+    print filter_badges
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_1)(badge, path) for badge in filter_badges)
 
 
@@ -61,6 +63,8 @@ def exp2():
     filter_indeces = stratefied_sample(offset1, offset2, offset3)
     filters = [all_ind_cnt[i][1] for i in filter_indeces]
     filter_badges = [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), conceptsPerRequest)]
+    print 'Experiment 2'
+    print filter_badges
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path) for badge in filter_badges)
 
 
@@ -70,6 +74,8 @@ def exp3():
     filter_indeces = stratefied_sample(offset1, offset2, offset3)
     filters = [all_ind_cnt[i][1] for i in filter_indeces]
     filter_badges = [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), conceptsPerRequest)]
+    print 'Experiment 3'
+    print filter_badges
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_3)(badge, path) for badge in filter_badges)
 
 if sys.argv[1] == '1':
