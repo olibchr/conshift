@@ -199,12 +199,13 @@ def experiment_3(filters, path):
 
 
 # Experiment 4 - Test using kl divergence instead for cosine
-def experiment_4(filters, path):
+def experiment_4(filters, path, vsize):
     print "Experiment 4"
     pref = 'all'
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
+    vsize = vsize *1.0
     all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
     docid_to_date = load_doc_map(path)
     weights = load_idf_weights(path)
@@ -213,8 +214,8 @@ def experiment_4(filters, path):
     for con in concepts:
         try:
             print "Splitting in intervals"
-            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
-            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/vsize)
+            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/vsize)
             con.into_flex_timeframes(docid_to_date, bucketsize)
             con.rebuild_flex_dist(weights, all_id_to_ctg)
             con.get_kl_div()

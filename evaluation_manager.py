@@ -88,10 +88,13 @@ def exp3():
 
 
 def exp4():
-    filter_badges = get_filter_badges()
+    filter_badges = filter_badges_24()
     print 'Experiment 4'
     print filter_badges
-    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_4)(badge, path) for badge in filter_badges)
+    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_4)(badge, path, 24) for badge in filter_badges)
+    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_4)(badge, path, 12) for badge in filter_badges)
+    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_4)(badge, path, 6) for badge in filter_badges)
+    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_4)(badge, path, 4) for badge in filter_badges)
 
 
 def exp5():
@@ -102,8 +105,6 @@ def exp5():
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path, 12) for badge in filter_badges)
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path, 6) for badge in filter_badges)
     Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path, 4) for badge in filter_badges)
-    Parallel(n_jobs=num_cores/2)(delayed(wiki_comparison.experiment_2)(badge, path, 2) for badge in filter_badges)
-
 
 
 if sys.argv[1] == '1':
