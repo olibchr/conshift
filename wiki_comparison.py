@@ -81,12 +81,13 @@ def experiment_1(filters, path):
 
 
 # Experiment 2 - Test flexible vector size
-def experiment_2(filters, path):
+def experiment_2(filters, path, vsize):
     print "Experiment 2"
     pref = 'all'
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
+    vsize = vsize * 1.0
     all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
     docid_to_date = load_doc_map(path)
     weights = load_idf_weights(path)
@@ -96,8 +97,8 @@ def experiment_2(filters, path):
         try:
             #if len(set(item.split('_')[1] for item in con.features)) < 4: concepts.pop(concepts.index(con)); print "too few articles in " + con.name; continue
             print "Splitting in intervals"
-            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
-            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            print len(set(item.split('_')[1] for item in con.features)), math.floor(len(set(item.split('_')[1] for item in con.features))/vsize)
+            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/vsize)
             con.into_flex_timeframes(docid_to_date, bucketsize)
             con.rebuild_flex_dist(weights, all_id_to_ctg)
             con.get_cosim()
@@ -133,7 +134,7 @@ def experiment_2(filters, path):
         except Exception:
             print 'Fatal Error with wiki edits'
         del con
-    outfile = '8_experiments/results_exp2_' + now + '.json'
+    outfile = '8_experiments/results_exp2_' + now + '_' +str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))

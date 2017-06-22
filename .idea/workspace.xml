@@ -4,7 +4,7 @@
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/evaluation_manager.py" afterPath="$PROJECT_DIR$/evaluation_manager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment_evaluation.py" afterPath="$PROJECT_DIR$/experiment_evaluation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wiki_comparison.py" afterPath="$PROJECT_DIR$/wiki_comparison.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,13 +43,12 @@
         <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="304" column="14" selection-start-line="304" selection-start-column="14" selection-end-line="304" selection-end-column="14" />
+              <caret line="136" column="70" selection-start-line="136" selection-start-column="70" selection-end-line="136" selection-end-column="70" />
               <folding>
                 <element signature="e#0#85#0" expanded="true" />
                 <element signature="e#932#3118#0" expanded="false" />
-                <element signature="e#3198#5829#0" expanded="false" />
-                <element signature="e#5905#8333#0" expanded="false" />
-                <element signature="e#13513#16404#0" expanded="false" />
+                <element signature="e#5961#8389#0" expanded="false" />
+                <element signature="e#13569#16460#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -70,8 +69,8 @@
       <file leaf-file-name="evaluation_manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1438849">
-              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.7413572">
+              <caret line="104" column="85" selection-start-line="104" selection-start-column="85" selection-end-line="104" selection-end-column="85" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -155,8 +154,8 @@
         <option value="$PROJECT_DIR$/concept_time_analysis.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/article_hist.py" />
         <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
-        <option value="$PROJECT_DIR$/experiment_evaluation.py" />
         <option value="$PROJECT_DIR$/wiki_comparison.py" />
+        <option value="$PROJECT_DIR$/experiment_evaluation.py" />
         <option value="$PROJECT_DIR$/evaluation_manager.py" />
       </list>
     </option>
@@ -167,10 +166,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1766" />
-    <option name="y" value="-53" />
-    <option name="width" value="1560" />
-    <option name="height" value="931" />
+    <option name="x" value="38" />
+    <option name="y" value="22" />
+    <option name="width" value="1402" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -615,10 +614,10 @@
     <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1766" y="-53" width="1560" height="931" extended-state="0" />
+    <frame x="38" y="22" width="1402" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17564103" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19543509" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39802226" sideWeight="0.5028531" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -689,9 +688,8 @@
           <folding>
             <element signature="e#0#85#0" expanded="true" />
             <element signature="e#932#3118#0" expanded="false" />
-            <element signature="e#3198#5829#0" expanded="false" />
-            <element signature="e#5905#8333#0" expanded="false" />
-            <element signature="e#13513#16404#0" expanded="false" />
+            <element signature="e#5961#8389#0" expanded="false" />
+            <element signature="e#13569#16460#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -738,9 +736,8 @@
           <folding>
             <element signature="e#0#85#0" expanded="true" />
             <element signature="e#932#3118#0" expanded="false" />
-            <element signature="e#3198#5829#0" expanded="false" />
-            <element signature="e#5905#8333#0" expanded="false" />
-            <element signature="e#13513#16404#0" expanded="false" />
+            <element signature="e#5961#8389#0" expanded="false" />
+            <element signature="e#13569#16460#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -770,9 +767,8 @@
           <folding>
             <element signature="e#0#85#0" expanded="true" />
             <element signature="e#932#3118#0" expanded="false" />
-            <element signature="e#3198#5829#0" expanded="false" />
-            <element signature="e#5905#8333#0" expanded="false" />
-            <element signature="e#13513#16404#0" expanded="false" />
+            <element signature="e#5961#8389#0" expanded="false" />
+            <element signature="e#13569#16460#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -809,9 +805,8 @@
           <folding>
             <element signature="e#0#85#0" expanded="true" />
             <element signature="e#932#3118#0" expanded="false" />
-            <element signature="e#3198#5829#0" expanded="false" />
-            <element signature="e#5905#8333#0" expanded="false" />
-            <element signature="e#13513#16404#0" expanded="false" />
+            <element signature="e#5961#8389#0" expanded="false" />
+            <element signature="e#13569#16460#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1069,6 +1064,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="136" column="70" selection-start-line="136" selection-start-column="70" selection-end-line="136" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#85#0" expanded="true" />
+            <element signature="e#932#3118#0" expanded="false" />
+            <element signature="e#5961#8389#0" expanded="false" />
+            <element signature="e#13569#16460#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/experiment_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1079,24 +1087,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="304" column="14" selection-start-line="304" selection-start-column="14" selection-end-line="304" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#85#0" expanded="true" />
-            <element signature="e#932#3118#0" expanded="false" />
-            <element signature="e#3198#5829#0" expanded="false" />
-            <element signature="e#5905#8333#0" expanded="false" />
-            <element signature="e#13513#16404#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1438849">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.7413572">
+          <caret line="104" column="85" selection-start-line="104" selection-start-column="85" selection-end-line="104" selection-end-column="85" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
