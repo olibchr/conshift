@@ -29,7 +29,7 @@ def read_exp_results(exp_name):
                     'concept': rv['concept'],
                     'id': rv['id'],
                     'intervals': [dtparser.parse(dt) for dt in rv['intervals']],
-                    'cosines': rv['cosines'],
+                    'cosines': rv['kl_div'],
                     'wkedits': rv['wkedits'],
                     'spearman': rv['spearman'],
                     'p': rv['p']
