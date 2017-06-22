@@ -254,8 +254,9 @@ def experiment_4(filters, path):
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 
+# Experiment 5 - Test unsing 24 flexible vectors
 def experiment_5(filters, path):
-    print "Experiment 6"
+    print "Experiment 5"
     pref = 'all'
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
@@ -310,7 +311,7 @@ def experiment_5(filters, path):
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
 
 
-# Experiment 5 - Test one publisher at a time vs wikipedia
+# Experiment 6 - Test one publisher at a time vs wikipedia
 def experiment_6(filters, path):
     print "Experiment 4"
     prefs = ['DM', 'IND', 'WP', 'NYT', 'HP']

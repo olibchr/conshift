@@ -88,7 +88,23 @@ class WikiEdits:
             print 'Parsing ...'
             soup = BeautifulSoup(txt, 'lxml-xml')
             print 'Finding revisions ...'
-            #revisions = soup.find_all('revision')
+            revisions = soup.find_all('rev')
+
+            for i, rev in enumerate(revisions):
+                row = {
+                    'id':rev['revid'],
+                    'dt':dtparser.parse(rev['timestamp']),
+                    'comment': abs(len(rev['comment']))
+                }
+                if row['dt'] > ENDDATE: continue
+                if row['dt'] < STARTDATE: continue
+                self.revisions.append(dict(row))
+            save_revs(srcfile, self.revisions)
+        if len(self.revisions) <= 1:
+            txt = self.get_history(title)
+            print 'Parsing ...'
+            soup = BeautifulSoup(txt, 'lxml-xml')
+            print 'Finding revisions ...'
             revisions = soup.find_all('rev')
 
             for i, rev in enumerate(revisions):
