@@ -4,9 +4,9 @@ from joblib import Parallel, delayed
 import multiprocessing
 
 
-path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
-#path = '/export/scratch1/home/becher/data/'
-conceptsPerRequest = 3
+#path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+path = '/export/scratch1/home/becher/data/'
+conceptsPerRequest = 30
 
 num_concepts = int(sys.argv[2])
 num_cores = multiprocessing.cpu_count()
