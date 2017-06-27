@@ -7,5 +7,3 @@ python evaluation_manager.py 3 990 | tee output3.txt &
 wait
 python evaluation_manager.py 4 990 | tee output4.txt &
 wait
-python evaluation_manager.py 5 990 | tee output5.txt &
-wait

@@ -58,6 +58,15 @@ def update_ind_cnt():
     return sorted(new_cnt, reverse=True, key= lambda cnt:cnt[2])
 
 
+def drop_categories(ind_cnt):
+    print len(ind_cnt)
+    ind_cnt_update= []
+    for i in ind_cnt:
+        if 'Category:' in i[0]:continue
+        ind_cnt_update.append(i)
+    print len(ind_cnt_update)
+    return ind_cnt_update
+
 def save_ind_cnt(out):
     with open('index_cnt_update.csv','w') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -65,12 +74,13 @@ def save_ind_cnt(out):
             writer.writerow(o)
 
 
-all_id_to_ctg = get_ctg()
-all_ctg_to_id = {v: int(k) for k, v in all_id_to_ctg.iteritems()}
+#all_id_to_ctg = get_ctg()
+#all_ctg_to_id = {v: int(k) for k, v in all_id_to_ctg.iteritems()}
 all_ind = get_ind_cnt()
-all_ind = sorted(all_ind, key=lambda entree: entree[1], reverse=True)
 
-all_ind_update = update_ind_cnt()
+#all_ind_update = update_ind_cnt()
+all_ind_update = drop_categories(all_ind)
+all_ind_update = sorted(all_ind_update, key=lambda entree: entree[2], reverse=True)
 save_ind_cnt(all_ind_update)
 
 

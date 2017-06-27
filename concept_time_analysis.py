@@ -32,8 +32,7 @@ class Concept():
         self.top_removals = []
         self.top_core = []
         self.core_set = set()
-    def into_fixed_timeframes(self, docid_to_date):
-        buckets = 12
+    def into_fixed_timeframes(self, docid_to_date, buckets):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
         timedelta = DATELAST - DATEONE

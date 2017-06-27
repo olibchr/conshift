@@ -26,7 +26,7 @@ def comparator(concepts_cosines, wikiedit_counts):
 
 
 # Experiment 1 - Test fix vector size
-def experiment_1(filters, path):
+def experiment_1(filters, path, vsize):
     print "Experiment 1"
     pref = 'all'
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
@@ -39,7 +39,7 @@ def experiment_1(filters, path):
     print "Building Concepts"
     for con in concepts:
         try:
-            con.into_fixed_timeframes(docid_to_date)
+            con.into_fixed_timeframes(docid_to_date, vsize)
             con.rebuild_fix_dist(weights, all_id_to_ctg)
             con.get_cosim(vector="fix")
             #con.print_cosim()
@@ -141,12 +141,13 @@ def experiment_2(filters, path, vsize):
 
 
 # Experiment 3 - Test no idf weighting
-def experiment_3(filters, path):
+def experiment_3(filters, path, vsize):
     print "Experiment 3"
     pref = 'all'
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
     filter_id_to_ctg, all_id_to_ctg = get_ctg(path, filters)
     print filters
+    vsize = vsize *1.0
     all_ctg_to_id = {v:k for k,v in all_id_to_ctg.iteritems()}
     docid_to_date = load_doc_map(path)
     weights = load_idf_weights(path)
@@ -155,7 +156,7 @@ def experiment_3(filters, path):
     for con in concepts:
         try:
             print "Splitting in intervals"
-            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/12.0)
+            bucketsize = math.floor(len(set(item.split('_')[1] for item in con.features))/vsize)
             print len(set(item.split('_')[1] for item in con.features)), bucketsize
             con.into_flex_timeframes(docid_to_date, bucketsize)
             con.rebuild_flex_dist(weights, all_id_to_ctg, weightsON=False)

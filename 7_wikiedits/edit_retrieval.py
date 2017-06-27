@@ -21,6 +21,12 @@ def file_exists(fname):
     return False
 
 
+def bot_list():
+    with open('7_wikiedits/botlist.txt','r') as f:
+        content = f.readlines()
+    bots = set([x.strip() for x in content])
+    return bots
+
 def save_revs(srcfile, revisions):
     out_format = []
     for rv in revisions:
@@ -84,6 +90,7 @@ class WikiEdits:
         if file_exists(srcfile) and refresh==False:
             self.revisions = read_revisions(srcfile)
         else:
+            bots = bot_list()
             txt = self.get_history(title)
             print 'Parsing ...'
             soup = BeautifulSoup(txt, 'lxml-xml')
@@ -91,6 +98,7 @@ class WikiEdits:
             revisions = soup.find_all('rev')
 
             for i, rev in enumerate(revisions):
+                if rev['user'] in bots: print "bot detected"; continue
                 row = {
                     'id':rev['revid'],
                     'dt':dtparser.parse(rev['timestamp']),
