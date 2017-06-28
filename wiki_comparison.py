@@ -131,7 +131,7 @@ def experiment_2(filters, path, vsize):
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
             del wkedit
-        except Exception:
+        except Exception as e:
             print 'Fatal Error with wiki edits: ' + con.name + ", " + str(con.id) + "; Reason: "+ str(e)
         del con
     outfile = '8_experiments/results_exp2_' + now + '_' +str(int(vsize)) + '.json'
