@@ -20,7 +20,7 @@ DATELAST = datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")
 
 
 def comparator(concepts_cosines, wikiedit_counts):
-    print concepts_cosines, wikiedit_counts
+    #print concepts_cosines, wikiedit_counts
     corr, r_val = scipy.stats.spearmanr(concepts_cosines, wikiedit_counts)
     return corr, r_val
 
