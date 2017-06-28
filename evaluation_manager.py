@@ -25,6 +25,7 @@ def get_ind_cnt():
     return all_ind, all_ind_dt
 
 
+# !!!offset 3 on change!!!
 def get_ranges(ind_cnt):
     offset1 = 0
     offset2 = 0
@@ -32,7 +33,7 @@ def get_ranges(ind_cnt):
     for item in ind_cnt:
         if item[2] > 500: offset1 += 1 # tbd
         if item[2] > 100: offset2 += 1
-        if item[2] > 23: offset3 += 1 # tbd
+        if item[2] > 51: offset3 += 1 # tbd
         else: break
     print offset1, offset2, offset3
     return offset1, offset2, offset3
@@ -112,13 +113,12 @@ def exp4():
 
 def exp5():
     # Its actually exp 2 with different filters
-    filter_badges = filter_badges_24()
+    filter_badges = get_filter_badges()
     print 'Experiment 5'
     print filter_badges
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 24) for badge in filter_badges)
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 12) for badge in filter_badges)
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 6) for badge in filter_badges)
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 4) for badge in filter_badges)
+    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 52) for badge in filter_badges)
+    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_4)(badge, path, 52) for badge in filter_badges)
+
 
 
 if sys.argv[1] == '1':
