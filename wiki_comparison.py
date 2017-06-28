@@ -44,8 +44,8 @@ def experiment_1(filters, path, vsize):
             con.get_cosim(vector="fix")
             #con.print_cosim()
             print "     " + con.name + " built successfully"
-        except Exception:
-            print "Fatal error with concept"
+        except Exception as e:
+            print "Fatal error with concept: " + str(e)
             concepts.pop(concepts.index(con))
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
@@ -71,8 +71,8 @@ def experiment_1(filters, path, vsize):
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
             del wkedit
-        except Exception:
-            print 'Fatal Error with wiki edits'
+        except Exception as e:
+            print 'Fatal Error with wiki edits: ' + str(e)
         del con
     outfile = '8_experiments/results_exp1_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
@@ -104,8 +104,8 @@ def experiment_2(filters, path, vsize):
             con.get_cosim()
             #con.print_cosim()
             print "     " + con.name + " built successfully"
-        except Exception:
-            print "Fatal error with concept"
+        except Exception as e:
+            print "Fatal error with concept: " + str(e)
             concepts.pop(concepts.index(con))
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
@@ -163,8 +163,8 @@ def experiment_3(filters, path, vsize):
             con.get_cosim()
             #con.print_cosim()
             print "     " + con.name + " built successfully"
-        except Exception:
-            print "Fatal error with concept"
+        except Exception as e:
+            print "Fatal error with concept: " + str(e)
             concepts.pop(concepts.index(con))
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
@@ -190,8 +190,8 @@ def experiment_3(filters, path, vsize):
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
             del wkedit
-        except Exception:
-            print 'Fatal Error with wiki edits'
+        except Exception as e:
+            print 'Fatal Error with wiki edits: ' + str(e)
         del con
     outfile = '8_experiments/results_exp3_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
@@ -221,8 +221,8 @@ def experiment_4(filters, path, vsize):
             con.rebuild_flex_dist(weights, all_id_to_ctg)
             con.get_kl_div()
             print "     " + con.name + " built successfully"
-        except Exception:
-            print "Fatal error with concept"
+        except Exception as e:
+            print "Fatal error with concept: " + str(e)
             concepts.pop(concepts.index(con))
     print "Getting edits of " + str(len(concepts)) + " concepts"
     wikiedits = []
@@ -248,8 +248,8 @@ def experiment_4(filters, path, vsize):
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
             del wkedit
-        except Exception:
-            print 'Fatal Error with wiki edits'
+        except Exception as e:
+            print 'Fatal Error with wiki edits: ' + str(e)
         del con
     outfile = '8_experiments/results_exp4_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
@@ -338,8 +338,8 @@ def experiment_6(filters, path):
                 con.get_cosim()
                 #con.print_cosim()
                 print "     " + con.name + " built successfully"
-            except Exception:
-                print "Fatal error with concept"
+            except Exception as e:
+                print "Fatal error with concept: " + str(e)
                 concepts.pop(concepts.index(con))
         print "Getting edits of " + str(len(concepts)) + " concepts"
         wikiedits = []
