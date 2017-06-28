@@ -1,9 +1,12 @@
 import json, csv, scipy, sys, math, os
 from dateutil import parser as dtparser
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib.patches as mpatches
 
-#path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
 #path = '/export/scratch1/home/becher/data/'
-path = './'
+exppath = './'
 
 exp_file = sys.argv[1]
 
@@ -18,7 +21,7 @@ def get_ind_cnt():
 def read_exp_results(exp_name):
     print('Reading from disc: {}'.format(exp_name))
     exp_results = []
-    with open(path + exp_name) as in_file:
+    with open(exppath + exp_name) as in_file:
         for line in in_file:
             exp_results.append(json.loads(line))
     exp_formatted = []
@@ -52,7 +55,6 @@ def eval_err_exps(err_exps, avg_cosim):
         if all_ind_cnt[name] > 1000: strati_high_cnt += 1
         elif all_ind_cnt[name] > 11: strati_med_cnt += 1
         else: strati_low_cnt += 1
-
     print("Average cosine for failed experiments: {}. Average cosine for correct experiments: {}".format(sum(avg_err_cosines)/len(avg_err_cosines), avg_cosim))
     print("Failed experiments distribution: High strati group: {}, Med strati group: {}, Low strati group: {}".format(strati_high_cnt, strati_med_cnt, strati_low_cnt))
 
@@ -64,7 +66,32 @@ def extract_averages(experiment, err_exp):
     avg_p = sum([exp['p']for exp in experiment])/len(experiment)
     avg_sim = sum([sum(exp['cosines'])/len(exp['cosines']) for exp in experiment])/len(experiment)
     print('Average spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
-    eval_err_exps(err_exp, avg_sim)
+    if len(err_exp) > 0: eval_err_exps(err_exp, avg_sim)
+
+
+def make_hists(exp_results):
+    spearmans = [x['spearman'] for x in exp_results]
+    pvals = [x['p'] for x in exp_results]
+
+    # plot it
+    fig, (ax,ax2) = plt.subplots(1,2)
+    ax.hist(spearmans, bins=50, color='lightblue', label='Spearman')
+    red_patch = mpatches.Patch(color='lightblue', label='Spearman')
+    ax2.hist(pvals, bins=50, color='red', label='P vals')
+    blue_patch = mpatches.Patch(color='red', label='P vals')
+    plt.legend(handles=[red_patch, blue_patch])
+
+    plt.show()
+
+
+def analyze_small_p(exp_results):
+    print "\nSubsampling experiments with p < 0.05:\n"
+    succ = []
+    for e in exp_results:
+        if e['p'] < 0.05: succ.append(e)
+    make_hists(succ)
+    extract_averages(succ, [])
+
 
 
 def extract_filters():
@@ -87,4 +114,6 @@ def extract_filters():
 all_ind_cnt = get_ind_cnt()
 exp_results, err_exp = read_exp_results(exp_file)
 extract_averages(exp_results, err_exp)
+make_hists(exp_results)
+analyze_small_p(exp_results)
 #extract_filters()

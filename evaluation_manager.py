@@ -55,8 +55,6 @@ def get_filter_badges():
     offset1, offset2, offset3 = get_ranges(all_ind_cnt)
     filter_indeces = stratefied_sample(offset1, offset2, offset3)
     filters = [all_ind_cnt[i][1] for i in filter_indeces]
-    print filters
-
     return [filters[i:i+conceptsPerRequest] for i in range(0,len(filters), conceptsPerRequest)]
 
 

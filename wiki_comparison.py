@@ -74,7 +74,7 @@ def experiment_1(filters, path, vsize):
         except Exception:
             print 'Fatal Error with wiki edits'
         del con
-    outfile = '8_experiments/results_exp1_' + now + '.json'
+    outfile = '8_experiments/results_exp1_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
@@ -193,7 +193,7 @@ def experiment_3(filters, path, vsize):
         except Exception:
             print 'Fatal Error with wiki edits'
         del con
-    outfile = '8_experiments/results_exp3_' + now + '.json'
+    outfile = '8_experiments/results_exp3_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
