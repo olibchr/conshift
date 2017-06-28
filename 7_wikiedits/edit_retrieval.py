@@ -97,7 +97,8 @@ class WikiEdits:
             revisions = soup.find_all('rev')
 
             for i, rev in enumerate(revisions):
-                if rev['user'] in bots: print "bot detected"; continue
+                if 'user' in rev:
+                    if rev['user'] in bots: print "bot detected"; continue
                 row = {
                     'id':rev['revid'],
                     'dt':dtparser.parse(rev['timestamp'])
