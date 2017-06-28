@@ -30,7 +30,7 @@ def bot_list():
 def save_revs(srcfile, revisions):
     out_format = []
     for rv in revisions:
-        out_format.append({'id': rv['id'],'dt':str(rv['dt']),'comment':rv['comment']})
+        out_format.append({'id': rv['id'],'dt':str(rv['dt'])})
     with io.open(srcfile, 'w', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_format, encoding='utf8', ensure_ascii=False)))
 
@@ -139,7 +139,7 @@ class WikiEdits:
         with open('revisions/' + CONCEPT + '.csv', 'wb') as out:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for rev in self.revisions:
-                writer.writerow([rev['id'], rev['dt'], rev['comment']])
+                writer.writerow([rev['id'], rev['dt']])
 
 def main():
     wikiedits = WikiEdits(data_dir=RAW_DATA_DIR)
