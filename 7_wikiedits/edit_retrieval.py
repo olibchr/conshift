@@ -43,8 +43,7 @@ def read_revisions(srcfile):
     for rv in revisions:
         row = {
             'id': rv['id'],
-            'dt': dtparser.parse(rv['dt']),
-            'comment': rv['comment']
+            'dt': dtparser.parse(rv['dt'])
         }
         revisions_formatted.append(dict(row))
     return revisions_formatted
@@ -101,8 +100,7 @@ class WikiEdits:
                 if rev['user'] in bots: print "bot detected"; continue
                 row = {
                     'id':rev['revid'],
-                    'dt':dtparser.parse(rev['timestamp']),
-                    'comment': abs(len(rev['comment']))
+                    'dt':dtparser.parse(rev['timestamp'])
                 }
                 if row['dt'] > ENDDATE: continue
                 if row['dt'] < STARTDATE: continue
@@ -118,8 +116,7 @@ class WikiEdits:
             for i, rev in enumerate(revisions):
                 row = {
                     'id':rev['revid'],
-                    'dt':dtparser.parse(rev['timestamp']),
-                    'comment': abs(len(rev['comment']))
+                    'dt':dtparser.parse(rev['timestamp'])
                 }
                 if row['dt'] > ENDDATE: continue
                 if row['dt'] < STARTDATE: continue
