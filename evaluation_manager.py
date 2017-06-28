@@ -32,8 +32,8 @@ def get_ranges(ind_cnt):
     offset3 = 0
     for item in ind_cnt:
         if item[2] > 500: offset1 += 1 # tbd
-        if item[2] > 100: offset2 += 1
-        if item[2] > 51: offset3 += 1 # tbd
+        if item[2] > 200: offset2 += 1
+        if item[2] > 99: offset3 += 1 # tbd
         else: break
     print offset1, offset2, offset3
     return offset1, offset2, offset3
@@ -112,7 +112,6 @@ def exp4():
 
 
 def exp5():
-    # Its actually exp 2 with different filters
     filter_badges = get_filter_badges()
     print 'Experiment 5'
     print filter_badges
