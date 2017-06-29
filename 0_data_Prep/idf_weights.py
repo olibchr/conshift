@@ -1,6 +1,7 @@
 import csv
 import sys
 import numpy as np
+import pandas as pd
 import pickle, string
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -63,6 +64,11 @@ def build_all_idf(all_d_vec, all_d_content):
     transformer = TfidfTransformer(smooth_idf=False)
     sparse_entities = transformer.fit_transform(all_d_vec)
     idf = transformer.idf_
+    print "Weigths"
+    weights = np.asarray(sparse_entities.mean(axis=0)).ravel().tolist()
+    weights_df = pd.DataFrame({'term': [i[0] for i in all_d_content], 'weight': weights})
+    weights_df.sort_values(by='weight', ascending=False).head(20)
+    print weights_df
     return dict(zip([i[0] for i in all_d_content], idf))
 
 
@@ -74,7 +80,7 @@ def main():
     print "Inverse Document Frequency"
     weights_sparse_entities = build_all_idf(sparse_entities, all_d_content)
 
-    with open(path + "all_distributions_weights.csv", 'wb') as outfile:
+    with open(path + "all_distributions_weights_upd.csv", 'wb') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='|',quoting=csv.QUOTE_MINIMAL)
         for key, value in weights_sparse_entities.items():
             writer.writerow([key, value])
