@@ -115,8 +115,10 @@ def exp5():
     filter_badges = get_filter_badges()
     print 'Experiment 5'
     print filter_badges
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 100) for badge in filter_badges)
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_4)(badge, path, 100) for badge in filter_badges)
+    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_1)(badge, path, 100) for badge in filter_badges)
+    #Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 100) for badge in filter_badges)
+    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_3)(badge, path, 100) for badge in filter_badges)
+    #Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_4)(badge, path, 100) for badge in filter_badges)
 
 
 
