@@ -36,7 +36,7 @@ def save_revs(srcfile, revisions):
 
 
 def read_revisions(srcfile):
-    print('Reading from disc: {}'.format(srcfile))
+    # print('Reading from disc: {}'.format(srcfile))
     with open(srcfile) as json_data:
         revisions = json.load(json_data)
     revisions_formatted = []
@@ -75,7 +75,7 @@ class WikiEdits:
     def __init__(self, data_dir='wikijson'):
         self.base_url = 'https://en.wikipedia.org/wiki/Special:Export/'
         self.data_dir = data_dir
-        print self.data_dir
+        # print self.data_dir
     def get_history(self, title):
         #url = '{}{}?history'.format(self.base_url, title)
         #r = get_resource(url)
@@ -91,9 +91,9 @@ class WikiEdits:
         else:
             bots = bot_list()
             txt = self.get_history(title)
-            print 'Parsing ...'
+            #print 'Parsing ...'
             soup = BeautifulSoup(txt, 'lxml-xml')
-            print 'Finding revisions ...'
+            #print 'Finding revisions ...'
             revisions = soup.find_all('rev')
 
             for i, rev in enumerate(revisions):

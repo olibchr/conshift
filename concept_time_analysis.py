@@ -1,4 +1,4 @@
-import csv
+import csv, math
 import sys
 from sklearn.metrics import pairwise as pw
 import warnings
@@ -56,8 +56,7 @@ class Concept():
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
         tag_len = len(set([tag[1] for tag in tag_quad]))
         if tag_len <= 2 * bucketsize: buckets=2
-        else: buckets = int(round(tag_len/(1.0 * bucketsize)))
-        tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
+        else: buckets = int(math.ceil(tag_len/(1.0 * bucketsize)))
         all_buckets = [dict() for x in range(buckets)]
         all_last_adds = buckets * [datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")]
         i = 0
@@ -70,7 +69,7 @@ class Concept():
             tag_doc = tag[1]
             tag_date = tag[2]
             tag_cnt = tag[3]
-            if i > tmpbucketsize:
+            if i >= bucketsize:
                 i = 0
                 t += 1
                 this_bucket = all_buckets[t]
@@ -380,7 +379,7 @@ def main():
     # Parse arguments
     path = sys.argv[1]
     pref = sys.argv[2]
-    bucketsize = int(sys.argv[3])
+    buckets = int(sys.argv[3])
     filters = map(int, sys.argv[4:])
     print "Setting filters.. "
     global filter_id_to_ctg, all_id_to_ctg, all_ctg_to_id, concepts, docid_to_date, weights
@@ -391,18 +390,21 @@ def main():
     concepts = load_distr(path, pref, filters, filter_id_to_ctg)
     print "Building Concepts"
     for con in concepts:
-        con.into_fixed_timeframes(docid_to_date)
+        bucketsize = len(set(item.split('_')[1] for item in con.features))/buckets
+        #con.into_fixed_timeframes(docid_to_date, buckets)
         con.into_flex_timeframes(docid_to_date, bucketsize)
         con.rebuild_flex_dist(weights, all_id_to_ctg)
-        con.rebuild_fix_dist(weights, all_id_to_ctg)
+        #con.rebuild_fix_dist(weights, all_id_to_ctg)
         con.get_cosim()
-        con.get_core()
-    pretty_print()
-    #save_state()
-    #save_core()
-    #save_core_bars()
-    #save_adds()
-    #save_rems()
+        #con.get_core()
+        print con.flexIntervals
+        print len(con.flexIntervals)
+        #pretty_print()
+        #save_state()
+        #save_core()
+        #save_core_bars()
+        #save_adds()
+        #save_rems()
 
 
 if __name__ == "__main__":
