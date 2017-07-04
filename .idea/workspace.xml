@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" afterPath="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/concept_time_analysis.py" afterPath="$PROJECT_DIR$/concept_time_analysis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/evaluation_manager.py" afterPath="$PROJECT_DIR$/evaluation_manager.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment_evaluation.py" afterPath="$PROJECT_DIR$/experiment_evaluation.py" />
@@ -26,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="edit_retrieval.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="edit_retrieval.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="102" column="38" selection-start-line="102" selection-start-column="38" selection-end-line="102" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.3304721">
+              <caret line="77" column="10" selection-start-line="77" selection-start-column="10" selection-end-line="77" selection-end-column="10" />
               <folding>
                 <element signature="e#435#497#0" expanded="false" />
               </folding>
@@ -51,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="evaluation_manager.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="evaluation_manager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7296137">
-              <caret line="118" column="4" selection-start-line="118" selection-start-column="4" selection-end-line="118" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="113" column="11" selection-start-line="113" selection-start-column="11" selection-end-line="113" selection-end-column="11" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
                 <element signature="e#7161#7519#0" expanded="false" />
@@ -81,10 +82,10 @@
         <entry file="file://$PROJECT_DIR$/experiment_evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#3788#4229#0" expanded="false" />
+                <element signature="e#3787#4228#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -93,21 +94,21 @@
       <file leaf-file-name="concept_time_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-35.555557">
-              <caret line="64" column="54" selection-start-line="64" selection-start-column="54" selection-end-line="64" selection-end-column="54" />
+            <state vertical-scroll-proportion="-18.333334">
+              <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
-                <element signature="e#8320#8746#0" expanded="false" />
-                <element signature="e#8777#9041#0" expanded="false" />
-                <element signature="e#9076#9386#0" expanded="false" />
-                <element signature="e#9448#10559#0" expanded="false" />
-                <element signature="e#10586#11338#0" expanded="false" />
-                <element signature="e#11363#12062#0" expanded="false" />
-                <element signature="e#12086#13306#0" expanded="false" />
-                <element signature="e#13335#14868#0" expanded="false" />
-                <element signature="e#14892#16279#0" expanded="false" />
-                <element signature="e#16303#17727#0" expanded="false" />
-                <element signature="e#17758#17985#0" expanded="false" />
+                <element signature="e#7984#8410#0" expanded="false" />
+                <element signature="e#8441#8705#0" expanded="false" />
+                <element signature="e#8740#9050#0" expanded="false" />
+                <element signature="e#9112#10223#0" expanded="false" />
+                <element signature="e#10250#11002#0" expanded="false" />
+                <element signature="e#11027#11726#0" expanded="false" />
+                <element signature="e#11750#12970#0" expanded="false" />
+                <element signature="e#12999#14532#0" expanded="false" />
+                <element signature="e#14556#15943#0" expanded="false" />
+                <element signature="e#15967#17391#0" expanded="false" />
+                <element signature="e#17422#17649#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -187,12 +188,12 @@
         <option value="$PROJECT_DIR$/index_analysis.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/article_hist.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/index_analysis.py" />
-        <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
         <option value="$PROJECT_DIR$/wiki_comparison.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/idf_weights.py" />
-        <option value="$PROJECT_DIR$/concept_time_analysis.py" />
-        <option value="$PROJECT_DIR$/experiment_evaluation.py" />
         <option value="$PROJECT_DIR$/evaluation_manager.py" />
+        <option value="$PROJECT_DIR$/experiment_evaluation.py" />
+        <option value="$PROJECT_DIR$/concept_time_analysis.py" />
+        <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
       </list>
     </option>
   </component>
@@ -1072,33 +1073,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
+    <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="38" selection-start-line="102" selection-start-column="38" selection-end-line="102" selection-end-column="38" />
+          <caret line="113" column="11" selection-start-line="113" selection-start-column="11" selection-end-line="113" selection-end-column="11" />
           <folding>
-            <element signature="e#435#497#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-35.555557">
-          <caret line="64" column="54" selection-start-line="64" selection-start-column="54" selection-end-line="64" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-            <element signature="e#8320#8746#0" expanded="false" />
-            <element signature="e#8777#9041#0" expanded="false" />
-            <element signature="e#9076#9386#0" expanded="false" />
-            <element signature="e#9448#10559#0" expanded="false" />
-            <element signature="e#10586#11338#0" expanded="false" />
-            <element signature="e#11363#12062#0" expanded="false" />
-            <element signature="e#12086#13306#0" expanded="false" />
-            <element signature="e#13335#14868#0" expanded="false" />
-            <element signature="e#14892#16279#0" expanded="false" />
-            <element signature="e#16303#17727#0" expanded="false" />
-            <element signature="e#17758#17985#0" expanded="false" />
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#7161#7519#0" expanded="false" />
+            <element signature="e#8941#9503#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1106,22 +1088,41 @@
     <entry file="file://$PROJECT_DIR$/experiment_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#3788#4229#0" expanded="false" />
+            <element signature="e#3787#4228#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/evaluation_manager.py">
+    <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7296137">
-          <caret line="118" column="4" selection-start-line="118" selection-start-column="4" selection-end-line="118" selection-end-column="4" />
+        <state vertical-scroll-proportion="-18.333334">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <element signature="e#7161#7519#0" expanded="false" />
-            <element signature="e#8941#9503#0" expanded="false" />
+            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#7984#8410#0" expanded="false" />
+            <element signature="e#8441#8705#0" expanded="false" />
+            <element signature="e#8740#9050#0" expanded="false" />
+            <element signature="e#9112#10223#0" expanded="false" />
+            <element signature="e#10250#11002#0" expanded="false" />
+            <element signature="e#11027#11726#0" expanded="false" />
+            <element signature="e#11750#12970#0" expanded="false" />
+            <element signature="e#12999#14532#0" expanded="false" />
+            <element signature="e#14556#15943#0" expanded="false" />
+            <element signature="e#15967#17391#0" expanded="false" />
+            <element signature="e#17422#17649#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3304721">
+          <caret line="77" column="10" selection-start-line="77" selection-start-column="10" selection-end-line="77" selection-end-column="10" />
+          <folding>
+            <element signature="e#435#497#0" expanded="false" />
           </folding>
         </state>
       </provider>
