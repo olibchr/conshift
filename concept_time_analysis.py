@@ -56,10 +56,12 @@ class Concept():
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
         tag_len = len(set([tag[1] for tag in tag_quad]))
         if tag_len <= 2 * bucketsize: buckets=2
-        else: buckets = int(round(tag_len/(1.0 * bucketsize)))
+        else: buckets = int(round(tag_len/(1.0 * bucketsize)))+1
+        print('TMP BUCKET: {}'.format(buckets))
         tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
-        print tmpbucketsize
+        print('TMP BUCKETSIZE: {}'.format(tmpbucketsize))
         all_buckets = [dict() for x in range(buckets)]
+        print len(all_buckets)
         all_last_adds = buckets * [datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")]
         i = 0
         t = 0
@@ -393,7 +395,6 @@ def main():
     print "Building Concepts"
     for con in concepts:
         bucketsize = len(set(item.split('_')[1] for item in con.features))/buckets
-        print bucketsize
         #con.into_fixed_timeframes(docid_to_date, buckets)
         con.into_flex_timeframes(docid_to_date, bucketsize)
         con.rebuild_flex_dist(weights, all_id_to_ctg)
