@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/evaluation_manager.py" afterPath="$PROJECT_DIR$/experiment_manager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run_exps.sh" afterPath="$PROJECT_DIR$/run_exps.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment_manager.py" afterPath="$PROJECT_DIR$/experiment_manager.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,37 +49,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="experiment_manager.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="experiment_manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/experiment_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="113" column="11" selection-start-line="113" selection-start-column="11" selection-end-line="113" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.2918455">
+              <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
                 <element signature="e#7161#7519#0" expanded="false" />
                 <element signature="e#8941#9503#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="run_exps.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/run_exps.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.115879826">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="idf_weights.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/0_data_Prep/idf_weights.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="34" selection-start-line="63" selection-start-column="18" selection-end-line="63" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -141,7 +117,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/create_vectors.py" />
         <option value="$PROJECT_DIR$/entropy_sample.py" />
         <option value="$PROJECT_DIR$/0_Data_Prep/correct_dataset.py" />
         <option value="$PROJECT_DIR$/distr_vec.py" />
@@ -192,6 +167,7 @@
         <option value="$PROJECT_DIR$/concept_time_analysis.py" />
         <option value="$PROJECT_DIR$/7_wikiedits/edit_retrieval.py" />
         <option value="$PROJECT_DIR$/run_exps.sh" />
+        <option value="$PROJECT_DIR$/experiment_manager.py" />
       </list>
     </option>
   </component>
@@ -1039,16 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/0_data_Prep/idf_weights.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="34" selection-start-line="63" selection-start-column="18" selection-end-line="63" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1091,23 +1057,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiment_manager.py">
+    <entry file="file://$PROJECT_DIR$/0_data_Prep/idf_weights.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="11" selection-start-line="113" selection-start-column="11" selection-end-line="113" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.31759655">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <element signature="e#7161#7519#0" expanded="false" />
-            <element signature="e#8941#9503#0" expanded="false" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/run_exps.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.115879826">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.051502146">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/experiment_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2918455">
+          <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#7161#7519#0" expanded="false" />
+            <element signature="e#8941#9503#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
