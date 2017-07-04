@@ -55,10 +55,12 @@ class Concept():
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
         tag_quad = sorted(tag_quad, key=lambda date: (date[2], date[1]))
         tag_len = len(set([tag[1] for tag in tag_quad]))
+        print('PREDEF BUCKETSIZE: {}'.format(bucketsize))
         if tag_len <= 2 * bucketsize: buckets=2
-        else: buckets = int(round(tag_len/(1.0 * bucketsize)))+1
+        else: buckets = int(math.ceil(tag_len/(1.0 * bucketsize))); print tag_len/(1.0 * bucketsize)
+        print('TAGLEN: {}'.format(tag_len))
         print('TMP BUCKET: {}'.format(buckets))
-        tmpbucketsize = int(round(tag_len / (1.0 * buckets)))
+        tmpbucketsize = bucketsize #int(round(tag_len / (1.0 * buckets)))
         print('TMP BUCKETSIZE: {}'.format(tmpbucketsize))
         all_buckets = [dict() for x in range(buckets)]
         print len(all_buckets)
