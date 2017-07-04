@@ -65,7 +65,8 @@ def extract_averages(experiment, err_exp):
     avg_spearman = sum([abs(exp['spearman']) for exp in experiment])/len(experiment)
     avg_p = sum([exp['p']for exp in experiment])/len(experiment)
     avg_sim = sum([sum(exp['cosines'])/len(exp['cosines']) for exp in experiment])/len(experiment)
-    print('Average spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
+    print('Average absolute spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
+    print('Average spearman is {}'.format(sum([exp['spearman'] for exp in experiment])/len(experiment)))
     if len(err_exp) > 0: eval_err_exps(err_exp, avg_sim)
 
 

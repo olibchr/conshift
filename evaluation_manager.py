@@ -33,7 +33,7 @@ def get_ranges(ind_cnt):
     for item in ind_cnt:
         if item[2] > 500: offset1 += 1 # tbd
         if item[2] > 200: offset2 += 1
-        if item[2] > 51: offset3 += 1 # tbd
+        if item[2] > 99: offset3 += 1 # tbd
         else: break
     print offset1, offset2, offset3
     return offset1, offset2, offset3
@@ -115,10 +115,10 @@ def exp5():
     filter_badges = get_filter_badges()
     print 'Experiment 5'
     print filter_badges
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_1)(badge, path, 52) for badge in filter_badges)
-    #Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 100) for badge in filter_badges)
-    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_3)(badge, path, 52) for badge in filter_badges)
-    #Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_4)(badge, path, 100) for badge in filter_badges)
+    #Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_1)(badge, path, 52) for badge in filter_badges)
+    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_2)(badge, path, 100) for badge in filter_badges)
+    #Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_3)(badge, path, 52) for badge in filter_badges)
+    Parallel(n_jobs=num_jobs)(delayed(wiki_comparison.experiment_4)(badge, path, 100) for badge in filter_badges)
 
 
 
