@@ -51,7 +51,7 @@ class Concept():
             all_tag_docs[i].append(tag[1])
         for this_bucket, last_add in zip(all_buckets, self.fixIntervals):
             self.fixFrames.append([k, v] for k, v in this_bucket.iteritems())
-            self.art_per_bucket_fix.append(len(this_bucket))
+        self.art_per_bucket_fix = [len(set(docs)) for docs in all_tag_docs]
         self.docID_fixFrames = all_tag_docs
         assert len(self.fixIntervals) == len(self.fixFrames) == len(self.docID_fixFrames), "Different amount of fix vector elements!"
     def into_flex_timeframes(self, docid_to_date, bucketsize):
@@ -73,6 +73,7 @@ class Concept():
             tag_date = tag[2]
             tag_cnt = tag[3]
             if i >= bucketsize:
+                self.art_per_bucket_flex.append(i)
                 i = 0
                 t += 1
                 this_bucket = all_buckets[t]
@@ -85,9 +86,9 @@ class Concept():
             else:
                 this_bucket[tag_id] = tag_cnt
             all_tag_docs[t].append(tag_doc)
+        self.art_per_bucket_flex.append(i)
         for this_bucket, last_add in zip(all_buckets, all_last_adds):
             self.flexFrames.append([k, v] for k, v in this_bucket.iteritems())
-            self.art_per_bucket_flex.append(len(this_bucket))
             self.flexIntervals.append(last_add)
         self.docID_flexFrames = all_tag_docs
         self.flexIntervals[-1] = datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")  # very last add must be last date, otherwise thatll clash with wikipedia edits
