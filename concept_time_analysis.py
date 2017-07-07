@@ -401,9 +401,9 @@ def main():
         con.rebuild_fix_dist(weights, all_id_to_ctg)
         con.get_cosim()
         con.get_core()
-        print con.flexIntervals
-        print len(con.flexIntervals)
-        pretty_print()
+        #print con.flexIntervals
+        #print len(con.flexIntervals)
+        #pretty_print()
         #save_state()
         save_core(filters)
         #save_core_bars(filters)

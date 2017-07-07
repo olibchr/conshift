@@ -67,20 +67,25 @@ def extract_averages(experiment, err_exp):
     avg_p = sum([exp['p']for exp in experiment])/len(experiment)
     avg_sim = sum([sum(exp['cosines'])/len(exp['cosines']) for exp in experiment])/len(experiment)
     _, idx = max((val['spearman'], idx) for (idx, val) in enumerate(experiment))
-    max_item = experiment[idx]
+    max_corr = experiment[idx]
     _, idx = min((val['spearman'], idx) for (idx, val) in enumerate(experiment))
-    min_item = experiment[idx]
+    min_corr = experiment[idx]
+    all_avg_cosines = [(sum(exp['cosines'])/len(exp['cosines']),idx) for (idx, exp) in enumerate(experiment)]
+    max_cos = experiment[max(all_avg_cosines)[1]]
+    min_cos = experiment[min(all_avg_cosines)[1]]
     print('Average absolute spearman is {}, average p-value is {}'.format(avg_spearman, avg_p))
     print('Average spearman is {}'.format(sum([exp['spearman'] for exp in experiment])/len(experiment)))
-    print('Max item: {}'.format(max_item['id']))
-    print('Min item: {}'.format(min_item['id']))
+    print('Max Corr: {}'.format(max_corr['id']))
+    print('Min Corr: {}'.format(min_corr['id']))
+    print('Max Cos: {}'.format(max_cos['id']))
+    print('Min Cos: {}'.format(min_cos['id']))
     if len(err_exp) > 0: eval_err_exps(err_exp, avg_sim)
 
 
 def make_hists(exp_results):
     spearmans = [x['spearman'] for x in exp_results]
     pvals = [x['p'] for x in exp_results]
-    avg_sim = [sum(exp['cosines'])/len(exp['cosines']) for exp in exp_results]
+    avg_sim_p_con = [sum(exp['cosines'])/len(exp['cosines']) for exp in exp_results]
     # plot it
     fig, (ax,ax2) = plt.subplots(1,2)
     ax.hist(spearmans, bins=50, color='lightblue', label='Spearman')
@@ -91,7 +96,7 @@ def make_hists(exp_results):
     plt.show()
     counts = [x['counts'] for x in exp_results]
     fig, ax = plt.subplots(1,1)
-    ax.scatter(avg_sim,counts)
+    ax.scatter(avg_sim_p_con,counts)
     plt.show()
 
 
