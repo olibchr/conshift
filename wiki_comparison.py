@@ -66,7 +66,8 @@ def experiment_1(filters, path, vsize):
                 'cosines': con.cosim,
                 'wkedits': wkedit.rev_tf_sums,
                 'spearman': spear,
-                'p': p_val
+                'p': p_val,
+                'arts_per_bucket': con.art_per_bucket_fix
             }
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
@@ -126,7 +127,8 @@ def experiment_2(filters, path, vsize):
                 'cosines': con.cosim,
                 'wkedits': wkedit.rev_tf_sums,
                 'spearman': spear,
-                'p': p_val
+                'p': p_val,
+                'arts_per_bucket': con.art_per_bucket_flex
             }
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
@@ -185,7 +187,8 @@ def experiment_3(filters, path, vsize):
                 'cosines': con.cosim,
                 'wkedits': wkedit.rev_tf_sums,
                 'spearman': spear,
-                'p': p_val
+                'p': p_val,
+                'arts_per_bucket': con.art_per_bucket_flex
             }
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)
@@ -243,7 +246,8 @@ def experiment_4(filters, path, vsize):
                 'kl_div': con.kl_div,
                 'wkedits': wkedit.rev_tf_sums,
                 'spearman': spear,
-                'p': p_val
+                'p': p_val,
+                'arts_per_bucket': con.art_per_bucket_flex
             }
             out_results.append(result)
             print "     " + str(spear) + " spearman corr of concept " + con.name + " with p " + str(p_val)

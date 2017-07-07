@@ -131,14 +131,14 @@ function init_graph(data, tag) {
         .attr("font-weight", "bold");
 }
 
-d3.csv("analysis_adds13291.csv", type, function(error, data) {
+d3.csv("analysis_adds55005.csv", type, function(error, data) {
     headerNames = d3.keys(data[0]).slice(1);
     callbackError = error;
     callbackData = data;
     init_graph(callbackData, "#adds");
 });
 
-d3.csv("analysis_rems13291.csv", type, function(error, data) {
+d3.csv("analysis_rems55005.csv", type, function(error, data) {
     headerNames = d3.keys(data[0]).slice(1);
     callbackError = error;
     callbackData = data;

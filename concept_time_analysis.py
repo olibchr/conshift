@@ -31,6 +31,8 @@ class Concept():
         self.top_adds = []
         self.top_removals = []
         self.top_core = []
+        self.art_per_bucket_fix = []
+        self.art_per_bucket_flex = []
         self.core_set = set()
     def into_fixed_timeframes(self, docid_to_date, buckets):
         tag_quad = [[int(item.split('_')[0]), int(item.split('_')[1]), datetime.datetime.strptime(docid_to_date[int(item.split('_')[1])], "%Y-%m-%d"), 1] for item in self.features]
@@ -49,6 +51,7 @@ class Concept():
             all_tag_docs[i].append(tag[1])
         for this_bucket, last_add in zip(all_buckets, self.fixIntervals):
             self.fixFrames.append([k, v] for k, v in this_bucket.iteritems())
+            self.art_per_bucket_fix.append(len(this_bucket))
         self.docID_fixFrames = all_tag_docs
         assert len(self.fixIntervals) == len(self.fixFrames) == len(self.docID_fixFrames), "Different amount of fix vector elements!"
     def into_flex_timeframes(self, docid_to_date, bucketsize):
@@ -84,6 +87,7 @@ class Concept():
             all_tag_docs[t].append(tag_doc)
         for this_bucket, last_add in zip(all_buckets, all_last_adds):
             self.flexFrames.append([k, v] for k, v in this_bucket.iteritems())
+            self.art_per_bucket_flex.append(len(this_bucket))
             self.flexIntervals.append(last_add)
         self.docID_flexFrames = all_tag_docs
         self.flexIntervals[-1] = datetime.datetime.strptime("2015-08-14", "%Y-%m-%d")  # very last add must be last date, otherwise thatll clash with wikipedia edits
@@ -157,6 +161,7 @@ class Concept():
                 top_rem= top_rem[:5]
             top_core = [[all_id_to_ctg[idx],a] for a, idx in sorted(core, reverse=True)]
             if len(top_core) >= 5: top_core= top_core[:5]
+            print top_core
             self.top_adds.append(top_adds)
             self.top_removals.append(top_rem)
             self.top_core.append(top_core)
@@ -248,7 +253,7 @@ def save_state():
                 writer.writerow(print_list)
 
 
-def save_core():
+def save_core(filters):
     with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         printlist = []
@@ -257,8 +262,8 @@ def save_core():
             core_no_key = []
             for i in range(len(con.top_core)):
                 core_no_key.append([t[0] for t in con.top_core[i]])
-                for j in range(len(con.top_core[0])):
-                    if len(con.top_core[i][j][0]) == 0: continue
+                for j in range(len(con.top_core[i])):
+                    if not con.top_core[i][j][0]: continue
                     con.core_set.add(con.top_core[i][j][0])
             for core_item in con.core_set:
                 for j in range(len(con.top_core)):
@@ -273,7 +278,7 @@ def save_core():
             writer.writerow(core)
 
 
-def save_core_bars():
+def save_core_bars(filters):
     with open('2_results/analysis_core_bars' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -282,8 +287,8 @@ def save_core_bars():
             con.core_set = set()
             for i in range(len(con.top_core)):
                 core_no_key.append([t[0] for t in con.top_core[i]])
-                for j in range(len(con.top_core[0])):
-                    if len(con.top_core[i][j][0]) == 0: continue
+                for j in range(len(con.top_core[i])):
+                    if not con.top_core[i][j][0]: continue
                     con.core_set.add(con.top_core[i][j][0])
             for core_item in con.core_set:
                 for j in range(len(con.top_adds)):
@@ -299,13 +304,13 @@ def save_core_bars():
                 tmp = [k]
                 for v in p:
                     tmp.append(v.values()[0])
-                assert len(tmp)>1, "No data to write into bar output file for date " + str(k)
+                #assert len(tmp)>1, "No data to write into bar output file for date " + str(k)
                 f.append(tmp)
-            f = sorted(f, key=lambda k:time.strptime(k[0], "%Y-%m-%d"))
+            f = sorted(f, key=lambda k:k[0])
             writer.writerows(f)
 
 
-def save_adds():
+def save_adds(filters):
     with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -315,8 +320,8 @@ def save_adds():
             con.top_adds = norm_cont(con.top_adds)
             for i in range(len(con.top_adds)):
                 add_no_key.append([t[0] for t in con.top_adds[i]])
-                for j in range(len(con.top_adds[0])):
-                    if len(con.top_adds[i][j][0]) == 0: continue
+                for j in range(len(con.top_adds[i])):
+                    if not con.top_adds[i][j][0]: continue
                     con.core_set.add(con.top_adds[i][j][0])
             for core_item in con.core_set:
                 for j in range(len(con.top_adds)):
@@ -336,7 +341,7 @@ def save_adds():
             writer.writerows(f)
 
 
-def save_rems():
+def save_rems(filters):
     with open('2_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -346,8 +351,8 @@ def save_rems():
             con.top_removals = norm_cont(con.top_removals)
             for i in range(len(con.top_removals)):
                 rem_no_key.append([t[0] for t in con.top_removals[i]])
-                for j in range(len(con.top_removals[0])):
-                    if len(con.top_removals[i][j][0]) == 0: continue
+                for j in range(len(con.top_removals[i])):
+                    if not con.top_removals[i][j][0]: continue
                     con.core_set.add(con.top_removals[i][j][0])
             for core_item in con.core_set:
                 for j in range(len(con.top_removals)):
@@ -356,7 +361,6 @@ def save_rems():
                     else:
                         printlist[con.fixIntervals[j]].append({core_item: 0})
             writer.writerow(["Date"] + list(con.core_set))
-
             f = []
             for k,p in printlist.iteritems():
                 tmp = [k.date()]
@@ -391,20 +395,20 @@ def main():
     print "Building Concepts"
     for con in concepts:
         bucketsize = len(set(item.split('_')[1] for item in con.features))/buckets
-        #con.into_fixed_timeframes(docid_to_date, buckets)
+        con.into_fixed_timeframes(docid_to_date, buckets)
         con.into_flex_timeframes(docid_to_date, bucketsize)
         con.rebuild_flex_dist(weights, all_id_to_ctg)
-        #con.rebuild_fix_dist(weights, all_id_to_ctg)
+        con.rebuild_fix_dist(weights, all_id_to_ctg)
         con.get_cosim()
-        #con.get_core()
+        con.get_core()
         print con.flexIntervals
         print len(con.flexIntervals)
-        #pretty_print()
+        pretty_print()
         #save_state()
-        #save_core()
-        #save_core_bars()
-        #save_adds()
-        #save_rems()
+        save_core(filters)
+        #save_core_bars(filters)
+        #save_adds(filters)
+        #save_rems(filters)
 
 
 if __name__ == "__main__":
