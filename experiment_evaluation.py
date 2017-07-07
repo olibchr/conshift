@@ -32,10 +32,11 @@ def read_exp_results(exp_name):
                     'concept': rv['concept'],
                     'id': rv['id'],
                     'intervals': [dtparser.parse(dt) for dt in rv['intervals']],
-                    'cosines': rv['kl_div'],
+                    'cosines': rv['cosines'],
                     'wkedits': rv['wkedits'],
                     'spearman': rv['spearman'],
-                    'p': rv['p']
+                    'p': rv['p'],
+                    'counts': all_ind_cnt[unicode('http://en.wikipedia.org/wiki/'+rv['concept']).encode('utf-8', 'ignore')]
                 }
             if type(result['spearman']) != float or math.isnan(result['spearman']):
                 err_exp.append(result)
@@ -79,7 +80,7 @@ def extract_averages(experiment, err_exp):
 def make_hists(exp_results):
     spearmans = [x['spearman'] for x in exp_results]
     pvals = [x['p'] for x in exp_results]
-
+    avg_sim = [sum(exp['cosines'])/len(exp['cosines']) for exp in exp_results]
     # plot it
     fig, (ax,ax2) = plt.subplots(1,2)
     ax.hist(spearmans, bins=50, color='lightblue', label='Spearman')
@@ -87,8 +88,12 @@ def make_hists(exp_results):
     ax2.hist(pvals, bins=50, color='red', label='P vals')
     blue_patch = mpatches.Patch(color='red', label='P vals')
     plt.legend(handles=[red_patch, blue_patch])
-
     plt.show()
+    counts = [x['counts'] for x in exp_results]
+    fig, ax = plt.subplots(1,1)
+    ax.scatter(avg_sim,counts)
+    plt.show()
+
 
 
 def analyze_small_p(exp_results):
