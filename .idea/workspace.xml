@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f488cb9b-f0a7-4fbc-a3d3-a7dd41a563b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_data_Prep/index_analysis.py" afterPath="$PROJECT_DIR$/0_data_Prep/index_analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/0_data_Prep/index_counter.py" afterPath="$PROJECT_DIR$/0_data_Prep/index_counter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment_evaluation.py" afterPath="$PROJECT_DIR$/experiment_evaluation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment_manager.py" afterPath="$PROJECT_DIR$/experiment_manager.py" />
     </list>
     <ignored path="0_conshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +29,7 @@
       <file leaf-file-name="edit_retrieval.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="16.407408">
+            <state vertical-scroll-proportion="0.0">
               <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
               <folding>
                 <element signature="e#435#497#0" expanded="false" />
@@ -43,8 +41,8 @@
       <file leaf-file-name="wiki_comparison.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="80.0">
-              <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="60" column="37" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="37" />
               <folding>
                 <element signature="e#0#85#0" expanded="true" />
                 <element signature="e#11900#14358#0" expanded="false" />
@@ -54,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="experiment_manager.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="experiment_manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/experiment_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="42" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.77716964">
+              <caret line="116" column="83" selection-start-line="116" selection-start-column="83" selection-end-line="116" selection-end-column="83" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
                 <element signature="e#8941#9503#0" expanded="false" />
@@ -71,19 +69,9 @@
         <entry file="file://$PROJECT_DIR$/experiment_evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="concept_time_analysis.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.9480832">
-              <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
+              <caret line="95" column="47" selection-start-line="95" selection-start-column="47" selection-end-line="95" selection-end-column="47" />
               <folding>
-                <element signature="e#0#16#0" expanded="true" />
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -176,11 +164,11 @@
         <option value="$PROJECT_DIR$/run_exps.sh" />
         <option value="$PROJECT_DIR$/wiki_comparison.py" />
         <option value="$PROJECT_DIR$/concept_time_analysis.py" />
-        <option value="$PROJECT_DIR$/experiment_manager.py" />
-        <option value="$PROJECT_DIR$/experiment_evaluation.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/create_vectors.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/index_counter.py" />
         <option value="$PROJECT_DIR$/0_data_Prep/index_analysis.py" />
+        <option value="$PROJECT_DIR$/experiment_evaluation.py" />
+        <option value="$PROJECT_DIR$/experiment_manager.py" />
       </list>
     </option>
   </component>
@@ -190,8 +178,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2127" />
-    <option name="y" value="-215" />
+    <option name="x" value="-2142" />
+    <option name="y" value="-217" />
     <option name="width" value="1844" />
     <option name="height" value="1376" />
   </component>
@@ -220,7 +208,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -249,12 +236,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="8_experiments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="0_conshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="0_data_Prep" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -621,7 +623,7 @@
     <option name="totallyTimeSpent" value="26823000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2127" y="-215" width="1844" height="1376" extended-state="0" />
+    <frame x="-2142" y="-217" width="1844" height="1376" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10195228" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -996,7 +998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="152" column="45" selection-start-line="152" selection-start-column="45" selection-end-line="152" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1004,17 +1005,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.011727912">
           <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
-          <folding>
-            <marker date="1492865589000" expanded="true" signature="1391:1432" placeholder="INSERT INTO articles... " />
-            <marker date="1492865589000" expanded="true" signature="3081:3117" placeholder="INSERT INTO concepts" />
-            <marker date="1492865589000" expanded="true" signature="3339:3372" placeholder="INSERT INTO weights" />
-            <marker date="1492865589000" expanded="true" signature="3557:3576" placeholder="DROP TABLE a... " />
-            <marker date="1492865589000" expanded="true" signature="3594:3711" placeholder="CREATE TABLE... articles" />
-            <marker date="1492865589000" expanded="true" signature="3809:3828" placeholder="DROP TABLE c... " />
-            <marker date="1492865589000" expanded="true" signature="3846:3916" placeholder="CREATE TABLE... concepts" />
-            <marker date="1492865589000" expanded="true" signature="3978:3996" placeholder="DROP TABLE w... " />
-            <marker date="1492865589000" expanded="true" signature="4014:4070" placeholder="CREATE TABLE... weights" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1022,9 +1012,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31978106">
           <caret line="167" column="11" selection-start-line="167" selection-start-column="11" selection-end-line="167" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1032,9 +1019,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17591868">
           <caret line="15" column="49" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
-          <folding>
-            <element signature="e#2#12#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1042,7 +1026,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.011727912">
           <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1050,7 +1033,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37842065">
           <caret line="68" column="14" selection-start-line="68" selection-start-column="14" selection-end-line="68" selection-end-column="14" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+          <folding>
+            <element signature="e#435#497#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1064,29 +1056,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiment_evaluation.py">
+    <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
+        <state vertical-scroll-proportion="0.90304923">
+          <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/experiment_manager.py">
+    <entry file="file://$PROJECT_DIR$/experiment_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="42" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
+          <caret line="95" column="47" selection-start-line="95" selection-start-column="47" selection-end-line="95" selection-end-column="47" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <element signature="e#8941#9503#0" expanded="false" />
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wiki_comparison.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="80.0">
-          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="37" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="37" />
           <folding>
             <element signature="e#0#85#0" expanded="true" />
             <element signature="e#11900#14358#0" expanded="false" />
@@ -1095,22 +1088,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/7_wikiedits/edit_retrieval.py">
+    <entry file="file://$PROJECT_DIR$/experiment_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="16.407408">
-          <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.77716964">
+          <caret line="116" column="83" selection-start-line="116" selection-start-column="83" selection-end-line="116" selection-end-column="83" />
           <folding>
-            <element signature="e#435#497#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/concept_time_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9480832">
-          <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#8941#9503#0" expanded="false" />
           </folding>
         </state>
       </provider>
