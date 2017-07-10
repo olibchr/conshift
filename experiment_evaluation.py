@@ -131,6 +131,6 @@ def extract_filters():
 all_ind_cnt = get_ind_cnt()
 exp_results, err_exp = read_exp_results(exp_file)
 extract_averages(exp_results, err_exp)
-make_hists(exp_results)
+#make_hists(exp_results)
 analyze_small_p(exp_results)
-extract_filters()
+#extract_filters()

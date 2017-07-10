@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore")
 """
 Little tool to investigate annotations a bit more
 """
-path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+path = sys.argv[1]
 
 def get_ctg():
     all_id_to_ctg = {}

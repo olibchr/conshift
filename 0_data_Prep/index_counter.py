@@ -1,5 +1,5 @@
-import csv
-path =  '/Users/oliverbecher/1_data/0_cwi/1_data/'
+import csv, sys
+path = sys.argv[1]
 
 def load_distr():
     with open(path + 'all_distributions_time.csv') as distr_vec:
@@ -21,7 +21,7 @@ def get_ctg():
 
 
 def save_ind_cnt(out):
-    with open('index_cnt_update.csv','w') as outfile:
+    with open(path + 'index_cnt.csv','w') as outfile:
         writer = csv.writer(outfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for o in out:
             writer.writerow([all_id_to_ctg[o[0]], o[0], o[1]])
