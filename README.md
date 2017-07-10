@@ -61,7 +61,7 @@ python concept_time_analysis $PROJECT_FILES ALL N ID
 
 ## Authors
 
-* **Oliver Becher** - *Initial work* - [PurpleBooth](https://github.com/olibchr)
+* **Oliver Becher** - [OliBchr](https://github.com/olibchr)
 
 
 ## License
