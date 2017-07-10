@@ -33,7 +33,7 @@ def get_ranges(ind_cnt):
     for item in ind_cnt:
         if item[2] > 500: offset1 += 1 # tbd
         if item[2] > 200: offset2 += 1
-        if item[2] > 99: offset3 += 1 # tbd
+        if item[2] > 51: offset3 += 1 # tbd
         else: break
     print offset1, offset2, offset3
     return offset1, offset2, offset3

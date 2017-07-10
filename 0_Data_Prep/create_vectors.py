@@ -169,6 +169,7 @@ def main():
     print "Loading data.." # we load the data
     articles, ctg_set = load_data()
     ctg_set = sorted(ctg_set)
+    #print("AMount of Different Annotations: {}".format(len(set(ctg_set))))
 
     print "Creating dictionary.." # put all annotations into dictionaries
     ctg_to_id = {ctg_set[i]: i for i in range(0,len(ctg_set))}

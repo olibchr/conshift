@@ -106,7 +106,7 @@ def analyze_small_p(exp_results):
     succ = []
     for e in exp_results:
         if e['p'] < 0.05: succ.append(e)
-    make_hists(succ)
+    #make_hists(succ)
     extract_averages(succ, [])
 
 
@@ -133,4 +133,4 @@ exp_results, err_exp = read_exp_results(exp_file)
 extract_averages(exp_results, err_exp)
 make_hists(exp_results)
 analyze_small_p(exp_results)
-#extract_filters()
+extract_filters()
