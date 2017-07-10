@@ -6,7 +6,7 @@ import random
 from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise as pw
 import math, json, io
-import scipy
+import scipy.stats
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
 sys.path.append('7_wikiedits/')

@@ -3,7 +3,7 @@ from dateutil import parser as dtparser
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.patches as mpatches
-import scipy
+import scipy.stats
 
 path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
 #path = '/export/scratch1/home/becher/data/'
@@ -108,7 +108,7 @@ def analyze_small_p(exp_results):
     for e in exp_results:
         if e['p'] < 0.05: succ.append(e)
     #make_hists(succ)
-    get_spearman(succ)
+    #get_spearman(succ)
     extract_averages(succ, [])
 
 
@@ -137,9 +137,10 @@ def comparator(concepts_cosines, wikiedit_counts):
 
 
 def get_spearman(experiments):
-    spearmans = [exp['cosines'] for exp in experiments]
+    cosines = [exp['cosines'] for exp in experiments]
     wp_edits = [exp['wkedits'] for exp in experiments]
-    comparator(spearmans, wp_edits)
+    g_spear, g_p = comparator(cosines, wp_edits)
+    print('Global Spearman: {}, global P Val: {}'.format(len(g_spear[0]),g_p))
 
 all_ind_cnt = get_ind_cnt()
 exp_results, err_exp = read_exp_results(exp_file)
