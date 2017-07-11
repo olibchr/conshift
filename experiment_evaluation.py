@@ -33,7 +33,7 @@ def read_exp_results(exp_name):
                     'concept': rv['concept'],
                     'id': rv['id'],
                     'intervals': [dtparser.parse(dt) for dt in rv['intervals']],
-                    'cosines': rv['cosines'],
+                    'cosines': rv['kl_div'],
                     'wkedits': rv['wkedits'],
                     'spearman': rv['spearman'],
                     'p': rv['p'],
@@ -88,17 +88,28 @@ def make_hists(exp_results):
     pvals = [x['p'] for x in exp_results]
     avg_sim_p_con = [sum(exp['cosines'])/len(exp['cosines']) for exp in exp_results]
     # plot it
-    fig, (ax,ax2) = plt.subplots(1,2)
-    ax.hist(spearmans, bins=50, color='lightblue', label='Spearman')
+
+    fig, ax = plt.subplots(figsize=(4, 6))
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.get_xaxis().tick_bottom()
+    ax.get_yaxis().tick_left()
     red_patch = mpatches.Patch(color='lightblue', label='Spearman')
-    ax2.hist(pvals, bins=50, color='red', label='P vals')
     blue_patch = mpatches.Patch(color='red', label='P vals')
-    plt.legend(handles=[red_patch, blue_patch])
-    plt.show()
+
+
+    ax.hist(spearmans, bins=50, color='#3F5D7D', label='Spearman')
+    #plt.legend(handles=[red_patch, blue_patch])
+    plt.savefig("histogram_spearmans.png", bbox_inches="tight");
+    #plt.show()
+
     counts = [x['counts'] for x in exp_results]
     fig, ax = plt.subplots(1,1)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
     ax.scatter(avg_sim_p_con,counts)
-    plt.show()
+    #plt.show()
+    plt.savefig("counts.png", bbox_inches="tight");
 
 
 
@@ -107,7 +118,7 @@ def analyze_small_p(exp_results):
     succ = []
     for e in exp_results:
         if e['p'] < 0.05: succ.append(e)
-    #make_hists(succ)
+    make_hists(succ)
     #get_spearman(succ)
     extract_averages(succ, [])
 
@@ -145,6 +156,6 @@ def get_spearman(experiments):
 all_ind_cnt = get_ind_cnt()
 exp_results, err_exp = read_exp_results(exp_file)
 extract_averages(exp_results, err_exp)
-#make_hists(exp_results)
+make_hists(exp_results)
 analyze_small_p(exp_results)
 #extract_filters()
