@@ -4,7 +4,6 @@ from joblib import Parallel, delayed
 import multiprocessing
 
 
-#path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
 path = '/export/scratch1/home/becher/data/'
 conceptsPerRequest = 30
 
