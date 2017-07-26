@@ -243,7 +243,7 @@ def pretty_print():
 
 
 def save_state():
-    with open('2_results/analysis_results_' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+    with open('1_results/analysis_results_' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         writer = csv.writer(out, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for con in concepts:
             for i in range(len(con.fixIntervals)-1):
@@ -255,7 +255,7 @@ def save_state():
 
 
 def save_core(filters):
-    with open('2_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+    with open('1_results/analysis_core' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         printlist = []
         for con in concepts:
@@ -280,7 +280,7 @@ def save_core(filters):
 
 
 def save_core_bars(filters):
-    with open('2_results/analysis_core_bars' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+    with open('1_results/analysis_core_bars' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             printlist = {t:[] for t in con.fixIntervals}
@@ -312,7 +312,7 @@ def save_core_bars(filters):
 
 
 def save_adds(filters):
-    with open('2_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+    with open('1_results/analysis_adds' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer = csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             printlist = {t:[] for t in con.fixIntervals}
@@ -343,7 +343,7 @@ def save_adds(filters):
 
 
 def save_rems(filters):
-    with open('2_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
+    with open('1_results/analysis_rems' + ''.join(map(str,filters)) + '.csv', 'wb') as out:
         for con in concepts:
             writer =  csv.writer(out, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             printlist = {t:[] for t in con.fixIntervals}

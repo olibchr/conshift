@@ -5,8 +5,8 @@ import matplotlib.dates as mdates
 import matplotlib.patches as mpatches
 import scipy.stats
 
-path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
-#path = '/export/scratch1/home/becher/data/'
+#path = '/Users/oliverbecher/1_data/0_cwi/1_data/'
+path = '/export/scratch1/home/becher/data/'
 exppath = './'
 
 exp_file = sys.argv[1]

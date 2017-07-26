@@ -9,7 +9,7 @@ import math, json, io
 import scipy.stats
 warnings.filterwarnings("ignore")
 csv.field_size_limit(sys.maxsize)
-sys.path.append('7_wikiedits/')
+sys.path.append('4_wikiedits/')
 from edit_retrieval import WikiEdits
 
 # Init global vars
@@ -53,7 +53,7 @@ def experiment_1(filters, path, vsize):
     out_results = []
     for con in concepts:
         try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wkedit = WikiEdits(data_dir='4_wikiedits/wikijson')
             wikiedits.append(wkedit)
             wkedit.parse(con.name)
             wkedit.split_revisions(con.fixIntervals)
@@ -75,7 +75,7 @@ def experiment_1(filters, path, vsize):
         except Exception as e:
             print 'Fatal Error with wiki edits: ' + con.name + ", " + str(con.id) + "; Reason: "+ str(e)
         del con
-    outfile = '8_experiments/results_exp1_' + now + '_' + str(int(vsize)) + '.json'
+    outfile = '5_experiment_results/results_exp1_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
@@ -114,7 +114,7 @@ def experiment_2(filters, path, vsize):
     out_results = []
     for con in concepts:
         try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wkedit = WikiEdits(data_dir='4_wikiedits/wikijson')
             wikiedits.append(wkedit)
             wkedit.parse(con.name)
             wkedit.split_revisions(con.flexIntervals)
@@ -136,7 +136,7 @@ def experiment_2(filters, path, vsize):
         except Exception as e:
             print 'Fatal Error with wiki edits: ' + con.name + ", " + str(con.id) + "; Reason: "+ str(e)
         del con
-    outfile = '8_experiments/results_exp2_' + now + '_' +str(int(vsize)) + '.json'
+    outfile = '5_experiment_results/results_exp2_' + now + '_' +str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
@@ -174,7 +174,7 @@ def experiment_3(filters, path, vsize):
     out_results = []
     for con in concepts:
         try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wkedit = WikiEdits(data_dir='4_wikiedits/wikijson')
             wikiedits.append(wkedit)
             wkedit.parse(con.name)
             wkedit.split_revisions(con.flexIntervals)
@@ -196,7 +196,7 @@ def experiment_3(filters, path, vsize):
         except Exception as e:
             print 'Fatal Error with wiki edits: ' + con.name + ", " + str(con.id) + "; Reason: "+ str(e)
         del con
-    outfile = '8_experiments/results_exp3_' + now + '_' + str(int(vsize)) + '.json'
+    outfile = '5_experiment_results/results_exp3_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
@@ -233,7 +233,7 @@ def experiment_4(filters, path, vsize):
     out_results = []
     for con in concepts:
         try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wkedit = WikiEdits(data_dir='4_wikiedits/wikijson')
             wikiedits.append(wkedit)
             wkedit.parse(con.name)
             wkedit.split_revisions(con.flexIntervals)
@@ -255,7 +255,7 @@ def experiment_4(filters, path, vsize):
         except Exception as e:
             print 'Fatal Error with wiki edits: ' + con.name + ", " + str(con.id) + "; Reason: "+ str(e)
         del con
-    outfile = '8_experiments/results_exp4_' + now + '_' + str(int(vsize)) + '.json'
+    outfile = '5_experiment_results/results_exp4_' + now + '_' + str(int(vsize)) + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
@@ -291,7 +291,7 @@ def experiment_5(filters, path):
     out_results = []
     for con in concepts:
         try:
-            wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+            wkedit = WikiEdits(data_dir='4_wikiedits/wikijson')
             wikiedits.append(wkedit)
             wkedit.parse(con.name)
             wkedit.split_revisions(con.flexIntervals)
@@ -312,7 +312,7 @@ def experiment_5(filters, path):
         except Exception:
             print 'Fatal Error with wiki edits'
         del con
-    outfile = '8_experiments/results_exp5_' + now + '.json'
+    outfile = '5_experiment_results/results_exp5_' + now + '.json'
     print('Writing results to {}').format(outfile)
     with io.open(outfile, 'a', encoding='utf-8') as f:
         f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
@@ -351,7 +351,7 @@ def experiment_6(filters, path):
         out_results = []
         for con in concepts:
             try:
-                wkedit = WikiEdits(data_dir='7_wikiedits/wikijson')
+                wkedit = WikiEdits(data_dir='4_wikiedits/wikijson')
                 wikiedits.append(wkedit)
                 wkedit.parse(con.name)
                 wkedit.split_revisions(con.flexIntervals)
@@ -372,7 +372,7 @@ def experiment_6(filters, path):
             except Exception as e:
                 print 'Fatal Error with wiki edits: ' + con.name + ", " + str(con.id) + "; Reason: "+ str(e)
             del con
-        outfile = '8_experiments/results_exp5_' + now + '.json'
+        outfile = '5_experiment_results/results_exp5_' + now + '.json'
         print('Writing results to {}').format(outfile)
         with io.open(outfile, 'a', encoding='utf-8') as f:
             f.write(unicode(json.dumps(out_results, encoding='utf8', ensure_ascii=False)+ '\n'))
